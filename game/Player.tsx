@@ -1,14 +1,22 @@
 "use client";
 
-import { RefObject, useRef } from "react";
+import { RefObject, useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
+import { Html, useTexture } from "@react-three/drei";
 import { CapsuleCollider, RapierRigidBody, RigidBody } from "@react-three/rapier";
 import * as THREE from "three";
 import { pressedKeys, useInput } from "./input";
 
 export function Player({ bodyRef }: { bodyRef: RefObject<RapierRigidBody | null> }) {
   const visual = useRef<THREE.Group>(null);
-  const targetRotation = useRef(0);
+  const texture = useTexture("/characters/felice-v1.png");
+
+  useEffect(() => {
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.magFilter = THREE.NearestFilter;
+    texture.minFilter = THREE.LinearMipmapLinearFilter;
+    texture.needsUpdate = true;
+  }, [texture]);
 
   useFrame((_, delta) => {
     const body = bodyRef.current;
@@ -34,9 +42,10 @@ export function Player({ bodyRef }: { bodyRef: RefObject<RapierRigidBody | null>
     const speed = 4.2;
     body.setLinvel({ x: direction.x * speed, y: velocity.y, z: direction.z * speed }, true);
 
-    if (direction.lengthSq() > 0.01) {
-      targetRotation.current = Math.atan2(direction.x, direction.z);
-      if (visual.current) visual.current.rotation.y = THREE.MathUtils.damp(visual.current.rotation.y, targetRotation.current, 12, delta);
+    if (visual.current) {
+      const moving = direction.lengthSq() > 0.01;
+      const targetY = moving ? Math.sin(performance.now() * 0.012) * 0.035 : 0;
+      visual.current.position.y = THREE.MathUtils.damp(visual.current.position.y, targetY, 13, delta);
     }
   });
 
@@ -44,19 +53,17 @@ export function Player({ bodyRef }: { bodyRef: RefObject<RapierRigidBody | null>
     <RigidBody ref={bodyRef} position={[0, 1.15, 5]} colliders={false} enabledRotations={[false, false, false]} linearDamping={8} friction={1} canSleep={false}>
       <CapsuleCollider args={[0.46, 0.34]} />
       <group ref={visual}>
-        <mesh castShadow position={[0, 0.1, 0]}>
-          <capsuleGeometry args={[0.34, 0.68, 8, 16]} />
-          <meshStandardMaterial color="#f8dfcf" roughness={0.78} />
-        </mesh>
-        <mesh castShadow position={[0, 0.62, 0]}>
-          <sphereGeometry args={[0.29, 18, 14]} />
-          <meshStandardMaterial color="#f2c5aa" roughness={0.72} />
-        </mesh>
-        <mesh castShadow position={[0, 0.72, -0.04]} rotation={[-0.2, 0, 0]}>
-          <sphereGeometry args={[0.305, 16, 10, 0, Math.PI * 2, 0, Math.PI * 0.55]} />
-          <meshStandardMaterial color="#472c27" roughness={0.9} />
-        </mesh>
+        <sprite scale={[1.55, 2.32, 1]} position={[0, 0.15, 0]}>
+          <spriteMaterial map={texture} transparent alphaTest={0.05} depthWrite={false} toneMapped={false} />
+        </sprite>
+        <Html position={[0, 1.48, 0]} center distanceFactor={7} style={{ pointerEvents: "none" }}>
+          <span className="player-name">Felice</span>
+        </Html>
       </group>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.78, 0]}>
+        <circleGeometry args={[0.48, 24]} />
+        <meshBasicMaterial color="#263129" transparent opacity={0.22} depthWrite={false} />
+      </mesh>
     </RigidBody>
   );
 }

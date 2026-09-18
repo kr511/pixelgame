@@ -25,7 +25,7 @@ export function GameUI({ started, onStart }: { started: boolean; onStart: () => 
 
   return (
     <div className="game-ui">
-      <div className="world-title"><span>F × E</span><div><strong>Felice × Elias</strong><small>v0.1 · Abendinsel</small></div></div>
+      <div className="world-title"><span>F × E</span><div><strong>Felice × Elias</strong><small>v0.1 · Felice · Abendinsel</small></div></div>
       {started && <button data-game-control className="pause-button" onClick={() => setPaused(!paused)} aria-label={paused ? "Weiterspielen" : "Pause"}>{paused ? <Play size={18} /> : <Pause size={18} />}</button>}
       {started && !paused && <div className="controls-hint"><span className="desktop-hint">WASD · Ziehen zum Umschauen</span><span className="mobile-hint">Links bewegen · Rechts umschauen</span></div>}
       {started && !paused && (

@@ -28,6 +28,7 @@ button { font:inherit; }
 .loading-screen { position:fixed; inset:0; display:grid; place-content:center; gap:12px; background:linear-gradient(#cf745f,#293842); color:#fff9f2; text-align:center; }
 .loading-screen span { font-family:Georgia,serif; font-size:2.6rem; }
 .loading-screen p { margin:0; color:rgba(255,255,255,.72); }
+.player-name { display:inline-flex; padding:5px 10px; border:1px solid rgba(255,255,255,.32); border-radius:999px; color:#fff8f1; background:rgba(35,29,32,.5); box-shadow:0 5px 18px rgba(25,19,22,.2); backdrop-filter:blur(8px); font-size:.68rem; font-weight:800; letter-spacing:.03em; white-space:nowrap; text-shadow:0 1px 5px rgba(0,0,0,.35); }
 @media (pointer:coarse),(max-width:760px) {
   .desktop-hint { display:none; } .mobile-hint { display:inline; }
   .controls-hint { bottom:max(14px,env(safe-area-inset-bottom)); }
