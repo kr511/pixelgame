@@ -35,8 +35,8 @@ export function Player({ bodyRef }: { bodyRef: RefObject<RapierRigidBody | null>
     const length = Math.hypot(x, y);
     if (length > 1) { x /= length; y /= length; }
 
-    const forward = new THREE.Vector3(Math.sin(input.yaw), 0, Math.cos(input.yaw));
-    const right = new THREE.Vector3(forward.z, 0, -forward.x);
+    const forward = new THREE.Vector3(-1, 0, -1).normalize();
+    const right = new THREE.Vector3(1, 0, -1).normalize();
     const direction = forward.multiplyScalar(y).add(right.multiplyScalar(x));
     const velocity = body.linvel();
     const speed = 4.2;
@@ -50,7 +50,7 @@ export function Player({ bodyRef }: { bodyRef: RefObject<RapierRigidBody | null>
   });
 
   return (
-    <RigidBody ref={bodyRef} position={[0, 1.15, 5]} colliders={false} enabledRotations={[false, false, false]} linearDamping={8} friction={1} canSleep={false}>
+    <RigidBody ref={bodyRef} position={[2, 1.15, 4]} colliders={false} enabledRotations={[false, false, false]} linearDamping={8} friction={1} canSleep={false}>
       <CapsuleCollider args={[0.46, 0.34]} />
       <group ref={visual}>
         <sprite scale={[1.55, 2.32, 1]} position={[0, 0.15, 0]}>

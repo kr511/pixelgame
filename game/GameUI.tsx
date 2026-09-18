@@ -25,9 +25,9 @@ export function GameUI({ started, onStart }: { started: boolean; onStart: () => 
 
   return (
     <div className="game-ui">
-      <div className="world-title"><span>F × E</span><div><strong>Felice × Elias</strong><small>v0.1 · Felice · Abendinsel</small></div></div>
+      <div className="world-title"><span>F × E</span><div><strong>Felice × Elias</strong><small>v0.2 · Felices Sonnenhof</small></div></div>
       {started && <button data-game-control className="pause-button" onClick={() => setPaused(!paused)} aria-label={paused ? "Weiterspielen" : "Pause"}>{paused ? <Play size={18} /> : <Pause size={18} />}</button>}
-      {started && !paused && <div className="controls-hint"><span className="desktop-hint">WASD · Ziehen zum Umschauen</span><span className="mobile-hint">Links bewegen · Rechts umschauen</span></div>}
+      {started && !paused && <div className="controls-hint"><span className="desktop-hint">WASD · Felices Hof erkunden</span><span className="mobile-hint">Joystick · Felices Hof erkunden</span></div>}
       {started && !paused && (
         <div data-game-control className="joystick" onPointerDown={(event) => { event.currentTarget.setPointerCapture(event.pointerId); stickOrigin.current = { x: event.clientX, y: event.clientY }; moveStick(event); }} onPointerMove={(event) => { if (event.currentTarget.hasPointerCapture(event.pointerId)) moveStick(event); }} onPointerUp={stopStick} onPointerCancel={stopStick}>
           <div className="joystick-knob" style={{ transform: `translate(${stick.x}px, ${stick.y}px)` }} />
@@ -36,10 +36,10 @@ export function GameUI({ started, onStart }: { started: boolean; onStart: () => 
       {(!started || paused) && (
         <div className="start-screen" data-game-control>
           <div className="start-card">
-            <p>Eine kleine Welt für uns</p>
-            <h1>{paused ? "Kurze Pause?" : "Felice × Elias"}</h1>
-            <span>{paused ? "Die Abendinsel wartet auf dich." : "Der erste Schritt in unsere gemeinsame Welt."}</span>
-            <button onClick={() => { setPaused(false); onStart(); }}><Play size={17} fill="currentColor" />{paused ? "Weiter" : "Welt betreten"}</button>
+            <p>Willkommen auf dem Sonnenhof</p>
+            <h1>{started && paused ? "Kurze Pause?" : "Felice × Elias"}</h1>
+            <span>{started && paused ? "Der Sonnenhof wartet auf dich." : "Ein kleiner Hof voller Wege, Felder und ruhiger Ecken."}</span>
+            <button onClick={() => { setPaused(false); onStart(); }}><Play size={17} fill="currentColor" />{started && paused ? "Weiter" : "Welt betreten"}</button>
           </div>
         </div>
       )}

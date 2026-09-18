@@ -49,7 +49,7 @@ export function Game() {
 
   return (
     <main className="game-shell">
-      <Canvas shadows={!mobile} dpr={mobile ? [1, 1.25] : [1, 1.75]} camera={{ position: [0, 4.6, 10], fov: mobile ? 58 : 50, near: .1, far: 80 }} gl={{ antialias: !mobile, powerPreference: "high-performance" }}>
+      <Canvas orthographic shadows={!mobile} dpr={mobile ? [1, 1.25] : [1, 1.75]} camera={{ position: [10, 14, 10], zoom: mobile ? 28 : 38, near: .1, far: 100 }} gl={{ antialias: !mobile, powerPreference: "high-performance" }}>
         <Suspense fallback={null}>
           <Physics gravity={[0, -18, 0]} timeStep="vary">
             <World />
