@@ -1,6 +1,16 @@
 # Felice × Elias World
 
-Version **0.61**: ein eigenständiges, mobiles 2D-Spiel mit sechs zusammenhängenden Orten, Tageszyklus, Freunden, Ruhepositionen und vier spielbaren Erinnerungskapiteln.
+Version **0.65**: ein eigenständiges, mobiles 2D-Spiel mit sieben zusammenhängenden Orten, Tageszyklus, Freunden, Ruhepositionen und vier spielbaren Erinnerungskapiteln.
+
+## Neu in V0.65
+
+- **Felices Küche** ist vom Wohnzimmer aus erreichbar: Frühstück vorbereiten, ein warmes Getränk machen und aufräumen kosten jeweils zehn Minuten. Die Aktionen zeigen kurz Rückmeldung und passende Dampf-/Glanzanimationen. Am Küchentisch können Felice und Elias zusammen sitzen.
+- **Felice liegt unter der Decke, mit dem Kopf auf dem Kissen.** Die bewohnte Bettvariante übernimmt die genaue Kamera und Einrichtung des Zimmers; die frühere Deckenüberlagerung entfällt.
+- **Elena, Jason, Luca und Wyatt laufen auf dem Schulhof.** Jason und Luca gehen langsamer und pausieren länger. Die Figuren verwenden echte wechselnde Schrittbilder und begehbare Wege.
+- Beim Ansprechen können **alle neun Freunde und Elias** **Hinsetzen**, **Hinlegen** und **Aufstehen** wählen. Sie laufen zum nächsten freien passenden Platz; ein reservierter Platz kann nicht doppelt belegt werden. Hinlegen nutzt Decken, Sitzen Bänke, Sofa oder Küchenstühle. Felice kann die Ruheplätze ebenfalls benutzen.
+- Bewegung pausiert in Dialogen, im Buch, bei Pause und bei verborgenem Tab. Automatisches Laufen kostet keine Spielminuten. Kapitel, Uhrzeit und Jahreszeit verwenden weiterhin die bestehenden Speicherstände; Haltungen bleiben vorübergehend.
+
+[Browserprüfung und Szenenbilder von V0.65](qa/v065/REVIEW.md) · [Grafikvorgaben](game/ART-V065.md)
 
 ## Neu in V0.61
 
@@ -44,7 +54,7 @@ npx eslint game/Game.tsx game/GameUI.tsx game/WorldArt.tsx game/audio.ts game/ca
 npm run build
 ```
 
-Die 25 Tests umfassen Kapitel, Speicherstände, Erreichbarkeit, Trefferwertung, Kamera, Grafikzuordnung, Ton sowie Tagesgrenzen, Hinweiszeiten, Schlafen, Jahreszeiten sowie Bewegung bei verschiedenen Bildraten und Kollisionen. Browserprüfungen ergänzen sie um Darstellung und Bedienung.
+Die 30 Tests umfassen Kapitel, Speicherstände, Erreichbarkeit, Trefferwertung, Kamera, Grafikzuordnung, Ton sowie Tagesgrenzen, Hinweiszeiten, Schlafen, Jahreszeiten sowie Bewegung bei verschiedenen Bildraten, Kollisionen, NPC-Laufwege, Platzreservierungen und alle Freundesposen. Browserprüfungen ergänzen sie um Darstellung und Bedienung.
 
 ## Lokal starten
 

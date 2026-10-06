@@ -10,6 +10,7 @@ import { ShootingMemory } from "./memories/ShootingMemory";
 import { ItemArt } from "./SceneArt";
 import { BenchArt, CharacterArt, WorldAtmosphere, WorldBackdrop, characterStyle } from "./WorldArt";
 import { movementStep, walkingFrame } from "./motion";
+import { advanceActor, availableSeat, canChangePose, initialActors, requestPose, type Actor, type Actors, type Pose } from "./actors";
 import { CHAPTER_GRAPHICS, speakerGraphic } from "./graphics";
 import { cameraFor, offscreenGuide } from "./camera";
 import { audioAllowed, worldAudio } from "./audio";
@@ -17,7 +18,7 @@ import { ACTION_MINUTES, DAY_KEY, REST_SPOTS, SCHOOL_END, SCHOOL_START, SEASONS,
 import { CHAPTERS, ENTITIES, PLACES, SPAWNS, STORY_KEY, EMPTY_STORY, advanceStory, beginChapter, canWalk, currentStep, parseStory, routeTo, type ChapterId, type Entity, type Point, type StorySave } from "./story";
 
 type Direction = "front" | "left" | "back" | "right";
-type Dialogue = { speaker: string; text: string; target?: string; ending?: boolean; choices?: string[]; action?: "school"; morning?: boolean };
+type Dialogue = { speaker: string; text: string; target?: string; ending?: boolean; choices?: string[]; action?: "school" | "pose" | "kitchen"; actorId?: string; kitchenId?: string; morning?: boolean };
 type Rest = { spot: RestSpot; elias: boolean };
 type Notice = { date: string; minute: number; label: string };
 function clearMovement() { pressedKeys.clear(); useInput.getState().setMove(0, 0); }
@@ -39,6 +40,9 @@ export function Game() {
   const [dayError, setDayError] = useState<string | null>(dayInitial.error);
   const [notices, setNotices] = useState<Notice[]>([]);
   const [rest, setRest] = useState<Rest | null>(null);
+  const [actors, setActors] = useState<Actors>(initialActors);
+  const actorsRef = useRef(actors);
+  const [kitchenEffect, setKitchenEffect] = useState<string | null>(null);
   const [player, setPlayer] = useState<Point>(SPAWNS[initial.save.place]);
   const [direction, setDirection] = useState<Direction>("front");
   const [walking, setWalking] = useState(false);
@@ -66,16 +70,20 @@ export function Game() {
   const exits = PLACES[save.place].exits;
   const guide = step && step.place !== save.place ? routeTo(save.place, step.place) : undefined;
   const dogFollows = save.place === "garden" && save.completed.includes("dog") && save.chapter !== "dog";
-  const sceneEntities = ENTITIES[save.place].filter(e => !rest?.elias || e.art !== "elias").map(e => e.id === "anuk" && dogFollows ? { ...e, ...dog } : e);
+  const sceneEntities = ENTITIES[save.place].filter(e => !rest?.elias || e.art !== "elias").map(e => e.id === "anuk" && dogFollows ? { ...e, ...dog } : actors[e.id] ? { ...e, ...actors[e.id].position } : e);
   const nearbyExit = exits.find(e => Math.hypot(e.x-player.x, e.y-player.y) < .105);
-  const nearbyEntity = sceneEntities.map(e => ({ e, d: Math.hypot(e.x - player.x, e.y - player.y), companion: e.id === "anuk" && save.completed.includes("dog") && save.chapter !== "dog" })).filter(v => v.d < .115 && !(v.companion && nearbyExit)).sort((a,b) => Number(a.companion)-Number(b.companion) || a.d-b.d)[0]?.e;
+  const nearbyEntity = sceneEntities.map(e => ({ e, d: Math.hypot(e.x - player.x, e.y - player.y), companion: e.id === "anuk" && save.completed.includes("dog") && save.chapter !== "dog" })).filter(v => v.d < .115 && !(v.companion && nearbyExit) && (!nearbyExit || v.d < Math.hypot(nearbyExit.x-player.x, nearbyExit.y-player.y))).sort((a,b) => Number(a.companion)-Number(b.companion) || a.d-b.d)[0]?.e;
   const spots = REST_SPOTS.filter(spot => spot.place === save.place);
-  const nearbySpot = spots.filter(spot => Math.hypot(spot.approach.x-player.x,spot.approach.y-player.y) < .115).sort((a,b) => Math.hypot(a.approach.x-player.x,a.approach.y-player.y)-Math.hypot(b.approach.x-player.x,b.approach.y-player.y))[0];
+  const nearbySpot = spots.filter(spot => Math.hypot(spot.approach.x-player.x,spot.approach.y-player.y) < .115 && !Object.values(actors).some(actor => actor.restId?.startsWith(`${spot.id}:`))).sort((a,b) => Math.hypot(a.approach.x-player.x,a.approach.y-player.y)-Math.hypot(b.approach.x-player.x,b.approach.y-player.y))[0];
   const restTarget = nearbySpot && (!nearbyEntity || Math.hypot(nearbySpot.approach.x-player.x,nearbySpot.approach.y-player.y) < Math.hypot(nearbyEntity.x-player.x,nearbyEntity.y-player.y)) ? nearbySpot : undefined;
   const target = restTarget ?? nearbyEntity ?? nearbyExit;
   const targetName = restTarget?.name ?? nearbyEntity?.name ?? nearbyExit?.label;
   const light = seasonalLight(day.season, day.minute);
   const winter = day.season === "Winter" || save.chapter === "christmas";
+  const restPose: Pose = rest ? rest.spot.kind === "bed" || rest.spot.kind === "mat" ? "lying" : "sitting" : "standing";
+  const bedOccupied = rest?.spot.kind === "bed";
+
+  function updateActors(next: Actors) { actorsRef.current = next; setActors(next); }
 
   function position(point: Point) { playerRef.current = point; setPlayer(point); setWalking(false); clearMovement(); }
   const setSave = useCallback((next: StorySave) => {
@@ -83,7 +91,7 @@ export function Game() {
     if (!readable.current) return;
     try { window.localStorage.setItem(STORY_KEY, JSON.stringify(next)); setSaveError(null); }
     catch { setSaveError("Speichern ist gerade nicht möglich. Dein Fortschritt bleibt für diese Sitzung erhalten."); }
-  }, []);
+  }, [setStory, setSaveError]);
   const persistDay = useCallback((next: DaySave) => {
     dayRef.current = next; setDay(next);
     if (!dayReadable.current) return;
@@ -100,6 +108,11 @@ export function Game() {
     const timer = window.setTimeout(() => setNotices(previous => previous.slice(1)), 4500);
     return () => window.clearTimeout(timer);
   }, [notices, active]);
+  useEffect(() => {
+    if (!kitchenEffect || !active) return;
+    const timer = window.setTimeout(() => setKitchenEffect(null), 3000);
+    return () => window.clearTimeout(timer);
+  }, [kitchenEffect, active]);
   useEffect(() => { useMemories.getState().load(); }, []);
   useEffect(() => {
     try { worldAudio.load(window.localStorage); } catch { /* Storage may be disabled. */ }
@@ -125,6 +138,15 @@ export function Game() {
   }, [dialogue, journal]);
 
   const move = useCallback((seconds: number) => {
+    const next = { ...actorsRef.current };
+    let changed = false;
+    for (const entity of ENTITIES[save.place]) {
+      const actor = next[entity.id];
+      if (!actor || rest?.elias && entity.art === "elias") continue;
+      const updated = advanceActor(save.place, entity.id, actor, seconds);
+      if (updated !== actor) { next[entity.id] = updated; changed = true; }
+    }
+    if (changed) { actorsRef.current = next; setActors(next); }
     if (dogFollows) {
       const offset = { x: playerRef.current.x-dogRef.current.x, y: playerRef.current.y-dogRef.current.y };
       const distance = Math.hypot(offset.x, offset.y);
@@ -165,6 +187,9 @@ export function Game() {
     }
     if (nearbyEntity) {
       if (nearbyEntity.id === "album") { setJournal(true); return; }
+      if (save.place === "kitchen" && nearbyEntity.kind === "item") {
+        setDialogue({ speaker: "Felice", text: nearbyEntity.text, action: "kitchen", kitchenId: nearbyEntity.id, choices: [`${nearbyEntity.name} · 10 Min.`, "Zurück ins Spiel"] }); return;
+      }
       if (nearbyEntity.id === "school-door" && dayRef.current.minute < SCHOOL_END) {
         setDialogue({ speaker: "Schule", text: `Der Unterricht geht von ${clockText(SCHOOL_START)} bis ${clockText(SCHOOL_END)} Uhr.${dayRef.current.minute < SCHOOL_START ? " Bis zum Beginn wartest du in Ruhe." : " Du gehst in den Unterricht."}`, action: "school", choices: ["Unterricht besuchen", "Noch auf dem Schulhof bleiben"] }); return;
       }
@@ -175,6 +200,11 @@ export function Game() {
         spendTime(ACTION_MINUTES); useMemories.getState().enter("goelzau-shooting"); return;
       }
       const matches = step?.place === save.place && step.target === nearbyEntity.id;
+      if (!matches && nearbyEntity.kind === "person" && canChangePose(nearbyEntity.art)) {
+        const actor = actorsRef.current[nearbyEntity.id];
+        const choices = ["Hinsetzen", "Hinlegen", "Aufstehen", "Weiterreden"];
+        setDialogue({ speaker: nearbyEntity.name, text: `${nearbyEntity.text}\n${actor?.pose === "sitting" ? "Du kannst mich gern wieder zum Aufstehen einladen." : actor?.pose === "lying" ? "Hier auf der Decke kann man gut ausruhen." : "Ein bisschen Zeit für eine Pause?"}`, actorId: nearbyEntity.id, action: "pose", choices }); return;
+      }
       setDialogue({ speaker: matches ? step.speaker : nearbyEntity.name, text: matches ? step.text : nearbyEntity.text, target: matches ? nearbyEntity.id : undefined, choices: matches && nearbyEntity.id === "elias-bus" ? ["Zusammen losgehen", "Ich freue mich auf den Tag mit dir"] : undefined });
     } else if (nearbyExit) {
       setSave({ ...save, place: nearbyExit.to }); position(nearbyExit.spawn); spendTime(TRAVEL_MINUTES, nearbyExit.to);
@@ -186,6 +216,20 @@ export function Game() {
     if (dialogue.action === "school") {
       if (choice === "Unterricht besuchen") spendTime(SCHOOL_END - dayRef.current.minute, "school");
       setDialogue(null); clearMovement(); return;
+    }
+    if (dialogue.action === "kitchen") {
+      if (choice !== "Zurück ins Spiel") { spendTime(ACTION_MINUTES); setKitchenEffect(dialogue.kitchenId ?? null); }
+      setDialogue(null); clearMovement(); return;
+    }
+    if (dialogue.action === "pose" && dialogue.actorId) {
+      if (choice !== "Weiterreden") {
+        const pose: Pose = choice === "Aufstehen" ? "standing" : choice === "Hinlegen" ? "lying" : "sitting";
+        const actor = actorsRef.current[dialogue.actorId];
+        const seat = pose === "standing" ? undefined : availableSeat(save.place, pose, actor.position, actorsRef.current, rest?.spot.id);
+        if (pose !== "standing" && !seat) { setDialogue({ speaker: dialogue.speaker, text: "Die Ruheplätze sind gerade belegt. Lass uns später noch einmal schauen." }); return; }
+        updateActors({ ...actorsRef.current, [dialogue.actorId]: requestPose(save.place, actor, pose, seat) });
+      }
+      spendTime(ACTION_MINUTES); setDialogue(null); clearMovement(); return;
     }
     if (!dialogue.ending && !dialogue.morning) spendTime(ACTION_MINUTES);
     if (dialogue.target) {
@@ -248,24 +292,27 @@ export function Game() {
   const questTarget = step ? step.place === save.place ? sceneEntities.find(e => e.id === step.target) : guide : undefined;
   const arrow = questTarget ? offscreenGuide(questTarget, camera) : null;
 
-  return <main className="game-shell pixel-game version-five version-six version-061" data-scene={inWorld ? save.place : "shooting"} data-chapter={save.chapter ?? "free"} data-atmosphere-active={active} data-minute={day.minute} data-day={day.day}>
-    <link rel="preload" as="image" href="/characters/rest-poses-v061.png"/>
+  return <main className="game-shell pixel-game version-five version-six version-061 version-065" data-scene={inWorld ? save.place : "shooting"} data-chapter={save.chapter ?? "free"} data-atmosphere-active={active} data-minute={day.minute} data-day={day.day}>
+    <link rel="preload" as="image" href="/rooms/felice-bedroom-rest-v065.png"/>
+    <link rel="preload" as="image" href="/characters/rest-poses-v065.png"/>
+    <link rel="preload" as="image" href="/characters/neighbors-poses-v065.png"/>
+    <link rel="preload" as="image" href="/characters/neighbors-walk-v065.png"/>
     <div className={`pixel-viewport world-viewport ${save.place === "bedroom" ? "bedroom-viewport" : ""}`} hidden={!inWorld && phase !== "entering"} role="group" aria-label={PLACES[save.place].name}>
       <div key={save.place} className="world-scene world-camera" style={{ "--camera-x": `${camera.x*100}%`, "--camera-y": `${camera.y*100}%`, "--world-zoom": camera.zoom } as CSSProperties}>
-        <WorldBackdrop place={save.place} winter={winter}/>
+        <WorldBackdrop place={save.place} winter={winter} bedOccupied={bedOccupied}/>
         {spots.map(spot => <div key={spot.id} className={`rest-spot rest-${spot.kind}${restTarget?.id === spot.id ? " nearby-rest" : ""}`} style={{...labelStyle(spot.furniture ?? spot.approach), zIndex: Math.round((spot.furniture ?? spot.position).y*100)+8}} aria-label={spot.name}>
-          {spot.furniture && <BenchArt winter={winter && save.place === "garden"}/>}
+          {spot.furniture && (spot.kind === "mat" ? <PicnicArt/> : <BenchArt winter={winter && save.place === "garden"}/>)}
           {restTarget?.id === spot.id && !rest && <span className="entity-name">{spot.name}</span>}
         </div>)}
         {exits.map(exit => <div key={exit.to} className={`world-exit ${guide?.to === exit.to ? "quest-exit" : ""}`} style={labelStyle(exit)}><span><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 19 19 5M6 5h13v13" fill="none" stroke="currentColor" strokeWidth="2"/></svg></span><small>{exit.label}</small></div>)}
-        {sceneEntities.map(entity => <WorldEntity key={entity.id} entity={entity} quest={step?.place === save.place && step.target === entity.id} nearby={active && nearbyEntity?.id === entity.id} />)}
+        {sceneEntities.map(entity => <WorldEntity key={entity.id} entity={entity} actor={actors[entity.id]} quest={step?.place === save.place && step.target === entity.id} nearby={active && nearbyEntity?.id === entity.id} />)}
         {save.place === "bedroom" && memoryProgress["goelzau-shooting"] && <span className="room-trophy" style={labelStyle({x:.855,y:.49})} aria-label="Erinnerungsmedaille" data-testid="shooting-medal">✦</span>}
-        <div className={`room-player facing-${direction}${rest ? ` pose-${rest.spot.kind === "bed" ? "lying" : "sitting"}` : ""}${walking && active ? " walking" : ""}`} data-testid="felice-player" data-pose={rest ? rest.spot.kind === "bed" ? "lying" : "sitting" : "standing"} data-x={player.x.toFixed(3)} data-y={player.y.toFixed(3)} data-direction={direction} style={{...labelStyle(player),zIndex:rest?.spot.kind === "bed" ? 80 : Math.round(player.y*100)+10}}>
-          <CharacterArt id="felice" direction={direction} walking={walking && active} frame={walkFrame} pose={rest ? rest.spot.kind === "bed" ? "lying" : "sitting" : "standing"}/><span className="room-player-label">Felice</span>
+        <div className={`room-player facing-${direction} pose-${restPose}${bedOccupied ? " in-bed" : ""}${walking && active ? " walking" : ""}`} data-testid="felice-player" data-pose={restPose} data-x={player.x.toFixed(3)} data-y={player.y.toFixed(3)} data-direction={direction} style={{...labelStyle(player),zIndex:bedOccupied ? 80 : Math.round(player.y*100)+10}}>
+          {!bedOccupied && <CharacterArt id="felice" direction={direction} walking={walking && active} frame={walkFrame} pose={restPose}/>}<span className="room-player-label">Felice</span>
         </div>
-        {rest?.spot.kind === "bed" && <svg className="bed-duvet" viewBox="0 0 100 100" aria-hidden="true"><defs><clipPath id="bed-duvet-mask"><path d="M19.5 26Q25.5 25 31.5 26L33 39H18Z"/></clipPath></defs><image href="/rooms/felice-bedroom-v9.png" width="100" height="100" clipPath="url(#bed-duvet-mask)"/><path d="M19.5 26Q25.5 25 31.5 26" fill="none" stroke="#675148" strokeWidth=".35"/></svg>}
         {rest?.elias && <div className="room-player pose-sitting bench-companion" style={{...labelStyle(rest.spot.companion ?? player), zIndex: Math.round(player.y*100)+10}} aria-label="Elias sitzt neben Felice" data-testid="seated-elias"><CharacterArt id="elias" pose="sitting"/><span className="room-player-label">Elias</span></div>}
         <WorldAtmosphere place={save.place} winter={winter}/>
+        {save.place === "kitchen" && kitchenEffect && <div className={`kitchen-effect kitchen-${kitchenEffect}`} role="status"><span>{kitchenEffect === "breakfast" ? "Frühstück steht bereit" : kitchenEffect === "warm-drink" ? "Dein Getränk ist fertig" : "Die Küche ist aufgeräumt"}</span><i/><i/><i/></div>}
         <div className="daylight-shade" style={{ opacity: (1-light.daylight) * (["garden", "bus", "school"].includes(save.place) ? .62 : .18) }} aria-hidden="true"/>
       </div>
       {active && arrow && <div className="offscreen-guide" style={labelStyle(arrow)} role="status" aria-label={`Aufgabenziel: ${step?.label}`}><span style={{ transform: `rotate(${arrow.angle}deg)` }}>➜</span><small>{guide?.label ?? "Dein nächstes Ziel"}</small></div>}
@@ -276,15 +323,15 @@ export function Game() {
       <div className="day-clock" data-testid="day-clock"><strong>Uhrzeit: {clockText(day.minute)}</strong><small>Tag {day.day} · {activityAt(save.place, day.minute)}</small><label><span>Jahreszeit</span><select aria-label="Jahreszeit" value={day.season} onChange={event => persistDay({ ...dayRef.current, season: event.target.value as Season })}>{SEASONS.map(season => <option key={season}>{season}</option>)}</select></label></div>
       {notices[0] && active && <aside className="day-notice" role="status" data-testid="day-notice" key={`${notices[0].date}-${notices[0].minute}`}><strong>Uhrzeit: {clockText(notices[0].minute)}</strong><span>{notices[0].label}</span></aside>}
       <button className="journal-button" aria-label="Erinnerungsbuch öffnen" onClick={() => { clearMovement(); setJournal(true); }}>▤ <span>Erinnerungsbuch</span> <kbd>J</kbd></button>
-      <aside className="quest-tracker" aria-live="polite"><small>{chapter ? `${chapter.date} · ${Math.min(save.step+1,chapter.steps.length)}/${chapter.steps.length}` : "Version 0.61 · Frei erkunden"}</small><strong>{chapter?.title ?? "Eure kleine Welt"}</strong><p>{step?.label ?? (chapter ? "Kapitel bewahrt ♥ Wähle im Buch die nächste Geschichte." : "Schule: 7:15–13:00 Uhr. Triff deine Freunde oder ruh dich auf einer Bank aus.")}</p>{step && <span>{step.place === save.place ? "✦ Folge der goldenen Markierung" : `↗ ${guide?.label ?? PLACES[step.place].name}`}</span>}{save.bag.length > 0 && <div className="inventory">Tasche · {save.bag.join(" · ")}</div>}</aside>
-      {active && rest && <div className="memory-interaction rest-actions"><span>{rest.spot.kind === "bed" ? "Du liegst wach im Bett" : rest.elias ? "Ein Moment mit Elias" : "Du sitzt auf der Bank"}</span><button data-testid="world-interact" onClick={interact}><kbd>E</kbd>Aufstehen · 10 Min.</button>{rest.spot.kind === "bed" ? <button onClick={() => { setNotices([]); persistDay(sleepUntilMorning(dayRef.current)); position(rest.spot.approach); setRest(null); setDialogue({ speaker: "Felice", text: "Ein neuer Morgen. Es ist 5:00 Uhr. Du bist ausgeschlafen.", morning: true }); }}>Schlafen bis 5:00 Uhr</button> : <><button onClick={() => spendTime(ACTION_MINUTES)}>Ausruhen · 10 Min.</button>{!rest.elias && <button onClick={() => { setRest({ ...rest, elias: true }); spendTime(ACTION_MINUTES); }}>Mit Elias sitzen</button>}</>}</div>}
-      {active && !rest && target && <div className="memory-interaction"><span>{targetName}</span><button data-testid="world-interact" onClick={interact}><kbd>E</kbd>{restTarget ? restTarget.kind === "bed" ? "Hinlegen · 10 Min." : "Hinsetzen · 10 Min." : nearbyEntity ? nearbyEntity.id === "school-door" && day.minute < SCHOOL_END ? "Unterricht besuchen" : nearbyEntity.kind === "person" || nearbyEntity.kind === "dog" ? "Ansprechen · 10 Min." : "Anschauen / benutzen" : "Weitergehen · 30 Min."}</button></div>}
+      <aside className="quest-tracker" aria-live="polite"><small>{chapter ? `${chapter.date} · ${Math.min(save.step+1,chapter.steps.length)}/${chapter.steps.length}` : "Version 0.65 · Frei erkunden"}</small><strong>{chapter?.title ?? "Eure kleine Welt"}</strong><p>{step?.label ?? (chapter ? "Kapitel bewahrt ♥ Wähle im Buch die nächste Geschichte." : "Frühstück in der Küche, Freunde auf dem Schulhof und kleine Ruhepausen. Schule: 7:15–13:00 Uhr.")}</p>{step && <span>{step.place === save.place ? "✦ Folge der goldenen Markierung" : `↗ ${guide?.label ?? PLACES[step.place].name}`}</span>}{save.bag.length > 0 && <div className="inventory">Tasche · {save.bag.join(" · ")}</div>}</aside>
+      {active && rest && <div className="memory-interaction rest-actions"><span>{rest.spot.kind === "bed" ? "Du liegst wach im Bett" : rest.spot.kind === "mat" ? "Du liegst auf der Decke" : rest.elias ? "Ein Moment mit Elias" : rest.spot.kind === "chair" ? "Du sitzt gemütlich" : "Du sitzt auf der Bank"}</span><button data-testid="world-interact" onClick={interact}><kbd>E</kbd>Aufstehen · 10 Min.</button>{rest.spot.kind === "bed" ? <button onClick={() => { setNotices([]); persistDay(sleepUntilMorning(dayRef.current)); position(rest.spot.approach); setRest(null); setDialogue({ speaker: "Felice", text: "Ein neuer Morgen. Es ist 5:00 Uhr. Du bist ausgeschlafen.", morning: true }); }}>Schlafen bis 5:00 Uhr</button> : <><button onClick={() => spendTime(ACTION_MINUTES)}>Ausruhen · 10 Min.</button>{!rest.elias && rest.spot.kind !== "mat" && <button onClick={() => { setRest({ ...rest, elias: true }); spendTime(ACTION_MINUTES); }}>Mit Elias sitzen</button>}</>}</div>}
+      {active && !rest && target && <div className="memory-interaction"><span>{targetName}</span><button data-testid="world-interact" onClick={interact}><kbd>E</kbd>{restTarget ? restTarget.kind === "bed" || restTarget.kind === "mat" ? "Hinlegen · 10 Min." : "Hinsetzen · 10 Min." : nearbyEntity ? nearbyEntity.id === "school-door" && day.minute < SCHOOL_END ? "Unterricht besuchen" : nearbyEntity.kind === "person" || nearbyEntity.kind === "dog" ? "Ansprechen · 10 Min." : save.place === "kitchen" ? "Aktion wählen" : "Anschauen / benutzen" : "Weitergehen · 30 Min."}</button></div>}
       {!save.chapter && <div className="world-welcome">Dein Zimmer ist erst der Anfang. Geh durch die Tür oder öffne das Buch.</div>}
     </>}
     {journal && <dialog ref={journalRef} className="story-modal journal-modal" onCancel={() => { setJournal(false); clearMovement(); }}>
-      <div className="journal-heading"><div><small>FELICE × ELIAS · VERSION 0.61</small><h1>Unsere kleinen Geschichten</h1><p>{completed} von 4 Erinnerungen bewahrt{completed === 4 ? " · Eure erste Spielrunde ist komplett! ♥" : " · Ein Kapitel nach dem anderen, in eurem Tempo."}</p></div><div className="journal-duo" aria-label="Felice und Elias"><CharacterArt id="felice"/><CharacterArt id="elias"/></div><button className="modal-close" aria-label="Erinnerungsbuch schließen" onClick={() => setJournal(false)}>×</button></div>
+      <div className="journal-heading"><div><small>FELICE × ELIAS · VERSION 0.65</small><h1>Unsere kleinen Geschichten</h1><p>{completed} von 4 Erinnerungen bewahrt{completed === 4 ? " · Eure erste Spielrunde ist komplett! ♥" : " · Ein Kapitel nach dem anderen, in eurem Tempo."}</p></div><div className="journal-duo" aria-label="Felice und Elias"><CharacterArt id="felice"/><CharacterArt id="elias"/></div><button className="modal-close" aria-label="Erinnerungsbuch schließen" onClick={() => setJournal(false)}>×</button></div>
       <div className="chapter-grid">{CHAPTERS.map((c,i) => <article className={`chapter-card ${save.completed.includes(c.id)?"chapter-done":""}`} key={c.id}><div className="chapter-cover" style={{ backgroundImage: `url(${CHAPTER_GRAPHICS[c.id]})` }}><span className="chapter-symbol">{c.icon}</span></div><small>KAPITEL 0{i+1} {save.completed.includes(c.id) ? "· ✓ BEWAHRT" : ""}</small><h2>{c.title}</h2><time>{c.date}</time><p>{c.intro}</p><button onClick={() => { if (save.chapter === c.id && currentStep(save)) { setJournal(false); return; } selectChapter(c.id); }}>{save.chapter === c.id && step ? "Weiterspielen" : save.completed.includes(c.id) ? "Noch einmal erleben" : "Kapitel beginnen"} <span>→</span></button></article>)}</div>
-      <div className="journal-bottom"><section><h2>Eure Orte</h2><p>Zimmer ↔ Zuhause ↔ Garten ↔ Haltestelle ↔ Schule / Gölzau</p><p>WASD / Pfeile oder Joystick · E zum Sprechen & Benutzen · J für das Buch · Esc für Pause</p><small>Fortschritt wird automatisch auf diesem Gerät gespeichert. Die Dialoge sind spielerische Entwürfe eurer Erinnerungen.</small></section><button className="memory-primary" onClick={() => setJournal(false)}>Zurück ins Spiel</button></div>
+      <div className="journal-bottom"><section><h2>Eure Orte</h2><p>Zimmer / Küche ↔ Zuhause ↔ Garten ↔ Haltestelle ↔ Schule / Gölzau</p><p>WASD / Pfeile oder Joystick · E zum Sprechen & Benutzen · J für das Buch · Esc für Pause</p><small>Fortschritt wird automatisch auf diesem Gerät gespeichert. Die Dialoge sind spielerische Entwürfe eurer Erinnerungen.</small></section><button className="memory-primary" onClick={() => setJournal(false)}>Zurück ins Spiel</button></div>
     </dialog>}
     {dialogue && <dialog ref={dialogueRef} className={`story-modal dialogue-modal ${dialogue.ending ? "chapter-ending" : ""}`} onCancel={e => { e.preventDefault(); setDialogue(null); clearMovement(); }}>
       <div className="dialogue-portrait">{dialogue.ending ? <span>♥</span> : dialogue.speaker === "Felice & Elias" ? <div className="dialogue-duo"><CharacterArt id="felice" portrait/><CharacterArt id="elias" portrait/></div> : speakerGraphic(dialogue.speaker) ? <CharacterArt id={speakerGraphic(dialogue.speaker)!} portrait/> : <span>✦</span>}</div>
@@ -300,9 +347,14 @@ export function Game() {
   </main>;
 }
 
-function WorldEntity({ entity, quest, nearby }: { entity: Entity; quest: boolean; nearby: boolean }) {
+function WorldEntity({ entity, actor, quest, nearby }: { entity: Entity; actor?: Actor; quest: boolean; nearby: boolean }) {
   const point = entity.display ?? entity;
-  return <div className={`world-entity entity-${entity.kind} ${entity.kind !== "item" ? "character-idle" : ""} ${quest ? "quest-entity" : ""} ${nearby ? "nearby-entity" : ""}`} style={{...(entity.kind !== "item" ? characterStyle(entity.kind === "dog" ? "dog" : entity.art) : {}),left:`${point.x*100}%`,top:`${point.y*100}%`,zIndex:entity.display ? 110 : Math.round(entity.y*100)+9}} aria-label={entity.name}>
-    {quest && <span className="quest-marker">!</span>}{entity.kind === "person" ? <CharacterArt id={entity.art}/> : entity.kind === "dog" ? <CharacterArt id="dog"/> : <ItemArt art={entity.art}/>}<span className="entity-name">{entity.name}</span>
+  const pose = actor?.pose ?? "standing";
+  return <div className={`world-entity entity-${entity.kind} pose-${pose} ${actor?.moving ? "actor-walking" : ""} ${quest ? "quest-entity" : ""} ${nearby ? "nearby-entity" : ""}`} data-entity={entity.id} data-pose={pose} data-moving={actor?.moving ?? false} data-x={point.x.toFixed(3)} data-y={point.y.toFixed(3)} style={{...(entity.kind !== "item" ? characterStyle(entity.kind === "dog" ? "dog" : entity.art) : {}),left:`${point.x*100}%`,top:`${point.y*100}%`,zIndex:entity.display ? 110 : Math.round(entity.y*100)+9}} aria-label={entity.name}>
+    {quest && <span className="quest-marker">!</span>}{entity.kind === "person" ? <CharacterArt id={entity.art} pose={pose} walking={actor?.moving} frame={actor?.frame} direction={actor?.direction}/> : entity.kind === "dog" ? <CharacterArt id="dog"/> : entity.art === "action" ? <span className="kitchen-action-marker" aria-hidden="true">✦</span> : <ItemArt art={entity.art}/>}<span className="entity-name">{entity.name}</span>
   </div>;
+}
+
+function PicnicArt() {
+  return <svg viewBox="0 0 100 78" aria-hidden="true"><path d="M4 4L96 0 100 73 0 78Z" fill="#c8b58e" stroke="#756f53" strokeWidth="2"/><path d="M4 20L97 16M3 39L98 35M2 58L99 54M23 3L22 76M48 2L48 75M73 1L74 74" stroke="#7b9171" strokeWidth="5" opacity=".65"/><path d="M6 8L92 4 95 68 5 72Z" fill="none" stroke="#f1ddaf" strokeWidth="1"/></svg>;
 }

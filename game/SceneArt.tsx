@@ -20,7 +20,7 @@ export const SceneArt = memo(function SceneArt({ place, christmas }: { place: Pl
       <path d="M36 560h530M36 566h530" stroke="#deceb0" strokeWidth="5"/>{[40,100,160,220,380,440,500,560].map(x=><rect key={x} x={x} y="548" width="7" height="28" fill="#ecdbb9"/>)}
       {[{x:125,y:304},{x:460,y:292},{x:421,y:483}].map(p=><g key={p.x} transform={`translate(${p.x} ${p.y})`}><path d="M0 0v14M18 3v13M-14 5v11" stroke="#527b4d" strokeWidth="3"/><path d="M-5-4h10v8H-5M13-1h10v8H13M-19 1h10v8h-10" fill={christmas ? "#d9ece3" : "#f1d892"}/></g>)}
     </>}
-    {place === "home" && <>
+    {(place === "home" || place === "kitchen") && <>
       <rect width="600" height="91" fill="#d5b18d"/><path d="M0 88h600" stroke="#735343" strokeWidth="9"/><Window x={111} y={23}/><Window x={341} y={23}/>
       <rect x="211" y="196" width="202" height="199" fill="#a36e67"/><path d="M220 204h184v182H220Z" fill="none" stroke="#d7af88" strokeWidth="4"/>
       <rect x="222" y="221" width="173" height="118" fill="#684a3b"/><rect x="225" y="216" width="168" height="108" fill="#cfaa7a"/><rect x="245" y="216" width="34" height="108" fill="#ece0bf"/>

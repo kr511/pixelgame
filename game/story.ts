@@ -1,4 +1,4 @@
-export type Place = "bedroom" | "home" | "garden" | "bus" | "school" | "range";
+export type Place = "bedroom" | "home" | "kitchen" | "garden" | "bus" | "school" | "range";
 export type Point = { x: number; y: number };
 export type ChapterId = "dog" | "christmas" | "school" | "shooting";
 export type Step = { id: string; place: Place; target: string; label: string; speaker: string; text: string; item?: string };
@@ -12,7 +12,11 @@ export const PLACES: Record<Place, { name: string; subtitle: string; exits: Exit
   ] },
   home: { name: "Bei Felice zu Hause", subtitle: "Ein Platz für uns", exits: [
     { x: .12, y: .72, to: "bedroom", label: "Felices Zimmer", spawn: { x: .84, y: .68 } }, { x: .5, y: .9, to: "garden", label: "In den Garten", spawn: { x: .5, y: .35 } },
+    { x: .925, y: .52, to: "kitchen", label: "In Felices Küche", spawn: { x: .5, y: .85 } },
   ], obstacles: [{ left: .46, right: .73, top: .235, bottom: .48 }, { left: .12, right: .40, top: .17, bottom: .43 }, { left: .84, right: .96, top: .12, bottom: .46 }] },
+  kitchen: { name: "Felices Küche", subtitle: "Ein kleiner Moment im Alltag", exits: [{ x: .5, y: .9, to: "home", label: "Ins Wohnzimmer", spawn: { x: .89, y: .54 } }], obstacles: [
+    { left: .087, right: .914, top: .09, bottom: .284 }, { left: .576, right: .854, top: .36, bottom: .585 },
+  ] },
   garden: { name: "Der Garten", subtitle: "Kleine Pfoten, große Welt", exits: [
     { x: .5, y: .23, to: "home", label: "Ins Haus", spawn: { x: .5, y: .8 } }, { x: .91, y: .69, to: "bus", label: "Zur Haltestelle", spawn: { x: .17, y: .7 } },
   ], obstacles: [{ left: .27, right: .7, top: .04, bottom: .19 }, { left: .07, right: .2, top: .23, bottom: .42 }, { left: .73, right: .9, top: .2, bottom: .4 }, { left: .15, right: .35, top: .52, bottom: .60 }] },
@@ -27,6 +31,12 @@ export const PLACES: Record<Place, { name: string; subtitle: string; exits: Exit
 // Dialoge, Kleidung und genaue Szenengestaltung sind spielerische Entwürfe.
 export const ENTITIES: Record<Place, Entity[]> = {
   bedroom: [{ id: "album", name: "Unser Erinnerungsbuch", x: .77, y: .32, display: { x: .68, y: .23 }, kind: "item", art: "book", text: "Vier Kapitel, viele kleine Momente. Öffne das Erinnerungsbuch oben rechts und wähle eine Geschichte." }, { id: "photo", name: "Foto aus Gölzau", x: .79, y: .52, display: { x: .885, y: .45 }, kind: "item", art: "photo", text: "Das Foto führt dich direkt zum Schießen in Gölzau." }],
+  kitchen: [
+    { id: "breakfast", name: "Frühstück vorbereiten", x: .535, y: .465, display: { x: .65, y: .465 }, kind: "item", art: "action", text: "Du bereitest ein kleines Frühstück vor und deckst den Küchentisch. Ein ruhiger Start in den Tag." },
+    { id: "warm-drink", name: "Warmes Getränk machen", x: .21, y: .33, display: { x: .18, y: .17 }, kind: "item", art: "action", text: "Der Wasserkocher wird warm. Du machst dir ein warmes Getränk und nimmst dir einen kleinen Moment Zeit." },
+    { id: "tidy-kitchen", name: "Küche aufräumen", x: .89, y: .48, display: { x: .8, y: .46 }, kind: "item", art: "action", text: "Du räumst das Geschirr weg und wischst den Tisch ab. Jetzt ist die Küche wieder gemütlich und ordentlich." },
+    { id: "elias-kitchen", name: "Elias", x: .43, y: .58, kind: "person", art: "elias", text: "Ein Frühstück mit dir klingt gut. Wollen wir uns zusammen an den Tisch setzen?" },
+  ],
   home: [
     { id: "family", name: "Felices Mutter", x: .28, y: .5, kind: "person", art: "mother", text: "Schön, dass ihr da seid. Hier ist immer Platz für euch." },
     { id: "stepfather", name: "Felices Stiefvater", x: .75, y: .47, kind: "person", art: "stepfather", text: "Kommt herein. Wir machen es uns heute alle zusammen gemütlich." },
@@ -131,7 +141,7 @@ export function parseStory(raw: string | null): StorySave {
 export function canWalk(place: Place, x: number, y: number) {
   return x >= .075 && x <= .94 && y >= .16 && y <= .92 && !PLACES[place].obstacles.some(o => x > o.left - .02 && x < o.right + .02 && y > o.top - .015 && y < o.bottom + .015);
 }
-export const SPAWNS: Record<Place, Point> = { bedroom: { x: .5, y: .7 }, home: { x: .5, y: .78 }, garden: { x: .5, y: .38 }, bus: { x: .5, y: .72 }, school: { x: .5, y: .8 }, range: { x: .5, y: .8 } };
+export const SPAWNS: Record<Place, Point> = { bedroom: { x: .5, y: .7 }, home: { x: .5, y: .78 }, kitchen: { x: .5, y: .85 }, garden: { x: .5, y: .38 }, bus: { x: .5, y: .72 }, school: { x: .5, y: .8 }, range: { x: .5, y: .8 } };
 export function routeTo(from: Place, to: Place): Exit | undefined {
   const queue: { place: Place; first?: Exit }[] = [{ place: from }];
   const seen = new Set<Place>([from]);

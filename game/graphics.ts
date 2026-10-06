@@ -6,6 +6,7 @@ const rect = (left: number, top: number, right: number, bottom: number, depth = 
 export const SCENE_GRAPHICS: Record<Place, SceneGraphic> = {
   bedroom: { background: "/rooms/felice-bedroom-v9.png", outdoors: false, light: "#ffbd65", foreground: [rect(12,8.5,49.5,43),rect(49,14,74.5,30),rect(11,43,21.5,59.5),rect(84,33,95,58.5),rect(53,81,96,100,98)] },
   home: { background: "/rooms/home-v06.png", winter: "/rooms/home-winter-v06.png", outdoors: false, light: "#ffd49a", foreground: [rect(46,23.5,73,48),rect(12,17,40,43),rect(84,12,96,46)] },
+  kitchen: { background: "/rooms/kitchen-v065.png", outdoors: false, light: "#ffd49a", foreground: [rect(8.7,9,91.4,28.4),rect(57.6,36,85.4,58.5)] },
   garden: { background: "/rooms/garden-v06.png", winter: "/rooms/garden-winter-v06.png", outdoors: true, light: "#e0eabb", foreground: [rect(27,0,70,19),{ clip: "polygon(3% 9%,13% 6%,25% 10%,33% 20%,29% 28%,22% 30%,21% 38%,14% 38%,13% 30%,5% 27%,2% 20%)", depth:38 },{ clip:"polygon(69% 11%,79% 7%,94% 10%,98% 22%,91% 31%,86% 31%,86% 40%,79% 40%,77% 32%,68% 29%,65% 21%)",depth:40 }] },
   bus: { background: "/rooms/bus-v06.png", winter: "/rooms/bus-winter-v06.png", outdoors: true, light: "#dbe8e5", foreground: [rect(61,5,87,36),rect(13,21,42,37)] },
   school: { background: "/rooms/school-v06.png", winter: "/rooms/school-winter-v06.png", outdoors: true, light: "#e9dbb8", foreground: [rect(0,0,100,32),rect(11,38,30,48),rect(70,38,89,48)] },
@@ -44,11 +45,30 @@ export const SPRITE_FRAMES: Record<string, { size: readonly [number, number]; fr
     [[184,453,190,418],[569,444,180,427],[1012,452,194,419],[1425,444,177,427]],
   ] },
 };
+export const POSE_ATLASES = {
+  "/characters/neighbors-poses-v065.png": { size: [1254,1254], frames: [
+    [[127,10,149,303],[417,4,145,309],[688,11,178,303],[998,6,135,307]],
+    [[125,324,148,301],[418,318,138,307],[714,325,126,300],[997,319,138,305]],
+    [[115,632,168,282],[401,629,170,285],[676,629,198,285],[986,629,169,285]],
+    [[109,940,171,290],[395,940,175,291],[688,940,175,291],[989,940,166,291]],
+  ] },
+  "/characters/neighbors-walk-v065.png": { size: [1254,1254], frames: [
+    [[132,12,149,300],[411,6,148,306],[691,9,179,303],[998,7,146,305]],
+    [[134,324,145,296],[415,320,144,300],[714,322,140,298],[1003,319,141,302]],
+    [[127,636,151,298],[409,632,142,302],[682,637,189,296],[995,633,146,301]],
+    [[129,949,148,294],[409,944,142,300],[709,945,135,297],[1000,940,144,304]],
+  ] },
+  "/characters/rest-poses-v065.png": { size: [1254,1254], frames: [
+    [[181,48,281,539],[798,38,253,549]],
+    [[143,627,369,572],[806,627,237,571]],
+  ] },
+} as const;
 export const REST_GRAPHICS = {
-  sheet: "/characters/rest-poses-v061.png", size: [1254,1254] as const,
-  feliceSeated: [181,48,272,548] as SpriteRect,
-  eliasSeated: [795,39,258,557] as SpriteRect,
-  feliceLying: [145,660,334,549] as SpriteRect,
+  sheet: "/characters/rest-poses-v065.png", size: [1254,1254] as const,
+  feliceSeated: POSE_ATLASES["/characters/rest-poses-v065.png"].frames[0][0],
+  eliasSeated: POSE_ATLASES["/characters/rest-poses-v065.png"].frames[0][1],
+  feliceLying: POSE_ATLASES["/characters/rest-poses-v065.png"].frames[1][0],
+  eliasLying: POSE_ATLASES["/characters/rest-poses-v065.png"].frames[1][1],
 };
 export function characterGraphic(id: string): CharacterGraphic { return CHARACTER_GRAPHICS[id as CharacterId] ?? CHARACTER_GRAPHICS.friend; }
 export function speakerGraphic(speaker: string): CharacterId | null {
