@@ -9,7 +9,7 @@ export const WorldBackdrop = memo(function WorldBackdrop({ place, winter, bedOcc
   const [failedSource, setFailedSource] = useState<string | null>(null);
   if (failedSource === source) return <div className={`scene-backdrop fallback-${place}`}><SceneArt place={place} christmas={winter}/></div>;
   return <>
-    <svg className="scene-backdrop" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><image href={source} width="100" height="100" preserveAspectRatio="none" onError={() => setFailedSource(source)}/></svg>
+    <svg className={`scene-backdrop${winter && SCENE_GRAPHICS[place].outdoors && !SCENE_GRAPHICS[place].winter ? " winter-town" : ""}`} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><image href={source} width="100" height="100" preserveAspectRatio="none" onError={() => setFailedSource(source)}/></svg>
     {SCENE_GRAPHICS[place].foreground.map((layer, index) => <svg key={index} className="scene-foreground" style={{ clipPath: layer.clip, zIndex: Math.round(layer.depth) + 9 }} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><image href={source} width="100" height="100" preserveAspectRatio="none"/></svg>)}
   </>;
 });
@@ -61,7 +61,7 @@ export function BenchArt({ winter = false }: { winter?: boolean }) {
   const clip = useId();
   return <svg viewBox="10.8 37.8 19 10.4" aria-hidden="true">
     <defs><clipPath id={clip}><path d="M11.5 38.5H29.2V45.5H11.5ZM11.1 39H12.1V47.8H11.1ZM28.4 39H29.6V47.8H28.4Z"/></clipPath></defs>
-    <image href={sceneBackground("school", winter)} width="100" height="100" clipPath={`url(#${clip})`}/>
+    <image href={winter ? "/rooms/school-winter-v06.png" : "/rooms/school-v06.png"} width="100" height="100" clipPath={`url(#${clip})`}/>
   </svg>;
 }
 

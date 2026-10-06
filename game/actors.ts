@@ -13,10 +13,10 @@ export function standingActor(position: Point, wait = 0): Actor {
 
 // Short, separate routes below the school building and its benches.
 export const SCHOOL_ROUTES: Record<string, Point[]> = {
-  friends: [{ x: .37, y: .55 }, { x: .46, y: .55 }, { x: .46, y: .65 }, { x: .37, y: .65 }],
-  jason: [{ x: .61, y: .61 }, { x: .59, y: .61 }, { x: .59, y: .53 }, { x: .61, y: .53 }],
-  luca: [{ x: .37, y: .73 }, { x: .42, y: .73 }, { x: .42, y: .81 }, { x: .37, y: .81 }],
-  wyatt: [{ x: .73, y: .7 }, { x: .81, y: .7 }, { x: .81, y: .6 }, { x: .73, y: .6 }],
+  friends: [{ x: .34, y: .55 }, { x: .40, y: .55 }, { x: .40, y: .61 }, { x: .34, y: .61 }],
+  jason: [{ x: .61, y: .56 }, { x: .59, y: .56 }, { x: .59, y: .49 }, { x: .61, y: .49 }],
+  luca: [{ x: .46, y: .52 }, { x: .50, y: .52 }, { x: .50, y: .58 }, { x: .46, y: .58 }],
+  wyatt: [{ x: .72, y: .59 }, { x: .77, y: .59 }, { x: .77, y: .51 }, { x: .72, y: .51 }],
 };
 export function initialActors(): Actors {
   return Object.fromEntries(Object.values(ENTITIES).flat().filter(e => e.kind === "person" && canChangePose(e.art)).map((e, i) => [e.id, standingActor({ x: e.x, y: e.y }, 1.5 + i % 4)]));

@@ -1,6 +1,18 @@
 # Felice × Elias World
 
-Version **0.7**: ein eigenständiges, mobiles 2D-Spiel mit sieben zusammenhängenden Orten, Tageszyklus, Freunden, Ruhepositionen und vier spielbaren Erinnerungskapiteln.
+Version **0.75**: ein eigenständiges, mobiles 2D-Spiel mit zehn zusammenhängenden Orten, Tageszyklus, Freunden, Ruhepositionen und vier spielbaren Erinnerungskapiteln.
+
+## Neu in V0.75
+
+- **Radegast:** Von Felices Wohnung führt ein verkürzter, wiedererkennbarer Weg entlang der Hausreihen und Gärten zur neu gestalteten Bushaltestelle.
+- **Zörbig:** Der Bus kommt am Markt an. Von dort geht es zu Fuß an der Kirche vorbei zur Sekundarschule und auf den Pausenhof. Markt, Kirche und Schule folgen der Anordnung im bereitgestellten Luftbild.
+- **Pausenhof:** Das Gitter liegt direkt am Schulgebäude. Elena, Jason, Luca und Wyatt bewegen sich davor. Felice und Elias können auf den beiden Bänken beim Gitter sitzen; die Sitzpositionen und die Wege zum Aufstehen sind auf das neue Hofbild abgestimmt.
+- **Gölzau:** Der neue Weg führt über die Zufahrt zum Schützenhaus und weiter in den vorhandenen Schießstand. Alle neuen Wege besitzen Rückwege, angepasste Hindernisse und Vordergrundmasken.
+- **Ortsplan:** Das Erinnerungsbuch zeigt die Verbindungen zwischen Wohnung, Radegast, Zörbig und Gölzau sowie den aktuellen Ort. Tagesregeln, Kapitel und bestehende Spielstände bleiben erhalten.
+
+Die Ortsanordnung nutzt die persönlichen Luftbilder und öffentliche Quellen. Fassaden und genaue Hofdetails sind zeichnerisch ergänzt; aktuelle Hofbilder waren teilweise gesperrt. Die Gölzauer Außenansicht ist eine Spielinterpretation. [Quellen und Genauigkeit](qa/v075/SOURCES.md).
+
+[Browserprüfung und Szenenbilder von V0.75](qa/v075/REVIEW.md) · [Grafikvorgaben](game/ART-V075.md)
 
 ## Neu in V0.7
 
@@ -60,11 +72,11 @@ Grafikdateien und Generierungsvorgaben sind in [game/ART-V06.md](game/ART-V06.md
 ```powershell
 npm test
 npx tsc --noEmit
-npx eslint game/Game.tsx game/GameUI.tsx game/WorldArt.tsx game/NamesPanel.tsx game/actors.ts game/rest.ts game/names.ts game/graphics07.ts tests/actors.test.mjs tests/rest.test.mjs tests/names.test.mjs tests/motion.test.mjs tests/world.test.mjs qa/v07/*.mjs
+npx eslint game/Game.tsx game/GameUI.tsx game/WorldArt.tsx game/NamesPanel.tsx game/actors.ts game/rest.ts game/names.ts game/graphics07.ts tests/actors.test.mjs tests/rest.test.mjs tests/names.test.mjs tests/motion.test.mjs tests/world.test.mjs game/WorldMap.tsx game/story.ts game/day.ts tests/routes.test.mjs qa/v075/*.mjs
 npm run build
 ```
 
-Die 37 Tests umfassen Kapitel, Speicherstände, Erreichbarkeit, Trefferwertung, Kamera, Grafikzuordnung, Ton, Tagesgrenzen, Hinweiszeiten, Schlafen, Jahreszeiten, Bewegung bei verschiedenen Bildraten, Kollisionen, NPC-Laufwege, Platzreservierungen, alle Freundesposen sowie Felices und Elias' Ruhewege und ergänzte Namen. Browserprüfungen ergänzen sie um Darstellung und Bedienung.
+Die 39 Tests umfassen Kapitel, Speicherstände, Erreichbarkeit, Trefferwertung, Kamera, Grafikzuordnung, Ton, Tagesgrenzen, Hinweiszeiten, Schlafen, Jahreszeiten, Bewegung bei verschiedenen Bildraten, Kollisionen, NPC-Laufwege, Platzreservierungen, alle Freundesposen sowie Felices und Elias' Ruhewege und ergänzte Namen. Browserprüfungen ergänzen sie um Darstellung und Bedienung.
 
 ## Lokal starten
 

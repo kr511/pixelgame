@@ -63,6 +63,9 @@ export function activityAt(place: Place, minute: number) {
   if (place === "kitchen") return "Zuhause · Küche";
   if (place === "bedroom" || place === "home" || place === "garden") return "Zuhause";
   if (place === "range") return "Schießen · Gölzau";
+  if (place === "goelzau") return "Gölzau · Auf dem Weg zum Schießen";
+  if (place === "radegast") return "Radegast · Auf dem Weg zur Haltestelle";
+  if (place === "zoerbig") return "Zörbig · Markt und Schulweg";
   if (place === "school") return minute >= SCHOOL_START && minute < SCHOOL_END ? "Schule · Unterrichtszeit" : "Schule · Schulhof";
   return "Radegast · Haltestelle";
 }
@@ -79,14 +82,14 @@ export const REST_SPOTS: RestSpot[] = [
   { id: "home-sofa", place: "home", name: "Sofa im Wohnzimmer", kind: "chair", approach: { x: .36, y: .48 }, position: { x: .275, y: .412 }, companion: { x: .345, y: .412 } },
   { id: "kitchen-rest", place: "kitchen", name: "Kuscheldecke", kind: "mat", approach: { x: .24, y: .81 }, position: { x: .2, y: .75 }, companion: { x: .28, y: .75 }, furniture: { x: .24, y: .77 } },
   { id: "kitchen-chairs", place: "kitchen", name: "Stuhl am Küchentisch", kind: "chair", approach: { x: .7, y: .64 }, position: { x: .654, y: .582 }, companion: { x: .783, y: .582 } },
-  { id: "school-picnic", place: "school", name: "Picknickdecke", kind: "mat", approach: { x: .145, y: .8 }, position: { x: .12, y: .755 }, companion: { x: .20, y: .755 }, furniture: { x: .16, y: .775 } },
+  { id: "school-picnic", place: "school", name: "Picknickdecke", kind: "mat", approach: { x: .43, y: .74 }, position: { x: .40, y: .68 }, companion: { x: .48, y: .68 }, furniture: { x: .44, y: .70 } },
   { id: "range-rest", place: "range", name: "Ruhedecke", kind: "mat", approach: { x: .22, y: .92 }, position: { x: .18, y: .885 }, companion: { x: .26, y: .885 }, furniture: { x: .22, y: .905 } },
   { id: "home-rest", place: "home", name: "Kuscheldecke zum Ausruhen", kind: "mat", approach: { x: .45, y: .78 }, position: { x: .425, y: .72 }, companion: { x: .505, y: .72 }, furniture: { x: .465, y: .74 } },
-  { id: "bus-rest", place: "bus", name: "Decke am Wiesenrand", kind: "mat", approach: { x: .38, y: .85 }, position: { x: .34, y: .79 }, companion: { x: .42, y: .79 }, furniture: { x: .38, y: .81 } },
+  { id: "bus-rest", place: "bus", name: "Decke am Platzrand", kind: "mat", approach: { x: .38, y: .85 }, position: { x: .34, y: .79 }, companion: { x: .42, y: .79 }, furniture: { x: .38, y: .81 } },
   { id: "felice-bed", place: "bedroom", name: "Felices Bett", kind: "bed", approach: { x: .30, y: .49 }, position: { x: .255, y: .225 } },
   { id: "garden-bench", place: "garden", name: "Gartenbank", kind: "bench", approach: { x: .25, y: .65 }, position: { x: .215, y: .602 }, companion: { x: .28, y: .602 }, furniture: { x: .25, y: .61 } },
-  { id: "bus-bench", place: "bus", name: "Bank an der Haltestelle", kind: "bench", approach: { x: .275, y: .405 }, position: { x: .247, y: .36 }, companion: { x: .306, y: .36 } },
-  { id: "school-bench", place: "school", name: "Bank auf dem Schulhof", kind: "bench", approach: { x: .205, y: .54 }, position: { x: .175, y: .48 }, companion: { x: .24, y: .48 } },
-  { id: "school-bench-right", place: "school", name: "Bank am Schulhofrand", kind: "bench", approach: { x: .8, y: .54 }, position: { x: .765, y: .48 }, companion: { x: .83, y: .48 } },
+  { id: "bus-bench", place: "bus", name: "Bank an der Haltestelle", kind: "bench", approach: { x: .33, y: .485 }, position: { x: .312, y: .419 }, companion: { x: .362, y: .419 } },
+  { id: "school-bench", place: "school", name: "Bank beim Gitter", kind: "bench", approach: { x: .25, y: .51 }, position: { x: .23, y: .469 }, companion: { x: .273, y: .469 } },
+  { id: "school-bench-right", place: "school", name: "Zweite Bank beim Gitter", kind: "bench", approach: { x: .355, y: .51 }, position: { x: .335, y: .469 }, companion: { x: .378, y: .469 } },
   { id: "range-bench", place: "range", name: "Bank am Schießstand", kind: "bench", approach: { x: .76, y: .89 }, position: { x: .725, y: .835 }, companion: { x: .79, y: .835 }, furniture: { x: .76, y: .845 } },
 ];

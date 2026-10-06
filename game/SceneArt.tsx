@@ -9,10 +9,24 @@ function Window({ x, y }: { x: number; y: number }) {
 }
 export const SceneArt = memo(function SceneArt({ place, christmas }: { place: Place; christmas: boolean }) {
   if (place === "bedroom") return null;
-  const outdoors = ["garden", "bus", "school"].includes(place);
+  const outdoors = ["garden", "bus", "school", "radegast", "zoerbig", "goelzau"].includes(place);
   return <svg className="scene-art" viewBox="0 0 600 600" aria-hidden="true" shapeRendering="crispEdges">
     <defs><pattern id="grass" width="36" height="36" patternUnits="userSpaceOnUse"><rect width="36" height="36" fill={christmas ? "#cad5c4" : "#8ca779"}/><path d="M7 11h3v3H7M23 25h5v2h-5" fill={christmas ? "#e3e8d8" : "#779466"}/></pattern><pattern id="floor" width="90" height="30" patternUnits="userSpaceOnUse"><rect width="90" height="30" fill="#b68a64"/><path d="M0 29h90M1 0v30M45 0v5M18 12h32" stroke="#9c7556" strokeWidth="2"/></pattern><pattern id="paving" width="36" height="24" patternUnits="userSpaceOnUse"><rect width="36" height="24" fill="#c6bda1"/><path d="M0 23h36M0 0v24" stroke="#afa88f"/></pattern></defs>
     <rect width="600" height="600" fill={outdoors ? "url(#grass)" : "url(#floor)"}/>
+    {place === "radegast" && <>
+      <path d="M250 50L264 210 318 330 408 570" fill="none" stroke="#d9ccb1" strokeWidth="110"/><path d="M250 50L264 210 318 330 408 570" fill="none" stroke="#787c77" strokeWidth="62"/>
+      {[[25,40,150,85],[30,220,145,100],[30,400,200,160],[385,30,180,210],[455,320,145,220]].map(([x,y,w,h])=><g key={`${x}-${y}`}><rect x={x} y={y} width={w} height={h} fill="#b79d7c"/><path d={`M${x-4} ${y}h${w+8}v${h-12}h-${w+8}Z`} fill="#736e60"/><path d={`M${x+w/2} ${y}v${h-12}`} stroke="#a4937e" strokeWidth="4"/></g>)}
+    </>}
+    {place === "zoerbig" && <>
+      <path d="M170 60H435V215H170ZM275 190L240 252 180 345 120 420 90 510" fill="none" stroke="#d6c7a9" strokeWidth="75"/>
+      <rect x="12" y="12" width="120" height="190" fill="#96795f"/><rect x="465" y="12" width="125" height="190" fill="#96795f"/>
+      <rect x="392" y="285" width="130" height="103" fill="#b2a182"/><rect x="431" y="230" width="44" height="74" fill="#716b60"/>
+      <rect x="155" y="475" width="230" height="115" fill="#8b6c51"/><rect x="160" y="470" width="220" height="94" fill="#6c6960"/>
+    </>}
+    {place === "goelzau" && <>
+      <path d="M150 180V250L390 390 600 450" fill="none" stroke="#d3bfa0" strokeWidth="85"/><rect x="35" y="20" width="330" height="140" fill="#aa9576"/><rect x="25" y="15" width="350" height="130" fill="#766f61"/><rect x="132" y="128" width="38" height="38" fill="#5e6859"/>
+      <Tree x={520} y={220}/><Tree x={74} y={415}/><Tree x={285} y={565}/>
+    </>}
     {place === "garden" && <>
       <path d="M274 123h52v470h-52M298 391h302v55H298" fill="#cbb18a"/><path d="M278 132h44v450h-44M310 397h290v42H310" fill="#ddc399"/>
       <rect x="158" y="30" width="274" height="96" fill="#e5c49c"/><path d="M143 35V17h302v18Z" fill="#754b47"/><path d="M150 37h288v12H150" fill="#ab6d55"/><rect x="277" y="67" width="46" height="60" fill="#765345"/><rect x="286" y="73" width="27" height="24" fill="#dfbc7f"/><Window x={184} y={61}/><Window x={351} y={61}/>
@@ -40,6 +54,7 @@ export const SceneArt = memo(function SceneArt({ place, christmas }: { place: Pl
     {place === "school" && <>
       <rect x="60" y="200" width="484" height="328" fill="url(#paving)"/><rect x="100" y="38" width="400" height="157" fill="#bb8b68"/><rect x="91" y="33" width="418" height="22" fill="#6a6058"/><path d="M106 182h390" stroke="#e0c39a" strokeWidth="12"/>
       {[133,207,345,419].map(x=><Window key={x} x={x} y={89}/>)}<rect x="275" y="119" width="50" height="79" fill="#5a7774"/><path d="M300 121v73" stroke="#d8c6a2" strokeWidth="4"/><rect x="218" y="58" width="165" height="26" fill="#ead8b2"/><text x="301" y="69" textAnchor="middle" fill="#715a45" fontSize="9" fontFamily="monospace">SEKUNDARSCHULE</text><text x="301" y="80" textAnchor="middle" fill="#715a45" fontSize="10" fontFamily="monospace">ZÖRBIG</text>
+      {[140,366].map((x,i)=><g key={x}><path d={`M${x} 207h${i?72:136}`} stroke="#455c4a" strokeWidth="7"/>{Array.from({length:i?8:15},(_,n)=><path key={n} d={`M${x+n*9} 193v29`} stroke="#455c4a" strokeWidth="3"/>)}</g>)}
       {[{x:74,y:329},{x:449,y:329}].map(p=><g key={p.x}><rect x={p.x} y={p.y} width="82" height="17" fill="#a47750"/><rect x={p.x+6} y={p.y+20} width="70" height="13" fill="#886246"/></g>)}<Tree x={48} y={236}/><Tree x={554} y={230}/><Tree x={74} y={551}/><Tree x={527} y={553}/>
       <path d="M290 526h30v74h-30Z" fill="#c6bda1"/>
     </>}
