@@ -53,15 +53,18 @@ export const SceneArt = memo(function SceneArt({ place, christmas }: { place: Pl
     </>}
     {place === "school" && <>
       <rect width="600" height="600" fill="url(#paving)"/>
-      <path d="M0 0H160L129 395H0Z" fill="#b0aa98"/><path d="M0 0H134L108 300H0Z" fill="#777b79"/>
-      {[50,110,170,230,290,345].map((y,i)=><g key={y}><path d={`M${151-i*4} ${y}l-2 25`} stroke="#ede9df" strokeWidth="5"/><path d={`M${158-i*4} ${y+28}l-2 19`} stroke="#65706a" strokeWidth="8"/></g>)}
-      <path d="M30 325h82v67H30ZM30 347h82M30 368h82M68 325v67" stroke="#c5d0cb" strokeWidth="5" fill="none"/>
-      <path d="M466 0H600V600H521L486 399Z" fill="#a36346"/><path d="M499 0H600V600H546L514 400Z" fill="#a7553b"/>
-      {[15,45,75,105,135,165,195,225,255,285,315,345,375,405,435,465,495,525,555].map(y=><path key={y} d={`M505 ${y}H600`} stroke="#733d2e" strokeWidth="2"/>)}
-      <path d="M0 388 510 496" stroke="#ba765a" strokeWidth="44"/><rect x="254" y="0" width="96" height="50" fill="#797a70"/>
-      <path d="M50 440 196 470 183 488 229 510 238 560 60 534Z" fill="#78966b"/>
-      <path d="M115 428 200 452 187 478 235 510 244 554M60 510 160 530M282 474 310 508" stroke="#a16851" strokeWidth="10" fill="none"/>
-      {[{x:246,y:164},{x:374,y:222},{x:293,y:316},{x:400,y:365}].map(p=><g key={p.x}><path d={`M${p.x-30} ${p.y-12}l30 -17 35 17 -30 21Z`} fill="#956d4e"/><circle cx={p.x} cy={p.y-18} r="30" fill="#627e42"/><circle cx={p.x-12} cy={p.y-23} r="20" fill="#7c9850"/><circle cx={p.x+15} cy={p.y-20} r="22" fill="#6f9048"/></g>)}
+      <rect width="600" height="134" fill="#b0aa98"/><rect width="600" height="16" fill="#777b79"/>
+      {[35,85].map(y=>[90,155,220,350,415,480,545].map(x=><g key={`${x}-${y}`}><rect x={x-22} y={y-9} width="44" height="27" fill="#60716b"/><path d={`M${x-22} ${y-9}h44v27h-44ZM${x} ${y-9}v27`} stroke="#ede9df" strokeWidth="3" fill="none"/></g>))}
+      {[90,155,220,350,415,480,545].map(x=><g key={x}><rect x={x-22} y="114" width="44" height="16" fill="#52615c"/>{[-16,-8,0,8,16].map(dx=><path key={dx} d={`M${x+dx} 114v16`} stroke="#c5d0cb" strokeWidth="2"/>)}</g>)}
+      <rect x="260" y="85" width="80" height="49" fill="#465652"/><path d="M270 92h60v37h-60ZM300 92v37" stroke="#84928b" strokeWidth="3" fill="none"/>
+      <path d="M253 134h94v16h-94Z" fill="#c1bca9"/><path d="M253 138h94M253 143h94M253 148h94" stroke="#8e958c" strokeWidth="2"/>
+      <path d="M20 58h40v35l20 25v30M20 58v77h60M20 72h40M20 94h40M20 116h40" stroke="#a6b5b2" strokeWidth="4" fill="none"/>
+      <path d="M0 393 600 483" stroke="#ba765a" strokeWidth="44"/>
+      <path d="M50 458 194 481 184 502 243 528 257 562 176 551 55 519Z" fill="#78966b"/>
+      <path d="M107 443 200 465 184 493 241 525 257 555M49 515 164 539 176 552M284 482 326 525" stroke="#a16851" strokeWidth="10" fill="none"/>
+      {[{x:235,y:257},{x:403,y:270},{x:287,y:365},{x:448,y:386}].map(p=><g key={p.x}><path d={`M${p.x-36} ${p.y-16}l36 -16 39 16 -39 25Z`} fill="#956d4e"/><circle cx={p.x} cy={p.y-23} r="41" fill="#627e42"/><circle cx={p.x-15} cy={p.y-29} r="27" fill="#7c9850"/><circle cx={p.x+19} cy={p.y-26} r="29" fill="#6f9048"/></g>)}
+      <path d="M0 145h48M0 330h50M570 145v455M0 580h230M380 580h60" stroke="#627e42" strokeWidth="24"/>
+      <path d="M268 560v40M341 560v40" stroke="#a16851" strokeWidth="16"/>
     </>}
     {place === "range" && <>
       <rect width="600" height="211" fill="#b8baa3"/><path d="M0 192h600" stroke="#8c6d4d" strokeWidth="16"/>

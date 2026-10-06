@@ -31,9 +31,9 @@ export const PLACES: Record<Place, { name: string; subtitle: string; exits: Exit
   ], obstacles: [] },
   zoerbig: { name: "Zörbig · Markt und Schulweg", subtitle: "Von der Bushaltestelle zur Grünstraße", exits: [
     { x: .47, y: .20, to: "bus", label: "Bus zurück nach Radegast", spawn: { x: .74, y: .47 } },
-    { x: .17, y: .76, to: "school", label: "Zum Pausenhof", spawn: { x: .52, y: .90 } },
+    { x: .17, y: .76, to: "school", label: "Zum Pausenhof", spawn: { x: .52, y: .92 } },
   ], obstacles: [{ left: .525, right: .555, top: .15, bottom: .21 }] },
-  school: { name: "Sekundarschule Zörbig · Pausenhof", subtitle: "Treffpunkt an den Fenstergittern", exits: [{ x: .505, y: .945, to: "zoerbig", label: "Zurück zum Markt und Bus", spawn: { x: .20, y: .75 } }], obstacles: [] },
+  school: { name: "Sekundarschule Zörbig · Pausenhof", subtitle: "Treffpunkt an den Fenstergittern", exits: [{ x: .515, y: .95, to: "zoerbig", label: "Zurück zum Markt und Bus", spawn: { x: .20, y: .75 } }], obstacles: [] },
   goelzau: { name: "Gölzau · Weg zum Schützenhaus", subtitle: "Ankommen, Freunde treffen, zusammen schießen", exits: [
     { x: .90, y: .65, to: "bus", label: "Zurück nach Radegast", spawn: { x: .82, y: .76 } },
     { x: .265, y: .285, to: "range", label: "Ins Schützenhaus", spawn: { x: .5, y: .82 } },
@@ -81,13 +81,13 @@ export const ENTITIES: Record<Place, Entity[]> = {
     { id: "ticket", name: "Fahrkarte", x: .39, y: .48, display: { x: .405, y: .40 }, kind: "item", art: "ticket", text: "Eine Fahrkarte für den gemeinsamen Weg." },
   ],
   school: [
-    { id: "school-grille", name: "Treffpunkt am Fenstergitter", x: .32, y: .60, display: { x: .37, y: .70 }, kind: "item", art: "landmark", text: "Die niedrigen Gitter sitzen vor den unteren Fenstern des grauen Schulgebäudes. Hier stehen Elena, Jason, Luca und Wyatt in der Pause." },
-    { id: "friends", name: "Elena", x: .27, y: .66, kind: "person", art: "elena", text: "Hey Felice! Wir treffen uns am Gitter beim Schulgebäude. Bleibst du noch ein bisschen bei mir?" },
-    { id: "jason", name: "Jason", x: .285, y: .56, kind: "person", art: "jason", text: "Hey. Ich mache gerade eine kleine Pause am Gitter. Du kannst dich gern dazustellen." },
-    { id: "luca", name: "Luca", x: .295, y: .46, kind: "person", art: "luca", text: "Hallo Felice. Heute ist es hier ziemlich ruhig. Das mag ich." },
-    { id: "wyatt", name: "Wyatt", x: .305, y: .36, kind: "person", art: "wyatt", text: "Hey Felice! Schön, dass du da bist." },
-    { id: "notebook", name: "Vergessenes Heft", x: .57, y: .72, kind: "item", art: "book", text: "Jemand hat ein Heft liegen gelassen." },
-    { id: "school-door", name: "Schultür", x: .77, y: .684, display: { x: .822, y: .625 }, kind: "item", art: "bell", text: "Der Unterricht ist vorbei. Zeit für den gemeinsamen Heimweg." },
+    { id: "school-grille", name: "Treffpunkt am Fenstergitter", x: .225, y: .35, display: { x: .20, y: .51 }, kind: "item", art: "landmark", text: "Die niedrigen Gitter sitzen vor den unteren Fenstern des grauen Schulgebäudes. Hier stehen Elena, Jason, Luca und Wyatt in der Pause." },
+    { id: "friends", name: "Elena", x: .18, y: .295, kind: "person", art: "elena", text: "Hey Felice! Wir treffen uns am Gitter beim Schulgebäude. Bleibst du noch ein bisschen bei mir?" },
+    { id: "jason", name: "Jason", x: .25, y: .295, kind: "person", art: "jason", text: "Hey. Ich mache gerade eine kleine Pause am Gitter. Du kannst dich gern dazustellen." },
+    { id: "luca", name: "Luca", x: .18, y: .39, kind: "person", art: "luca", text: "Hallo Felice. Heute ist es hier ziemlich ruhig. Das mag ich." },
+    { id: "wyatt", name: "Wyatt", x: .25, y: .39, kind: "person", art: "wyatt", text: "Hey Felice! Schön, dass du da bist." },
+    { id: "notebook", name: "Vergessenes Heft", x: .60, y: .80, kind: "item", art: "book", text: "Jemand hat ein Heft liegen gelassen." },
+    { id: "school-door", name: "Eingang der Sekundarschule", x: .50, y: .28, display: { x: .50, y: .18 }, kind: "item", art: "bell", text: "Der Unterricht ist vorbei. Zeit für den gemeinsamen Heimweg." },
   ],
   range: [{ id: "range-host", name: "Am Schießstand", x: .32, y: .57, kind: "person", art: "host", text: "Die Bahn ist bereit. Neun Schüsse, drei Scheiben. Nimm dir Zeit." }, { id: "shoot", name: "Schießbahn", x: .5, y: .44, kind: "item", art: "target", text: "Bereit für deine Runde?" },
     { id: "ida", name: "Ida", x: .19, y: .68, kind: "person", art: "ida", text: "Hallo Felice! Schön, dich beim Schießen zu sehen." },
@@ -169,26 +169,30 @@ const WALK_AREAS: Partial<Record<Place, Point[][]>> = {
   ],
   goelzau: [[{x:.09,y:.26},{x:.61,y:.24},{x:.65,y:.32},{x:.69,y:.43},{x:.77,y:.50},{x:.83,y:.59},{x:.95,y:.59},{x:.95,y:.70},{x:.83,y:.73},{x:.79,y:.63},{x:.72,y:.55},{x:.66,y:.49},{x:.52,y:.45},{x:.35,y:.43},{x:.20,y:.42},{x:.09,y:.35}]],
 };
-// Ground footprints measured against the high overhead school courtyard.
-// The green corner remains reachable around the southern tip of its sitting wall.
+// Secondary-school facade and centered entrance at the back of the courtyard.
+// The primary school is outside this scene; only a planting strip bounds the right.
 const SOLID_AREAS: Partial<Record<Place, Point[][]>> = {
   school: [
-    [{x:0,y:0},{x:0.27,y:0},{x:0.263,y:0.137},{x:0.244,y:0.35},{x:0.228,y:0.56},{x:0.221,y:0.616},{x:0.205,y:0.669},{x:0,y:0.669}],
-    [{x:0.773,y:0},{x:1,y:0},{x:1,y:1},{x:0.869,y:1},{x:0.82,y:0.83},{x:0.792,y:0.59},{x:0.779,y:0.37},{x:0.762,y:0.22}],
-    [{x:0.355,y:0.262},{x:0.405,y:0.246},{x:0.455,y:0.253},{x:0.468,y:0.263},{x:0.444,y:0.296},{x:0.408,y:0.304},{x:0.357,y:0.284}],
-    [{x:0.568,y:0.348},{x:0.61,y:0.325},{x:0.665,y:0.335},{x:0.694,y:0.376},{x:0.621,y:0.4},{x:0.57,y:0.361}],
-    [{x:0.426,y:0.511},{x:0.47,y:0.49},{x:0.525,y:0.497},{x:0.55,y:0.514},{x:0.507,y:0.559},{x:0.43,y:0.529}],
-    [{x:0.603,y:0.59},{x:0.65,y:0.562},{x:0.73,y:0.573},{x:0.739,y:0.598},{x:0.668,y:0.64},{x:0.608,y:0.614}],
-    [{x:0.621,y:0.126},{x:0.69,y:0.126},{x:0.699,y:0.156},{x:0.624,y:0.16}],
-    [{x:0.196,y:0.705},{x:0.344,y:0.742},{x:0.343,y:0.761},{x:0.329,y:0.809},{x:0.3,y:0.795},{x:0.32,y:0.754},{x:0.189,y:0.724}],
-    [{x:0.304,y:0.79},{x:0.39,y:0.836},{x:0.414,y:0.914},{x:0.394,y:0.927},{x:0.384,y:0.85},{x:0.303,y:0.812}],
-    [{x:0.086,y:0.838},{x:0.267,y:0.872},{x:0.286,y:0.888},{x:0.29,y:0.904},{x:0.269,y:0.918},{x:0.25,y:0.885},{x:0.083,y:0.861}],
-    [{x:0.467,y:0.787},{x:0.48,y:0.779},{x:0.529,y:0.841},{x:0.511,y:0.861},{x:0.5,y:0.864},{x:0.461,y:0.808}],
-    [{x:0,y:0.675},{x:0.186,y:0.685},{x:0.199,y:0.72},{x:0.173,y:0.764},{x:0,y:0.764}],
-    [{x:0,y:0.88},{x:0.27,y:0.924},{x:0.322,y:0.957},{x:0.384,y:1},{x:0,y:1}],
-    [{x:0.55,y:0.9},{x:0.632,y:0.9},{x:0.733,y:1},{x:0.55,y:1}],
-    [{x:0.432,y:0.936},{x:0.462,y:0.936},{x:0.468,y:1},{x:0.432,y:1}],
-    [{x:0.548,y:0.94},{x:0.575,y:0.94},{x:0.578,y:1},{x:0.548,y:1}],
+    [{x:0,y:0},{x:1,y:0},{x:1,y:0.223},{x:0,y:0.223}],
+    [{x:0.421,y:0.176},{x:0.578,y:0.176},{x:0.578,y:0.25},{x:0.421,y:0.25}],
+    [{x:0.019,y:0.061},{x:0.136,y:0.061},{x:0.136,y:0.233},{x:0.107,y:0.252},{x:0.022,y:0.239}],
+    [{x:0.325,y:0.402},{x:0.373,y:0.386},{x:0.45,y:0.403},{x:0.457,y:0.415},{x:0.384,y:0.455},{x:0.323,y:0.426}],
+    [{x:0.605,y:0.421},{x:0.646,y:0.398},{x:0.72,y:0.422},{x:0.74,y:0.439},{x:0.671,y:0.478},{x:0.598,y:0.44}],
+    [{x:0.409,y:0.582},{x:0.46,y:0.56},{x:0.538,y:0.584},{x:0.557,y:0.605},{x:0.49,y:0.645},{x:0.402,y:0.604}],
+    [{x:0.676,y:0.611},{x:0.722,y:0.589},{x:0.799,y:0.61},{x:0.821,y:0.636},{x:0.752,y:0.683},{x:0.667,y:0.644}],
+    [{x:0,y:0.242},{x:0.119,y:0.239},{x:0.13,y:0.256},{x:0.057,y:0.267},{x:0,y:0.267}],
+    [{x:0,y:0.276},{x:0.083,y:0.279},{x:0.114,y:0.296},{x:0.093,y:0.34},{x:0,y:0.34}],
+    [{x:0,y:0.55},{x:0.083,y:0.55},{x:0.117,y:0.577},{x:0.088,y:0.63},{x:0,y:0.63}],
+    [{x:0,y:0.759},{x:0.158,y:0.759},{x:0.19,y:0.783},{x:0.16,y:0.797},{x:0,y:0.797}],
+    [{x:0.183,y:0.726},{x:0.339,y:0.765},{x:0.344,y:0.787},{x:0.317,y:0.824},{x:0.296,y:0.819},{x:0.32,y:0.774},{x:0.176,y:0.751}],
+    [{x:0.301,y:0.811},{x:0.415,y:0.86},{x:0.429,y:0.921},{x:0.415,y:0.931},{x:0.398,y:0.879},{x:0.296,y:0.835}],
+    [{x:0.082,y:0.847},{x:0.276,y:0.88},{x:0.305,y:0.904},{x:0.295,y:0.926},{x:0.277,y:0.917},{x:0.274,y:0.901},{x:0.08,y:0.87}],
+    [{x:0.476,y:0.796},{x:0.49,y:0.789},{x:0.557,y:0.86},{x:0.531,y:0.885},{x:0.522,y:0.88},{x:0.464,y:0.815}],
+    [{x:0,y:0.885},{x:0.286,y:0.927},{x:0.362,y:0.964},{x:0.393,y:1},{x:0,y:1}],
+    [{x:0.622,y:0.921},{x:0.717,y:0.921},{x:0.79,y:1},{x:0.622,y:1}],
+    [{x:0.944,y:0.25},{x:1,y:0.25},{x:1,y:1},{x:0.98,y:0.875},{x:0.956,y:0.591}],
+    [{x:0.443,y:0.923},{x:0.479,y:0.923},{x:0.479,y:1},{x:0.443,y:1}],
+    [{x:0.557,y:0.923},{x:0.588,y:0.923},{x:0.588,y:1},{x:0.557,y:1}],
   ],
 };
 function insideArea(x: number, y: number, points: Point[]) {
@@ -202,7 +206,7 @@ function insideArea(x: number, y: number, points: Point[]) {
 export function canWalk(place: Place, x: number, y: number) {
   return (!SOLID_AREAS[place] || !SOLID_AREAS[place]!.some(points => insideArea(x,y,points))) && (!WALK_AREAS[place] || WALK_AREAS[place]!.some(points => insideArea(x,y,points))) && x >= .075 && x <= .94 && y >= .16 && y <= (place === "school" ? .96 : .92) && !PLACES[place].obstacles.some(o => x > o.left - .02 && x < o.right + .02 && y > o.top - .015 && y < o.bottom + .015);
 }
-export const SPAWNS: Record<Place, Point> = { bedroom: { x: .5, y: .7 }, home: { x: .5, y: .78 }, kitchen: { x: .5, y: .85 }, garden: { x: .5, y: .38 }, radegast: { x: .435, y: .28 }, bus: { x: .5, y: .72 }, zoerbig: { x: .61, y: .285 }, school: { x: .52, y: .90 }, goelzau: { x: .86, y: .63 }, range: { x: .5, y: .8 } };
+export const SPAWNS: Record<Place, Point> = { bedroom: { x: .5, y: .7 }, home: { x: .5, y: .78 }, kitchen: { x: .5, y: .85 }, garden: { x: .5, y: .38 }, radegast: { x: .435, y: .28 }, bus: { x: .5, y: .72 }, zoerbig: { x: .61, y: .285 }, school: { x: .52, y: .92 }, goelzau: { x: .86, y: .63 }, range: { x: .5, y: .8 } };
 export function routeTo(from: Place, to: Place): Exit | undefined {
   const queue: { place: Place; first?: Exit }[] = [{ place: from }];
   const seen = new Set<Place>([from]);

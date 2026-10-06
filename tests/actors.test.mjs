@@ -93,7 +93,7 @@ test("Elias bleibt außerhalb der vier Schulfreunde am Fenstergitter", () => {
     let actor=initialActors()[id];
     for(let i=0;i<2400;i++) {
       actor=advanceActor("school",id,actor,1/60);
-      assert.ok(actor.position.x>=.26 && actor.position.x<=.35 && actor.position.y>=.34 && actor.position.y<=.70,id);
+      assert.ok(actor.position.x>=.17 && actor.position.x<=.295 && actor.position.y>=.28 && actor.position.y<=.435,id);
     }
   }
 });
@@ -120,5 +120,5 @@ test("Elena kehrt nach dem Aufstehen um die Sitzmauern zur Fenstergitter-Gruppe 
     assert.ok(canWalk("school",actor.position.x,actor.position.y));
   }
   assert.equal(actor.pose,"standing");
-  assert.ok(actor.position.x>=.26 && actor.position.x<=.35 && actor.position.y>=.64 && actor.position.y<=.70);
+  assert.ok(actor.position.x>=.17 && actor.position.x<=.295 && actor.position.y>=.28 && actor.position.y<=.34);
 });
