@@ -1,21 +1,17 @@
 .version-six { --paper:#f4e8d0; --sage:#b6c3a4; --gold:#e9cb8b; }
 .pixel-game.version-six { background:radial-gradient(ellipse at 55% 35%,#3d5047,#1d2e2a 65%,#14231f); }
 .version-six .world-viewport { width:min(calc(100vw - 340px),calc(100dvh - 72px),900px); margin-left:110px; border:3px solid #8b785b; outline:1px solid #d1b98c; isolation:isolate; }
-.world-camera { transform:translate(var(--camera-x),var(--camera-y)) scale(var(--world-zoom)); transform-origin:center; transition:transform 260ms ease-out; will-change:transform; }
+.world-camera { transform:translate(var(--camera-x),var(--camera-y)) scale(var(--world-zoom)); transform-origin:center;  will-change:transform; }
 .scene-backdrop,.scene-foreground { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
 .scene-backdrop { z-index:0; background:#8c9877; }
 .scene-foreground { pointer-events:none; }
 .fallback-bedroom { background:#6c432f url('/rooms/felice-bedroom-v9.png') center/100% 100%; }
 .character-art { width:100%; display:block; overflow:hidden; }
 .character-fallback { display:block; width:100%; }
-.character-idle>.character-art { animation:character-breathe 4s ease-in-out infinite; transform-origin:50% 94%; }
-.character-idle:nth-child(2n)>.character-art { animation-delay:-1.7s; }
-.character-walking .character-sheet { animation:character-steps .36s steps(1,end) infinite; }
-@keyframes character-steps { 0%,49.99% { transform:translateY(-100px); } 50%,100% { transform:translateY(-200px); } }
-@keyframes character-breathe { 0%,100% { transform:scaleY(1); } 50% { transform:scaleY(1.012); } }
-.version-six .room-player { min-width:0; max-width:none; transform:translate(-50%,-94%); filter:drop-shadow(0 2px 2px #2d2b2455); }
+
+.version-six .room-player { width:7.6%; min-width:0; max-width:none; transform:translate(-50%,-100%); filter:drop-shadow(0 2px 2px #2d2b2455); }
 .version-six .world-entity { filter:drop-shadow(0 2px 1px #25352c55); }
-.version-six .entity-item { width:5%; }
+.version-six .entity-item { width:3.4%; }
 .version-six .entity-name { font-size:9px; border-color:#9aaa84; box-shadow:0 2px 5px #15241f44; }
 .version-six .room-player-label { opacity:.85; font-size:8px; bottom:95%; }
 .world-atmosphere { position:absolute; inset:0; z-index:115; pointer-events:none; overflow:hidden; box-shadow:inset 0 0 60px #19231b16; }
@@ -98,13 +94,13 @@
 .day-notice { position:absolute; top:125px; left:50%; transform:translateX(-50%); z-index:7; display:grid; gap:5px; width:max-content; max-width:min(350px,45vw); padding:14px 20px; border:1px solid #d6ba81; border-radius:5px; background:#f0e3c9f5; color:#304334; text-align:center; box-shadow:0 6px 24px #10251d55; pointer-events:none; }
 .day-notice strong { font:600 23px/1.2 Georgia,serif; }
 .day-notice span { font-size:12px; line-height:1.4; }
-.rest-spot { position:absolute; width:22%; transform:translate(-50%,-65%); }
+.rest-spot { position:absolute; width:21%; transform:translate(-50%,-100%); }
 .rest-spot>svg { display:block; width:100%; filter:drop-shadow(0 3px 2px #283e3540); }
 .rest-bed { width:6%; transform:translate(-50%,-50%); }
 .rest-spot .entity-name { position:absolute; left:50%; top:100%; transform:translateX(-50%); color:#f3e6ca; background:#304634eb; border:1px solid #839579; padding:2px 5px; white-space:nowrap; }
 .nearby-rest .entity-name { border-color:#e9cb8b; color:#ffe1a0; }
-.version-061 .room-player.pose-sitting { transform:translate(-50%,-91%); }
-.version-061 .room-player.pose-lying { width:30%; transform:translate(-50%,-50%); }
+.version-061 .room-player.pose-sitting { transform:translate(-50%,-100%); }
+.version-061 .room-player.pose-lying { width:14%; transform:translate(-50%,-100%); }
 .pose-lying .room-player-label { bottom:100%; }
 .rest-actions { gap:6px; }
 .rest-actions button { justify-content:center; width:100%; }
@@ -120,3 +116,24 @@
   .version-061 .rest-actions button { padding:6px 9px; font-size:10px; }
 }
 @media (prefers-reduced-motion:reduce) { .daylight-shade { transition:none; } }
+
+/* Keep controls beside the scenery so furniture and characters stay visible. */
+.version-061 .world-viewport { width:min(calc(100vw - 460px),calc(100dvh - 80px),860px); margin-left:0; }
+.version-061 .day-clock { top:100px; left:20px; transform:none; width:190px; min-width:0; }
+.version-061 .day-clock select { min-height:36px; }
+.version-061 .quest-tracker { top:242px; }
+.version-061 .memory-interaction { left:auto; right:20px; bottom:80px; transform:none; max-width:185px; white-space:normal; }
+.version-061 .day-notice { top:24px; }
+.version-061 .world-exit>span { display:grid; place-items:center; }
+.version-061 .entity-person .entity-name { display:block; font-size:8px; padding:2px 4px; max-width:105px; white-space:normal; text-align:center; }
+@media (max-height:600px) and (orientation:landscape) {
+  .version-061 .world-viewport { width:min(calc(100dvh - 24px),calc(100vw - 340px)); }
+  .version-061 .day-clock { top:78px; left:12px; width:145px; padding:7px 9px; }
+  .version-061 .quest-tracker { top:min(190px,calc(100dvh - 140px)); width:145px; max-height:clamp(40px,calc(100dvh - 310px),80px); overflow:auto; }
+  .version-061 .quest-tracker p { margin:4px 0; }
+  .version-061 .memory-interaction { right:12px; bottom:14px; max-width:145px; }
+  .version-061 .entity-person .entity-name { font-size:7px; padding:1px 3px; }
+  .version-061 .day-notice { top:12px; }
+}
+
+.bed-duvet { position:absolute; inset:0; width:100%; height:100%; z-index:81; pointer-events:none; }

@@ -14,11 +14,15 @@ Version **0.61**: ein eigenständiges, mobiles 2D-Spiel mit sechs zusammenhänge
 
 Der Tagesstand wird getrennt unter `felice-elias.day.v061` gespeichert. Bestehende Kapitel- und Erinnerungsstände bleiben kompatibel. Sitz-/Liegepositionen sind vorübergehend; nach Neuladen steht Felice wieder am Ortseingang.
 
+## Szenenreview und Verfeinerung in V0.61
+
+Alle sechs Orte wurden anhand von Browseraufnahmen überarbeitet: echte Sitz- und Liegeposen, Bettdecke aus dem vorhandenen Zimmerbild, ausgerichtete Laufbilder, gleichmäßige Bewegung, vollständige Szenenansicht, passende Möbelpositionen und seitliche Bedienung. Der [vollständige Reviewbericht mit Vorher-/Nachher-Bildern](qa/review-v061/REVIEW.md) enthält die Einzelprüfung jedes Ortes und der Schieß-Erinnerung.
+
 ## Die Welt in V0.6
 
 Zimmer, Wohnzimmer, Garten, Haltestelle, Schulhof und Schießstand teilen eine warme, detaillierte Bildsprache. Elias trägt einen weißen Hoodie, schwarze lange Hose und helle Sneaker; seine Locken und sein Gesicht wurden anhand der persönlichen Bildreferenzen gestaltet. Die Fotos selbst sind keine Spielgrafiken. Felices vorhandene Figur bleibt die Stilreferenz. Familie und Freunde haben eigene Standbilder und Dialogporträts; Anuks persönliche Gestaltung folgt später.
 
-Ein typisierter Grafikkatalog in `game/graphics.ts` trennt Darstellung und Spielstand. Vordergrundmasken verdecken Figuren anhand ihrer Fußposition. Alle Orte verwenden dieselbe begrenzte Kamera mit Zoom 1,5; eine Markierung weist auf Aufgabenziele außerhalb des Bildes. Weihnachten nutzt winterliche Außenbilder und ein festliches Wohnzimmer. Lampen, Blätter, Schnee und dezente Standanimationen pausieren mit dem Spiel; reduzierte Bewegung schaltet dekorative Animationen ab.
+Ein typisierter Grafikkatalog in `game/graphics.ts` trennt Darstellung und Spielstand. Vordergrundmasken verdecken Figuren anhand ihrer Fußposition. Alle Orte verwenden eine vollständige, ruhige Szenenansicht mit Zoom 1; eine Markierung weist auf Aufgabenziele außerhalb des Bildes. Weihnachten nutzt winterliche Außenbilder und ein festliches Wohnzimmer. Lampen, Blätter, Schnee pausieren mit dem Spiel; reduzierte Bewegung schaltet dekorative Animationen ab.
 
 Der zentrale Web-Audio-Dienst erzeugt leise Raum-/Windgeräusche, Schritte, Interaktionen und Luftgewehrgeräusche ohne Audiodateien. Ton wird erst nach **Welt betreten** freigeschaltet und stoppt bei Pause, verborgenem Tab, Hochformat und Szenenübergängen. Die Lautsprechertaste speichert die Stummschaltung separat. Blockiertes Audio und fehlende Bilder lassen das Spiel mit stummer bzw. einfacher Ersatzdarstellung weiterlaufen.
 
@@ -40,7 +44,7 @@ npx eslint game/Game.tsx game/GameUI.tsx game/WorldArt.tsx game/audio.ts game/ca
 npm run build
 ```
 
-Die 22 Tests umfassen Kapitel, Speicherstände, Erreichbarkeit, Trefferwertung, Kamera, Grafikzuordnung, Ton sowie Tagesgrenzen, Hinweiszeiten, Schlafen und Jahreszeiten. Browserprüfungen ergänzen sie um Darstellung und Bedienung.
+Die 25 Tests umfassen Kapitel, Speicherstände, Erreichbarkeit, Trefferwertung, Kamera, Grafikzuordnung, Ton sowie Tagesgrenzen, Hinweiszeiten, Schlafen, Jahreszeiten sowie Bewegung bei verschiedenen Bildraten und Kollisionen. Browserprüfungen ergänzen sie um Darstellung und Bedienung.
 
 ## Lokal starten
 

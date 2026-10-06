@@ -1,6 +1,6 @@
 import type { Point } from "./story";
 
-export const WORLD_ZOOM = 1.5;
+export const WORLD_ZOOM = 1;
 export type Camera = Point & { zoom: number };
 const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(max, value));
 

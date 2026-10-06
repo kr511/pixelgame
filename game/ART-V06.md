@@ -21,7 +21,7 @@ Alle neuen Rasterbilder wurden mit dem eingebauten Imagegen-Werkzeug erzeugt. St
 | `rooms/bus-winter-v06.png` | Winterliche Haltestelle |
 | `rooms/school-winter-v06.png` | Winterlicher Schulhof |
 
-`characters/elias-walk-v06.png` ist die erste Generierung vor Korrektur der zweiten Schrittphase; das Spiel verwendet ausschließlich die korrigierte Datei. Atlaszellen sind quadratisch. Der Fußanker ist überwiegend `(0.5, 0.94)`. Die verbindlichen Größen, Zellen und Masken stehen im typisierten Katalog `graphics.ts`.
+`characters/elias-walk-v06.png` ist die erste Generierung vor Korrektur der zweiten Schrittphase; das Spiel verwendet ausschließlich die korrigierte Datei. Atlaszellen sind quadratisch. Die Figuren werden seit dem V0.61-Review auf eine gemeinsame Fußlinie mit Anker `(0.5, 1)` ausgerichtet. Die verbindlichen Größen, Zellen und Masken stehen im typisierten Katalog `graphics.ts`.
 
 ## Generierungsbrief der ursprünglichen Grafiken
 
@@ -57,6 +57,15 @@ Die Winterbilder bearbeiten jeweils die fertig generierte Basisszene: gleiche Ka
 
 ## Darstellung und Ersatzgrafiken
 
-`WorldArt.tsx` schneidet Atlanten in festen SVG-Zellen aus. Hintergrund und Vordergrund sind getrennte Ebenen; geometrische Ausschnitte des identischen Raumbilds ermöglichen positionsabhängige Verdeckung. Interaktive Gegenstände bleiben einzelne SVG-Elemente aus `SceneArt.tsx`. Fehlende Raum-/Figurendateien verwenden diese bisherigen SVG-Grafiken als Ersatz.
+`WorldArt.tsx` schneidet Figuren anhand gemessener Körpergrenzen in `SPRITE_FRAMES` aus. Die transparente Umgebung und Reste benachbarter Laufbilder werden ausgeschlossen; Körperhöhe, Mitte und Fußlinie sind für alle Richtungen und Schrittphasen gleich. Hintergrund und Vordergrund sind getrennte Ebenen; geometrische Ausschnitte des identischen Raumbilds ermöglichen positionsabhängige Verdeckung. Interaktive Gegenstände bleiben einzelne SVG-Elemente aus `SceneArt.tsx`. Fehlende Raum-/Figurendateien verwenden diese bisherigen SVG-Grafiken als Ersatz.
 
 Das vorhandene Zimmerbild und der Minispielhintergrund `goelzau-range-v1.png` bleiben erhalten. V0.6 gleicht ihre Rahmung, Beleuchtung, Figuren, Kamera bzw. Geräusche an die übrige Welt an.
+
+
+## Ruheposen im V0.61-Review
+
+`public/characters/rest-poses-v061.png` ist ein neu generierter transparenter Atlas (1254 × 1254): Felice sitzt links oben, Elias rechts oben, Felice liegt links unten. Die rechte untere Fläche bleibt frei. Die Ausschnitte sind in `REST_GRAPHICS` dokumentiert. Felices schwarzer Hoodie, schwarze Hose und lange Haare sowie Elias' weißer Hoodie und Locken übernehmen die bestehenden Figurenmerkmale.
+
+Gestaltungsvorgabe: dieselbe warme, weich schattierte RPG-Bildsprache; vollständig sichtbare Körper; sitzend entspannte Hände auf den Knien und Füße unter den Knien; liegend Kopf oben, Füße unten, Haare auf der Unterlage und Hände am Bauch. Kein Möbelstück, Text, Raster oder Hintergrund im Atlas. Die Bettdecke wird aus der vorhandenen Zimmergrafik über die unteren Körperteile gelegt. Die Liegepose wird nicht aus einer gedrehten Standfigur zusammengesetzt.
+
+Neue Bänke in Garten und Schießstand verwenden die ausgeschnittene gemalte Bank aus dem Schulhof. Der Wintergarten übernimmt die schneebedeckte Variante. Die bereits im Hintergrund vorhandenen Bänke an Haltestelle und Schule werden direkt benutzt.

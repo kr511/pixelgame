@@ -1,6 +1,6 @@
-import { memo, useState, type CSSProperties } from "react";
+import { memo, useId, useState, type CSSProperties } from "react";
 import { SceneArt, PersonArt, DogArt } from "./SceneArt";
-import { CHARACTER_GRAPHICS, SCENE_GRAPHICS, characterGraphic, sceneBackground } from "./graphics";
+import { CHARACTER_GRAPHICS, REST_GRAPHICS, SPRITE_FRAMES, SCENE_GRAPHICS, characterGraphic, sceneBackground } from "./graphics";
 import type { Place } from "./story";
 
 export const WorldBackdrop = memo(function WorldBackdrop({ place, winter }: { place: Place; winter: boolean }) {
@@ -13,26 +13,38 @@ export const WorldBackdrop = memo(function WorldBackdrop({ place, winter }: { pl
   </>;
 });
 
-export function CharacterArt({ id, portrait = false, direction = "front", walking = false, pose = "standing" }: { id: string; portrait?: boolean; direction?: "front" | "left" | "back" | "right"; walking?: boolean; pose?: "standing" | "sitting" | "lying" }) {
+export function CharacterArt({ id, portrait = false, direction = "front", walking = false, frame = 0, pose = "standing" }: { id: string; portrait?: boolean; direction?: "front" | "left" | "back" | "right"; walking?: boolean; frame?: number; pose?: "standing" | "sitting" | "lying" }) {
   const graphic = characterGraphic(id);
   const spec = portrait ? graphic.portrait : graphic;
   const [failedSource, setFailedSource] = useState<string | null>(null);
   const column = !portrait && (id === "elias" || id === "felice") ? ["front","left","back","right"].indexOf(direction) : spec.column;
-  if (failedSource === spec.sheet) return <span className="character-fallback">{id === "dog" ? <DogArt/> : <PersonArt variant={id}/>}</span>;
-  if (!portrait && pose === "sitting") return <svg className="character-art character-seated" viewBox="0 0 100 100" aria-hidden="true">
-    <svg x="0" y="10" width="100" height="65" viewBox="0 0 100 65" overflow="hidden"><image href={spec.sheet} width={spec.columns*100} height={spec.rows*100} x="0" y="0" preserveAspectRatio="none" onError={() => setFailedSource(spec.sheet)}/></svg>
-    <path d="M38 72Q32 71 32 80L35 91H46L48 78H51L54 91H65L68 80Q69 73 62 72Z" fill={id === "elias" ? "#282a2c" : "#363234"} stroke="#242426" strokeWidth="1.5"/>
-    <path d="M34 89h13l1 5H31l1-3ZM53 89h13l3 5H53Z" fill="#eee8dd" stroke="#635b55" strokeWidth="1"/>
+  const resting = !portrait && pose !== "standing" && (id === "felice" || id === "elias");
+  const sheet = resting ? REST_GRAPHICS.sheet : spec.sheet;
+  if (failedSource === sheet) return <span className={`character-fallback fallback-pose-${pose}`}>{id === "dog" ? <DogArt/> : <PersonArt variant={id}/>}</span>;
+  const atlas = SPRITE_FRAMES[spec.sheet];
+  if (!portrait && (atlas || resting)) {
+    const rect = resting ? pose === "lying" ? REST_GRAPHICS.feliceLying : id === "elias" ? REST_GRAPHICS.eliasSeated : REST_GRAPHICS.feliceSeated : atlas.frames[walking ? frame : spec.row][column];
+    const size = resting ? REST_GRAPHICS.size : atlas.size;
+    const height = pose === "sitting" ? 120 : 132;
+    const width = rect[2] / rect[3] * height;
+    return <svg key={sheet} className={`character-art character-${pose}`} viewBox="0 0 100 140" data-frame={walking ? frame : 0} aria-hidden="true">
+      <svg x={50-width/2} y={140-height} width={width} height={height} viewBox={rect.join(" ")} overflow="hidden">
+        <image href={sheet} width={size[0]} height={size[1]} onError={() => setFailedSource(sheet)}/>
+      </svg>
+    </svg>;
+  }
+  if (portrait && id === "felice") return <svg className="character-art" viewBox="155 15 155 155" aria-hidden="true"><image href={spec.sheet} width="1448" height="1086" onError={() => setFailedSource(sheet)}/></svg>;
+  return <svg className="character-art" viewBox="0 0 100 100" aria-hidden="true">
+    <image href={spec.sheet} x={-column*100} y={-spec.row*100} width={spec.columns*100} height={spec.rows*100} preserveAspectRatio="none" onError={() => setFailedSource(sheet)}/>
   </svg>;
-  if (!portrait && pose === "lying") return <svg className="character-art character-lying" viewBox="0 0 160 75" aria-hidden="true">
-    <rect x="7" y="13" width="34" height="48" rx="9" fill="#f1dcc2" stroke="#c4aa8c" strokeWidth="2"/>
-    <g transform="translate(2 73) rotate(-90) scale(.72 1.45)"><svg width="100" height="100" viewBox="0 0 100 100" overflow="hidden"><image href={spec.sheet} width={spec.columns*100} height={spec.rows*100} preserveAspectRatio="none" onError={() => setFailedSource(spec.sheet)}/></svg></g>
-    <path d="M54 10Q62 5 68 10H151V64H54Q61 39 54 10Z" fill="#b88874" stroke="#765743" strokeWidth="2"/><path d="M66 14v46M86 10v54M107 10v54M128 10v54M58 28h92M57 45h93" stroke="#e4baa0" strokeWidth="2" opacity=".6"/>
-  </svg>;
-  // The image moves by whole cells; each SVG's viewport clips exactly one atlas frame.
-  const viewBox = portrait && id === "felice" ? "38 0 52 52" : "0 0 100 100";
-  return <svg className={`character-art ${walking ? "character-walking" : ""}`} viewBox={viewBox} aria-hidden="true" shapeRendering="geometricPrecision">
-    <image className="character-sheet" href={spec.sheet} x={-column*100} y={-spec.row*100} width={spec.columns*100} height={spec.rows*100} preserveAspectRatio="none" onError={() => setFailedSource(spec.sheet)}/>
+}
+
+/** Reuse the painted bench silhouette; the paving is excluded by the mask. */
+export function BenchArt({ winter = false }: { winter?: boolean }) {
+  const clip = useId();
+  return <svg viewBox="10.8 37.8 19 10.4" aria-hidden="true">
+    <defs><clipPath id={clip}><path d="M11.5 38.5H29.2V45.5H11.5ZM11.1 39H12.1V47.8H11.1ZM28.4 39H29.6V47.8H28.4Z"/></clipPath></defs>
+    <image href={sceneBackground("school", winter)} width="100" height="100" clipPath={`url(#${clip})`}/>
   </svg>;
 }
 

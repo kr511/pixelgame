@@ -13,7 +13,7 @@ test("Kamera zeigt an jeder Weltkante ausschließlich die Szene", () => {
     assert.ok(player.x>=0&&player.x<=1&&player.y>=0&&player.y<=1);
   }
   assert.equal(cameraFor({x:.5,y:.5},.5).zoom,1);
-  assert.equal(cameraFor({x:.5,y:.5},NaN).zoom,1.5);
+  assert.equal(cameraFor({x:.5,y:.5},NaN).zoom,1);
 });
 
 test("Zielhinweis zeigt aus dem Bild liegende Ziele an die richtige Bildschirmkante", () => {

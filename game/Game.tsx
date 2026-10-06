@@ -8,7 +8,8 @@ import { useMemories } from "./memories/store";
 import { MemoryTransition } from "./memories/MemoryTransition";
 import { ShootingMemory } from "./memories/ShootingMemory";
 import { ItemArt } from "./SceneArt";
-import { CharacterArt, WorldAtmosphere, WorldBackdrop, characterStyle } from "./WorldArt";
+import { BenchArt, CharacterArt, WorldAtmosphere, WorldBackdrop, characterStyle } from "./WorldArt";
+import { movementStep, walkingFrame } from "./motion";
 import { CHAPTER_GRAPHICS, speakerGraphic } from "./graphics";
 import { cameraFor, offscreenGuide } from "./camera";
 import { audioAllowed, worldAudio } from "./audio";
@@ -41,6 +42,10 @@ export function Game() {
   const [player, setPlayer] = useState<Point>(SPAWNS[initial.save.place]);
   const [direction, setDirection] = useState<Direction>("front");
   const [walking, setWalking] = useState(false);
+  const [walkFrame, setWalkFrame] = useState(0);
+  const walkDistance = useRef(0);
+  const [dog, setDog] = useState<Point>({ x: .58, y: .53 });
+  const dogRef = useRef(dog);
   const [journal, setJournal] = useState(false);
   const [dialogue, setDialogue] = useState<Dialogue | null>(null);
   const [needsLandscape, setNeedsLandscape] = useState(false);
@@ -60,7 +65,8 @@ export function Game() {
   const step = currentStep(save);
   const exits = PLACES[save.place].exits;
   const guide = step && step.place !== save.place ? routeTo(save.place, step.place) : undefined;
-  const sceneEntities = ENTITIES[save.place].filter(e => !rest?.elias || e.art !== "elias").map(e => e.id === "anuk" && save.completed.includes("dog") && save.chapter !== "dog" ? { ...e, x: Math.max(.1,player.x-.07), y: Math.min(.87,player.y+.04) } : e);
+  const dogFollows = save.place === "garden" && save.completed.includes("dog") && save.chapter !== "dog";
+  const sceneEntities = ENTITIES[save.place].filter(e => !rest?.elias || e.art !== "elias").map(e => e.id === "anuk" && dogFollows ? { ...e, ...dog } : e);
   const nearbyExit = exits.find(e => Math.hypot(e.x-player.x, e.y-player.y) < .105);
   const nearbyEntity = sceneEntities.map(e => ({ e, d: Math.hypot(e.x - player.x, e.y - player.y), companion: e.id === "anuk" && save.completed.includes("dog") && save.chapter !== "dog" })).filter(v => v.d < .115 && !(v.companion && nearbyExit)).sort((a,b) => Number(a.companion)-Number(b.companion) || a.d-b.d)[0]?.e;
   const spots = REST_SPOTS.filter(spot => spot.place === save.place);
@@ -118,7 +124,15 @@ export function Game() {
     return () => { if (node?.open) node.close(); };
   }, [dialogue, journal]);
 
-  const move = useCallback(() => {
+  const move = useCallback((seconds: number) => {
+    if (dogFollows) {
+      const offset = { x: playerRef.current.x-dogRef.current.x, y: playerRef.current.y-dogRef.current.y };
+      const distance = Math.hypot(offset.x, offset.y);
+      if (distance > .11) {
+        const next = movementStep(dogRef.current, { x: offset.x/distance, y: offset.y/distance }, seconds*.8, (x,y) => canWalk("garden",x,y));
+        dogRef.current = next; setDog(next);
+      }
+    }
     if (rest) { setWalking(false); return; }
     const input = useInput.getState();
     let dx = Math.abs(input.moveX) > .05 ? input.moveX : Number(pressedKeys.has("KeyD") || pressedKeys.has("ArrowRight")) - Number(pressedKeys.has("KeyA") || pressedKeys.has("ArrowLeft"));
@@ -128,13 +142,18 @@ export function Game() {
     if (magnitude > 1) { dx /= magnitude; dy /= magnitude; }
     setDirection(Math.abs(dx) > Math.abs(dy) ? dx > 0 ? "right" : "left" : dy > 0 ? "front" : "back");
     const p = playerRef.current;
-    const x = canWalk(save.place,p.x+dx*.018,p.y) ? p.x+dx*.018 : p.x;
-    const y = canWalk(save.place,x,p.y+dy*.018) ? p.y+dy*.018 : p.y;
-    const moved = Math.hypot(x-p.x,y-p.y) > .0001;
+    const { x, y } = movementStep(p, { x: dx, y: dy }, seconds, (x, y) => canWalk(save.place, x, y));
+    const distance = Math.hypot(x-p.x,y-p.y);
+    const moved = distance > .00001;
     setWalking(moved);
-    if (moved) worldAudio.play("step");
-    playerRef.current = {x,y}; setPlayer({x,y});
-  }, [save.place, rest]);
+    if (moved) {
+      const previous = Math.floor(walkDistance.current / .054);
+      walkDistance.current += distance;
+      setWalkFrame(walkingFrame(walkDistance.current));
+      if (Math.floor(walkDistance.current / .054) !== previous) worldAudio.play("step");
+      playerRef.current = {x,y}; setPlayer({x,y});
+    }
+  }, [save.place, rest, dogFollows]);
 
   const interact = useCallback(() => {
     if (!active) return;
@@ -187,7 +206,7 @@ export function Game() {
       if (event.code === "KeyJ" && started && inWorld && !paused && !needsLandscape && !event.repeat) { event.preventDefault(); clearMovement(); setJournal(v => !v); return; }
       if (!active) return;
       if (["KeyW","KeyA","KeyS","KeyD","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(event.code)) {
-        event.preventDefault(); pressedKeys.add(event.code); if (!event.repeat) move();
+        event.preventDefault(); pressedKeys.add(event.code);
       }
       if (event.code === "KeyE" && !event.repeat) { event.preventDefault(); interact(); }
     };
@@ -199,8 +218,15 @@ export function Game() {
 
   useEffect(() => {
     if (!active) return;
-    const timer = window.setInterval(move,92);
-    return () => { window.clearInterval(timer); clearMovement(); };
+    let frame = 0;
+    let previous = performance.now();
+    const tick = (now: number) => {
+      if (!document.hidden) move(Math.min((now-previous)/1000, .1));
+      previous = now;
+      frame = window.requestAnimationFrame(tick);
+    };
+    frame = window.requestAnimationFrame(tick);
+    return () => { window.cancelAnimationFrame(frame); clearMovement(); };
   }, [active,move]);
 
   function selectChapter(id: ChapterId) {
@@ -223,20 +249,22 @@ export function Game() {
   const arrow = questTarget ? offscreenGuide(questTarget, camera) : null;
 
   return <main className="game-shell pixel-game version-five version-six version-061" data-scene={inWorld ? save.place : "shooting"} data-chapter={save.chapter ?? "free"} data-atmosphere-active={active} data-minute={day.minute} data-day={day.day}>
+    <link rel="preload" as="image" href="/characters/rest-poses-v061.png"/>
     <div className={`pixel-viewport world-viewport ${save.place === "bedroom" ? "bedroom-viewport" : ""}`} hidden={!inWorld && phase !== "entering"} role="group" aria-label={PLACES[save.place].name}>
       <div key={save.place} className="world-scene world-camera" style={{ "--camera-x": `${camera.x*100}%`, "--camera-y": `${camera.y*100}%`, "--world-zoom": camera.zoom } as CSSProperties}>
         <WorldBackdrop place={save.place} winter={winter}/>
-        {spots.map(spot => <div key={spot.id} className={`rest-spot rest-${spot.kind}${restTarget?.id === spot.id ? " nearby-rest" : ""}`} style={{...labelStyle(spot.kind === "bed" ? spot.approach : spot.position), zIndex: Math.round(spot.position.y*100)+8}} aria-label={spot.name}>
-          {spot.kind === "bench" && <svg viewBox="0 0 100 56" aria-hidden="true"><path d="M12 23V6M88 23V6M14 39v13M86 39v13" stroke="#3f5146" strokeWidth="5"/><path d="M5 7h90v8H5M5 19h90v8H5" fill="#a37650" stroke="#674a35" strokeWidth="1.5"/><path d="M1 33h98v10H1" fill="#c09865" stroke="#674a35" strokeWidth="2"/><path d="M5 43h90" stroke="#725239" strokeWidth="3"/></svg>}
-          {(!rest || rest.spot.id !== spot.id) && <span className="entity-name">{spot.name}</span>}
+        {spots.map(spot => <div key={spot.id} className={`rest-spot rest-${spot.kind}${restTarget?.id === spot.id ? " nearby-rest" : ""}`} style={{...labelStyle(spot.furniture ?? spot.approach), zIndex: Math.round((spot.furniture ?? spot.position).y*100)+8}} aria-label={spot.name}>
+          {spot.furniture && <BenchArt winter={winter && save.place === "garden"}/>}
+          {restTarget?.id === spot.id && !rest && <span className="entity-name">{spot.name}</span>}
         </div>)}
-        {exits.map(exit => <div key={exit.to} className={`world-exit ${guide?.to === exit.to ? "quest-exit" : ""}`} style={labelStyle(exit)}><span>↗</span><small>{exit.label}</small></div>)}
+        {exits.map(exit => <div key={exit.to} className={`world-exit ${guide?.to === exit.to ? "quest-exit" : ""}`} style={labelStyle(exit)}><span><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 19 19 5M6 5h13v13" fill="none" stroke="currentColor" strokeWidth="2"/></svg></span><small>{exit.label}</small></div>)}
         {sceneEntities.map(entity => <WorldEntity key={entity.id} entity={entity} quest={step?.place === save.place && step.target === entity.id} nearby={active && nearbyEntity?.id === entity.id} />)}
         {save.place === "bedroom" && memoryProgress["goelzau-shooting"] && <span className="room-trophy" style={labelStyle({x:.855,y:.49})} aria-label="Erinnerungsmedaille" data-testid="shooting-medal">✦</span>}
         <div className={`room-player facing-${direction}${rest ? ` pose-${rest.spot.kind === "bed" ? "lying" : "sitting"}` : ""}${walking && active ? " walking" : ""}`} data-testid="felice-player" data-pose={rest ? rest.spot.kind === "bed" ? "lying" : "sitting" : "standing"} data-x={player.x.toFixed(3)} data-y={player.y.toFixed(3)} data-direction={direction} style={{...labelStyle(player),zIndex:rest?.spot.kind === "bed" ? 80 : Math.round(player.y*100)+10}}>
-          <CharacterArt id="felice" direction={direction} walking={walking && active} pose={rest ? rest.spot.kind === "bed" ? "lying" : "sitting" : "standing"}/><span className="room-player-label">Felice</span>
+          <CharacterArt id="felice" direction={direction} walking={walking && active} frame={walkFrame} pose={rest ? rest.spot.kind === "bed" ? "lying" : "sitting" : "standing"}/><span className="room-player-label">Felice</span>
         </div>
-        {rest?.elias && <div className="room-player pose-sitting bench-companion" style={{...labelStyle({ x: player.x + .075, y: player.y }), zIndex: Math.round(player.y*100)+10}} aria-label="Elias sitzt neben Felice" data-testid="seated-elias"><CharacterArt id="elias" pose="sitting"/><span className="room-player-label">Elias</span></div>}
+        {rest?.spot.kind === "bed" && <svg className="bed-duvet" viewBox="0 0 100 100" aria-hidden="true"><defs><clipPath id="bed-duvet-mask"><path d="M19.5 26Q25.5 25 31.5 26L33 39H18Z"/></clipPath></defs><image href="/rooms/felice-bedroom-v9.png" width="100" height="100" clipPath="url(#bed-duvet-mask)"/><path d="M19.5 26Q25.5 25 31.5 26" fill="none" stroke="#675148" strokeWidth=".35"/></svg>}
+        {rest?.elias && <div className="room-player pose-sitting bench-companion" style={{...labelStyle(rest.spot.companion ?? player), zIndex: Math.round(player.y*100)+10}} aria-label="Elias sitzt neben Felice" data-testid="seated-elias"><CharacterArt id="elias" pose="sitting"/><span className="room-player-label">Elias</span></div>}
         <WorldAtmosphere place={save.place} winter={winter}/>
         <div className="daylight-shade" style={{ opacity: (1-light.daylight) * (["garden", "bus", "school"].includes(save.place) ? .62 : .18) }} aria-hidden="true"/>
       </div>
@@ -273,7 +301,8 @@ export function Game() {
 }
 
 function WorldEntity({ entity, quest, nearby }: { entity: Entity; quest: boolean; nearby: boolean }) {
-  return <div className={`world-entity entity-${entity.kind} ${entity.kind !== "item" ? "character-idle" : ""} ${quest ? "quest-entity" : ""} ${nearby ? "nearby-entity" : ""}`} style={{...(entity.kind !== "item" ? characterStyle(entity.kind === "dog" ? "dog" : entity.art) : {}),left:`${entity.x*100}%`,top:`${entity.y*100}%`,zIndex:Math.round(entity.y*100)+9}} aria-label={entity.name}>
+  const point = entity.display ?? entity;
+  return <div className={`world-entity entity-${entity.kind} ${entity.kind !== "item" ? "character-idle" : ""} ${quest ? "quest-entity" : ""} ${nearby ? "nearby-entity" : ""}`} style={{...(entity.kind !== "item" ? characterStyle(entity.kind === "dog" ? "dog" : entity.art) : {}),left:`${point.x*100}%`,top:`${point.y*100}%`,zIndex:entity.display ? 110 : Math.round(entity.y*100)+9}} aria-label={entity.name}>
     {quest && <span className="quest-marker">!</span>}{entity.kind === "person" ? <CharacterArt id={entity.art}/> : entity.kind === "dog" ? <CharacterArt id="dog"/> : <ItemArt art={entity.art}/>}<span className="entity-name">{entity.name}</span>
   </div>;
 }

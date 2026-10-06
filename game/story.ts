@@ -3,7 +3,7 @@ export type Point = { x: number; y: number };
 export type ChapterId = "dog" | "christmas" | "school" | "shooting";
 export type Step = { id: string; place: Place; target: string; label: string; speaker: string; text: string; item?: string };
 export type Chapter = { id: ChapterId; title: string; date: string; icon: string; intro: string; ending: string; reward: string; steps: Step[] };
-export type Entity = Point & { id: string; name: string; kind: "person" | "dog" | "item"; art: string; text: string };
+export type Entity = Point & { id: string; name: string; kind: "person" | "dog" | "item"; art: string; text: string; display?: Point };
 export type Exit = Point & { to: Place; label: string; spawn: Point };
 export type Obstacle = { left: number; right: number; top: number; bottom: number };
 export const PLACES: Record<Place, { name: string; subtitle: string; exits: Exit[]; obstacles: Obstacle[] }> = {
@@ -15,29 +15,29 @@ export const PLACES: Record<Place, { name: string; subtitle: string; exits: Exit
   ], obstacles: [{ left: .46, right: .73, top: .235, bottom: .48 }, { left: .12, right: .40, top: .17, bottom: .43 }, { left: .84, right: .96, top: .12, bottom: .46 }] },
   garden: { name: "Der Garten", subtitle: "Kleine Pfoten, große Welt", exits: [
     { x: .5, y: .23, to: "home", label: "Ins Haus", spawn: { x: .5, y: .8 } }, { x: .91, y: .69, to: "bus", label: "Zur Haltestelle", spawn: { x: .17, y: .7 } },
-  ], obstacles: [{ left: .27, right: .7, top: .04, bottom: .19 }, { left: .07, right: .2, top: .23, bottom: .42 }, { left: .73, right: .9, top: .2, bottom: .4 }] },
+  ], obstacles: [{ left: .27, right: .7, top: .04, bottom: .19 }, { left: .07, right: .2, top: .23, bottom: .42 }, { left: .73, right: .9, top: .2, bottom: .4 }, { left: .15, right: .35, top: .52, bottom: .60 }] },
   bus: { name: "Radegast · Bushaltestelle", subtitle: "Mit dem Bus nach Zörbig", exits: [
     { x: .09, y: .7, to: "garden", label: "Nach Hause", spawn: { x: .82, y: .69 } }, { x: .78, y: .44, to: "school", label: "Bus zur Schule nehmen", spawn: { x: .5, y: .82 } }, { x: .91, y: .76, to: "range", label: "Nach Gölzau", spawn: { x: .5, y: .82 } },
   ], obstacles: [{ left: .61, right: .87, top: .05, bottom: .36 }, { left: .13, right: .42, top: .21, bottom: .37 }] },
   school: { name: "Sekundarschule Zörbig", subtitle: "Zwischen Unterricht und Heimweg", exits: [{ x: .5, y: .9, to: "bus", label: "Bus nach Radegast", spawn: { x: .76, y: .52 } }], obstacles: [{ left: .18, right: .82, top: .06, bottom: .32 }, { left: .11, right: .30, top: .38, bottom: .48 }, { left: .70, right: .89, top: .38, bottom: .48 }] },
-  range: { name: "Schießstand · Gölzau", subtitle: "Einmal tief durchatmen", exits: [{ x: .5, y: .9, to: "bus", label: "Zur Haltestelle", spawn: { x: .82, y: .76 } }], obstacles: [{ left: .1, right: .9, top: .04, bottom: .34 }] },
+  range: { name: "Schießstand · Gölzau", subtitle: "Einmal tief durchatmen", exits: [{ x: .5, y: .9, to: "bus", label: "Zur Haltestelle", spawn: { x: .82, y: .76 } }], obstacles: [{ left: .1, right: .9, top: .04, bottom: .34 }, { left: .66, right: .86, top: .76, bottom: .835 }] },
 };
 
 // Bestätigt: acht Personen beim Weihnachtsessen; Namen noch offen.
 // Dialoge, Kleidung und genaue Szenengestaltung sind spielerische Entwürfe.
 export const ENTITIES: Record<Place, Entity[]> = {
-  bedroom: [{ id: "album", name: "Unser Erinnerungsbuch", x: .38, y: .64, kind: "item", art: "book", text: "Vier Kapitel, viele kleine Momente. Öffne das Erinnerungsbuch oben rechts und wähle eine Geschichte." }, { id: "photo", name: "Foto aus Gölzau", x: .79, y: .59, kind: "item", art: "photo", text: "Das Foto führt dich direkt zum Schießen in Gölzau." }],
+  bedroom: [{ id: "album", name: "Unser Erinnerungsbuch", x: .77, y: .32, display: { x: .68, y: .23 }, kind: "item", art: "book", text: "Vier Kapitel, viele kleine Momente. Öffne das Erinnerungsbuch oben rechts und wähle eine Geschichte." }, { id: "photo", name: "Foto aus Gölzau", x: .79, y: .52, display: { x: .885, y: .45 }, kind: "item", art: "photo", text: "Das Foto führt dich direkt zum Schießen in Gölzau." }],
   home: [
     { id: "family", name: "Felices Mutter", x: .28, y: .5, kind: "person", art: "mother", text: "Schön, dass ihr da seid. Hier ist immer Platz für euch." },
     { id: "stepfather", name: "Felices Stiefvater", x: .75, y: .47, kind: "person", art: "stepfather", text: "Kommt herein. Wir machen es uns heute alle zusammen gemütlich." },
-    { id: "halfsister", name: "Felices Halbschwester", x: .32, y: .7, kind: "person", art: "halfsister", text: "Schön, heute gemeinsam Weihnachten zu feiern." },
-    { id: "halfsister-partner", name: "Freund der Halbschwester", x: .18, y: .62, kind: "person", art: "partner-one", text: "Frohe Weihnachten euch beiden!" },
+    { id: "halfsister", name: "Felices Halbschwester", x: .32, y: .7, kind: "person", art: "halfsister", text: "Schön, heute Zeit miteinander zu verbringen." },
+    { id: "halfsister-partner", name: "Freund der Halbschwester", x: .18, y: .62, kind: "person", art: "partner-one", text: "Hallo ihr beiden! Macht es euch gemütlich." },
     { id: "stepsister", name: "Tochter des Stiefvaters", x: .76, y: .8, kind: "person", art: "stepsister", text: "Heute sind wir zu acht. Das wird ein schöner gemeinsamer Abend." },
     { id: "stepsister-partner", name: "Ihr Freund", x: .86, y: .65, kind: "person", art: "partner-two", text: "Schön, dass wir heute alle zusammen hier sind." },
     { id: "elias-home", name: "Elias", x: .57, y: .77, kind: "person", art: "elias", text: "Am schönsten ist es, wenn wir gemeinsam hier sind." },
-    { id: "dishes", name: "Geschirr", x: .69, y: .32, kind: "item", art: "plates", text: "Teller, Besteck und Gläser für einen gemeinsamen Abend." },
-    { id: "table", name: "Weihnachtstisch", x: .57, y: .53, kind: "item", art: "star", text: "Ein Tisch voller kleiner Dinge, an die man sich später erinnert." },
-    { id: "blanket", name: "Kuscheldecke", x: .19, y: .4, kind: "item", art: "blanket", text: "Eine weiche Decke für einen neuen Lieblingsplatz." },
+    { id: "dishes", name: "Geschirr", x: .77, y: .35, display: { x: .685, y: .345 }, kind: "item", art: "plates", text: "Teller, Besteck und Gläser für einen gemeinsamen Abend." },
+    { id: "table", name: "Esstisch", x: .57, y: .53, display: { x: .57, y: .44 }, kind: "item", art: "star", text: "Ein Tisch voller kleiner Dinge, an die man sich später erinnert." },
+    { id: "blanket", name: "Kuscheldecke", x: .3, y: .48, display: { x: .235, y: .325 }, kind: "item", art: "blanket", text: "Eine weiche Decke für einen neuen Lieblingsplatz." },
   ],
   garden: [
     { id: "anuk", name: "Anuk", x: .58, y: .53, kind: "dog", art: "dog", text: "Anuk, euer American Akita, schnuppert an deiner Hand. Sein eingerollter Schwanz wippt zufrieden." },
@@ -46,24 +46,24 @@ export const ENTITIES: Record<Place, Entity[]> = {
     { id: "dog-bed", name: "Anuks Platz", x: .35, y: .72, kind: "item", art: "bed", text: "Hier kann Anuk in Ruhe ankommen." },
   ],
   bus: [
-    { id: "elias-bus", name: "Elias", x: .43, y: .57, kind: "person", art: "elias", text: "Ein gewöhnlicher Weg fühlt sich zusammen gleich anders an." },
-    { id: "timetable", name: "Fahrplan · Radegast–Zörbig", x: .4, y: .39, kind: "item", art: "sign", text: "Radegast ↔ Zörbig. Euer Schulbus verbindet die Haltestelle mit der Sekundarschule Zörbig. Rechts führt der Spielweg nach Gölzau." },
-    { id: "ticket", name: "Fahrkarte", x: .24, y: .64, kind: "item", art: "ticket", text: "Eine Fahrkarte für den gemeinsamen Weg." },
+    { id: "elias-bus", name: "Elias", x: .48, y: .47, kind: "person", art: "elias", text: "Ein gewöhnlicher Weg fühlt sich zusammen gleich anders an." },
+    { id: "timetable", name: "Fahrplan · Radegast–Zörbig", x: .45, y: .4, display: { x: .445, y: .32 }, kind: "item", art: "sign", text: "Radegast ↔ Zörbig. Euer Schulbus verbindet die Haltestelle mit der Sekundarschule Zörbig. Rechts führt der Spielweg nach Gölzau." },
+    { id: "ticket", name: "Fahrkarte", x: .36, y: .44, display: { x: .37, y: .34 }, kind: "item", art: "ticket", text: "Eine Fahrkarte für den gemeinsamen Weg." },
   ],
   school: [
-    { id: "friends", name: "Elena", x: .38, y: .48, kind: "person", art: "elena", text: "Hey Felice! Schön, dich zu sehen. Wollen wir nach der Schule noch ein bisschen zusammen bleiben?" },
-    { id: "jason", name: "Jason", x: .58, y: .55, kind: "person", art: "jason", text: "Hey. Ich mache gerade eine kleine Pause. Du kannst dich gern dazustellen." },
+    { id: "friends", name: "Elena", x: .37, y: .55, kind: "person", art: "elena", text: "Hey Felice! Schön, dich zu sehen. Wollen wir nach der Schule noch ein bisschen zusammen bleiben?" },
+    { id: "jason", name: "Jason", x: .61, y: .61, kind: "person", art: "jason", text: "Hey. Ich mache gerade eine kleine Pause. Du kannst dich gern dazustellen." },
     { id: "luca", name: "Luca", x: .37, y: .73, kind: "person", art: "luca", text: "Hallo Felice. Heute ist es hier ziemlich ruhig. Das mag ich." },
-    { id: "wyatt", name: "Wyatt", x: .78, y: .7, kind: "person", art: "wyatt", text: "Hey Felice! Schön, dass du da bist." },
+    { id: "wyatt", name: "Wyatt", x: .73, y: .7, kind: "person", art: "wyatt", text: "Hey Felice! Schön, dass du da bist." },
     { id: "notebook", name: "Vergessenes Heft", x: .68, y: .69, kind: "item", art: "book", text: "Jemand hat ein Heft liegen gelassen." },
-    { id: "school-door", name: "Schultür", x: .5, y: .38, kind: "item", art: "bell", text: "Der Unterricht ist vorbei. Zeit für den gemeinsamen Heimweg." },
+    { id: "school-door", name: "Schultür", x: .5, y: .38, display: { x: .5, y: .30 }, kind: "item", art: "bell", text: "Der Unterricht ist vorbei. Zeit für den gemeinsamen Heimweg." },
   ],
-  range: [{ id: "range-host", name: "Am Schießstand", x: .32, y: .57, kind: "person", art: "host", text: "Die Bahn ist bereit. Neun Schüsse, drei Scheiben. Nimm dir Zeit." }, { id: "shoot", name: "Schießbahn", x: .62, y: .49, kind: "item", art: "target", text: "Bereit für deine Runde?" },
-    { id: "ida", name: "Ida", x: .17, y: .55, kind: "person", art: "ida", text: "Hallo Felice! Schön, dich beim Schießen zu sehen." },
-    { id: "helena", name: "Helena", x: .46, y: .48, kind: "person", art: "helena", text: "Hi Felice! Wollen wir uns nach der Runde kurz zusammensetzen?" },
-    { id: "linda", name: "Linda", x: .81, y: .49, kind: "person", art: "linda", text: "Hallo! Die nächste Runde wartet schon auf uns." },
-    { id: "lina", name: "Lina", x: .38, y: .75, kind: "person", art: "lina", text: "Hey Felice, wie läuft dein Tag bisher?" },
-    { id: "alexandra", name: "Alexandra", x: .64, y: .69, kind: "person", art: "alexandra", text: "Schön, dass wir uns hier treffen. Viel Spaß bei deiner Runde!" },
+  range: [{ id: "range-host", name: "Am Schießstand", x: .32, y: .57, kind: "person", art: "host", text: "Die Bahn ist bereit. Neun Schüsse, drei Scheiben. Nimm dir Zeit." }, { id: "shoot", name: "Schießbahn", x: .5, y: .44, kind: "item", art: "target", text: "Bereit für deine Runde?" },
+    { id: "ida", name: "Ida", x: .19, y: .68, kind: "person", art: "ida", text: "Hallo Felice! Schön, dich beim Schießen zu sehen." },
+    { id: "helena", name: "Helena", x: .32, y: .78, kind: "person", art: "helena", text: "Hi Felice! Wollen wir uns nach der Runde kurz zusammensetzen?" },
+    { id: "linda", name: "Linda", x: .78, y: .57, kind: "person", art: "linda", text: "Hallo! Die nächste Runde wartet schon auf uns." },
+    { id: "lina", name: "Lina", x: .65, y: .68, kind: "person", art: "lina", text: "Hey Felice, wie läuft dein Tag bisher?" },
+    { id: "alexandra", name: "Alexandra", x: .82, y: .70, kind: "person", art: "alexandra", text: "Schön, dass wir uns hier treffen. Viel Spaß bei deiner Runde!" },
   ],
 };
 

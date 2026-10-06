@@ -10,7 +10,7 @@ export const SEASONS = ["Frühling", "Sommer", "Herbst", "Winter"] as const;
 export type Season = typeof SEASONS[number];
 export type DaySave = { version: 1; date: string; minute: number; day: number; season: Season };
 export type DayNotice = { date: string; minute: number };
-export type RestSpot = { id: string; place: Place; name: string; kind: "bench" | "bed"; approach: Point; position: Point };
+export type RestSpot = { id: string; place: Place; name: string; kind: "bench" | "bed"; approach: Point; position: Point; companion?: Point; furniture?: Point };
 
 export function initialDay(now = new Date()): DaySave {
   const date = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
@@ -75,10 +75,10 @@ export function seasonalLight(season: Season, minute: number) {
 }
 
 export const REST_SPOTS: RestSpot[] = [
-  { id: "felice-bed", place: "bedroom", name: "Felices Bett", kind: "bed", approach: { x: .32, y: .49 }, position: { x: .32, y: .32 } },
-  { id: "garden-bench", place: "garden", name: "Gartenbank", kind: "bench", approach: { x: .2, y: .58 }, position: { x: .2, y: .57 } },
-  { id: "bus-bench", place: "bus", name: "Bank an der Haltestelle", kind: "bench", approach: { x: .2, y: .44 }, position: { x: .2, y: .43 } },
-  { id: "school-bench", place: "school", name: "Bank auf dem Schulhof", kind: "bench", approach: { x: .2, y: .57 }, position: { x: .2, y: .56 } },
-  { id: "school-bench-right", place: "school", name: "Bank am Schulhofrand", kind: "bench", approach: { x: .8, y: .57 }, position: { x: .8, y: .56 } },
-  { id: "range-bench", place: "range", name: "Bank am Schießstand", kind: "bench", approach: { x: .78, y: .79 }, position: { x: .78, y: .78 } },
+  { id: "felice-bed", place: "bedroom", name: "Felices Bett", kind: "bed", approach: { x: .30, y: .49 }, position: { x: .255, y: .35 } },
+  { id: "garden-bench", place: "garden", name: "Gartenbank", kind: "bench", approach: { x: .25, y: .65 }, position: { x: .215, y: .602 }, companion: { x: .28, y: .602 }, furniture: { x: .25, y: .61 } },
+  { id: "bus-bench", place: "bus", name: "Bank an der Haltestelle", kind: "bench", approach: { x: .275, y: .405 }, position: { x: .247, y: .36 }, companion: { x: .306, y: .36 } },
+  { id: "school-bench", place: "school", name: "Bank auf dem Schulhof", kind: "bench", approach: { x: .205, y: .54 }, position: { x: .175, y: .48 }, companion: { x: .24, y: .48 } },
+  { id: "school-bench-right", place: "school", name: "Bank am Schulhofrand", kind: "bench", approach: { x: .8, y: .54 }, position: { x: .765, y: .48 }, companion: { x: .83, y: .48 } },
+  { id: "range-bench", place: "range", name: "Bank am Schießstand", kind: "bench", approach: { x: .76, y: .89 }, position: { x: .725, y: .835 }, companion: { x: .79, y: .835 }, furniture: { x: .76, y: .845 } },
 ];
