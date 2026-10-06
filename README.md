@@ -1,6 +1,18 @@
 # Felice × Elias World
 
-Version **0.6**: ein eigenständiges, mobiles 2D-Spiel mit sechs zusammenhängenden Orten, sanft folgender Kamera und vier spielbaren Erinnerungskapiteln.
+Version **0.61**: ein eigenständiges, mobiles 2D-Spiel mit sechs zusammenhängenden Orten, Tageszyklus, Freunden, Ruhepositionen und vier spielbaren Erinnerungskapiteln.
+
+## Neu in V0.61
+
+- Der Tag beginnt um **5:00 Uhr**. Gespräche, Hinsetzen, Hinlegen, Aufstehen und Ausruhen kosten **10 Minuten**, Ortswechsel **30 Minuten**. Laufen, Pause und das Erinnerungsbuch verbrauchen keine Spielzeit.
+- Die Uhr bleibt oben sichtbar. Um **8, 12, 15, 18, 21 und 24 Uhr** erscheint für 4,5 Sekunden ein Hinweis mit Uhrzeit und Ort/Aktivität. Überschreitet eine Aktion mehrere Uhrzeiten, folgen die Hinweise nacheinander; während Dialogen, Pause und Erinnerungen warten sie.
+- An der Schultür lässt sich Unterricht von **7:15 bis 13:00 Uhr** besuchen. Wer früher kommt, wartet bis zum Unterricht. Danach ist der Schulhof weiter frei begehbar.
+- **Frühling, Sommer, Herbst und Winter** sind über die Uhr auswählbar und werden gespeichert. Die Jahreszeit steuert weiche Dämmerung, Tageslänge und winterliche Außenbilder. Sommerabende bleiben deutlich länger hell als Winterabende. Das Weihnachtskapitel behält seine winterliche Gestaltung.
+- **Elena, Jason, Luca und Wyatt** stehen auf dem Schulhof. **Ida, Helena, Linda, Lina und Alexandra** sind am Schießstand. Elena ist Felice näher befreundet; Jason und Luca haben ruhigere Dialoge. Die Figuren verwenden vorläufig vorhandene Atlasgrafiken, bis persönliche Aussehensangaben vorliegen.
+- Bänke in Garten, Haltestelle, Schulhof und Schießstand sind mit **E oder dem Aktionsknopf** benutzbar. **Mit Elias sitzen** lädt Elias auf den freien Platz ein. **Aufstehen** beendet die Sitzposition.
+- In Felices Zimmer führt **Hinlegen** ins Bett, zunächst wach. **Schlafen bis 5:00 Uhr** überspringt alle verbleibenden Hinweise bis zum nächsten Morgen; Schlaf vor 21 Uhr löst somit keine 21-/24-Uhr-Meldung aus. Nach Mitternacht führt Schlaf zu 5 Uhr desselben Morgens.
+
+Der Tagesstand wird getrennt unter `felice-elias.day.v061` gespeichert. Bestehende Kapitel- und Erinnerungsstände bleiben kompatibel. Sitz-/Liegepositionen sind vorübergehend; nach Neuladen steht Felice wieder am Ortseingang.
 
 ## Die Welt in V0.6
 
@@ -28,7 +40,7 @@ npx eslint game/Game.tsx game/GameUI.tsx game/WorldArt.tsx game/audio.ts game/ca
 npm run build
 ```
 
-Die 16 Tests umfassen die zehn bestehenden Kapitel-, Speicher-, Erreichbarkeits- und Trefferwertungsprüfungen sowie Kamera, Grafikzuordnung und Tonzustände. Browserprüfungen ergänzen sie um Darstellung, Dialoge, Ortswechsel, Wiederholung, Pause und Neuladen.
+Die 22 Tests umfassen Kapitel, Speicherstände, Erreichbarkeit, Trefferwertung, Kamera, Grafikzuordnung, Ton sowie Tagesgrenzen, Hinweiszeiten, Schlafen und Jahreszeiten. Browserprüfungen ergänzen sie um Darstellung und Bedienung.
 
 ## Lokal starten
 

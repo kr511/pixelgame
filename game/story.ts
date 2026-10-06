@@ -51,11 +51,20 @@ export const ENTITIES: Record<Place, Entity[]> = {
     { id: "ticket", name: "Fahrkarte", x: .24, y: .64, kind: "item", art: "ticket", text: "Eine Fahrkarte für den gemeinsamen Weg." },
   ],
   school: [
-    { id: "friends", name: "Freunde", x: .38, y: .48, kind: "person", art: "friend", text: "Da seid ihr ja! Schön, euch zu sehen." },
+    { id: "friends", name: "Elena", x: .38, y: .48, kind: "person", art: "elena", text: "Hey Felice! Schön, dich zu sehen. Wollen wir nach der Schule noch ein bisschen zusammen bleiben?" },
+    { id: "jason", name: "Jason", x: .58, y: .55, kind: "person", art: "jason", text: "Hey. Ich mache gerade eine kleine Pause. Du kannst dich gern dazustellen." },
+    { id: "luca", name: "Luca", x: .37, y: .73, kind: "person", art: "luca", text: "Hallo Felice. Heute ist es hier ziemlich ruhig. Das mag ich." },
+    { id: "wyatt", name: "Wyatt", x: .78, y: .7, kind: "person", art: "wyatt", text: "Hey Felice! Schön, dass du da bist." },
     { id: "notebook", name: "Vergessenes Heft", x: .68, y: .69, kind: "item", art: "book", text: "Jemand hat ein Heft liegen gelassen." },
     { id: "school-door", name: "Schultür", x: .5, y: .38, kind: "item", art: "bell", text: "Der Unterricht ist vorbei. Zeit für den gemeinsamen Heimweg." },
   ],
-  range: [{ id: "range-host", name: "Am Schießstand", x: .32, y: .57, kind: "person", art: "host", text: "Die Bahn ist bereit. Neun Schüsse, drei Scheiben. Nimm dir Zeit." }, { id: "shoot", name: "Schießbahn", x: .62, y: .49, kind: "item", art: "target", text: "Bereit für deine Runde?" }],
+  range: [{ id: "range-host", name: "Am Schießstand", x: .32, y: .57, kind: "person", art: "host", text: "Die Bahn ist bereit. Neun Schüsse, drei Scheiben. Nimm dir Zeit." }, { id: "shoot", name: "Schießbahn", x: .62, y: .49, kind: "item", art: "target", text: "Bereit für deine Runde?" },
+    { id: "ida", name: "Ida", x: .17, y: .55, kind: "person", art: "ida", text: "Hallo Felice! Schön, dich beim Schießen zu sehen." },
+    { id: "helena", name: "Helena", x: .46, y: .48, kind: "person", art: "helena", text: "Hi Felice! Wollen wir uns nach der Runde kurz zusammensetzen?" },
+    { id: "linda", name: "Linda", x: .81, y: .49, kind: "person", art: "linda", text: "Hallo! Die nächste Runde wartet schon auf uns." },
+    { id: "lina", name: "Lina", x: .38, y: .75, kind: "person", art: "lina", text: "Hey Felice, wie läuft dein Tag bisher?" },
+    { id: "alexandra", name: "Alexandra", x: .64, y: .69, kind: "person", art: "alexandra", text: "Schön, dass wir uns hier treffen. Viel Spaß bei deiner Runde!" },
+  ],
 };
 
 export const CHAPTERS: Chapter[] = [

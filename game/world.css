@@ -86,3 +86,37 @@
 }
 @media (max-height:380px) and (orientation:landscape) { .version-six .quest-tracker { width:130px; } .version-six .quest-tracker>span { display:none; } .version-six .joystick { left:25px; width:80px; height:80px; } }
 @media (prefers-reduced-motion:reduce) { .world-camera { transition:none; } .world-atmosphere *,.character-idle>.character-art { animation:none!important; } }
+
+.daylight-shade { position:absolute; inset:0; z-index:118; pointer-events:none; background:#102139; transition:opacity 1.2s ease; }
+.day-clock { position:absolute; top:20px; left:50%; transform:translateX(-50%); z-index:5; min-width:190px; padding:9px 14px; border:1px solid #9ca183; border-radius:5px; background:#273e35f5; box-shadow:0 4px 18px #10251d44; }
+.day-clock strong,.day-clock small { display:block; }
+.day-clock strong { color:#f6e8c8; font:600 18px/1.2 Georgia,serif; font-variant-numeric:tabular-nums; }
+.day-clock small { margin-top:3px; color:#d2d8bd; font-size:11px; }
+.day-clock label { display:flex; gap:8px; align-items:center; margin-top:6px; font-size:10px; color:#c8d0b7; }
+.day-clock select { min-height:26px; border:1px solid #7e9178; border-radius:3px; padding:2px 7px; background:#344d3e; color:#f4e8d0; cursor:pointer; font-size:11px; }
+.day-clock select:focus-visible { outline:2px solid #e9cb8b; outline-offset:2px; }
+.day-notice { position:absolute; top:125px; left:50%; transform:translateX(-50%); z-index:7; display:grid; gap:5px; width:max-content; max-width:min(350px,45vw); padding:14px 20px; border:1px solid #d6ba81; border-radius:5px; background:#f0e3c9f5; color:#304334; text-align:center; box-shadow:0 6px 24px #10251d55; pointer-events:none; }
+.day-notice strong { font:600 23px/1.2 Georgia,serif; }
+.day-notice span { font-size:12px; line-height:1.4; }
+.rest-spot { position:absolute; width:22%; transform:translate(-50%,-65%); }
+.rest-spot>svg { display:block; width:100%; filter:drop-shadow(0 3px 2px #283e3540); }
+.rest-bed { width:6%; transform:translate(-50%,-50%); }
+.rest-spot .entity-name { position:absolute; left:50%; top:100%; transform:translateX(-50%); color:#f3e6ca; background:#304634eb; border:1px solid #839579; padding:2px 5px; white-space:nowrap; }
+.nearby-rest .entity-name { border-color:#e9cb8b; color:#ffe1a0; }
+.version-061 .room-player.pose-sitting { transform:translate(-50%,-91%); }
+.version-061 .room-player.pose-lying { width:30%; transform:translate(-50%,-50%); }
+.pose-lying .room-player-label { bottom:100%; }
+.rest-actions { gap:6px; }
+.rest-actions button { justify-content:center; width:100%; }
+.day-save-warning { position:absolute; z-index:9; right:15px; bottom:12px; max-width:320px; padding:9px 12px; background:#493c2c; border:1px solid #d6b781; font-size:11px; color:#ffedce; }
+@media (max-width:1100px) { .day-clock { left:45%; } }
+@media (max-height:600px) and (orientation:landscape) {
+  .day-clock { top:10px; left:50%; min-width:145px; padding:6px 9px; }
+  .day-clock strong { font-size:14px; } .day-clock small { font-size:9px; }
+  .day-clock label { margin-top:3px; font-size:9px; } .day-clock select { min-height:24px; font-size:10px; }
+  .day-notice { top:100px; padding:9px 12px; max-width:35vw; }
+  .day-notice strong { font-size:18px; } .day-notice span { font-size:10px; }
+  .version-061 .rest-actions { max-width:160px; bottom:12px; }
+  .version-061 .rest-actions button { padding:6px 9px; font-size:10px; }
+}
+@media (prefers-reduced-motion:reduce) { .daylight-shade { transition:none; } }
