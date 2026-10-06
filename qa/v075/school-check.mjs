@@ -43,19 +43,22 @@ const sitting=name=>{
 
 for(const [mode,width,height] of [['desktop',1366,900],['mobile',844,390]]){
  add('set','viewport',String(width),String(height));start('school');screenshot(`${mode}-school`);
- assert(`!document.querySelector('[data-entity="elias-guest"]') && [...document.querySelectorAll('.entity-person')].length===4`);
+ assert(`!document.querySelector('[data-entity="elias-guest"]') && [...document.querySelectorAll('.entity-person')].length===4 && document.body.scrollWidth<=${width}`);
 }
 add('set','viewport','1366','900');start('school');
 evaluate(`window.friendStart=[...document.querySelectorAll('.entity-person')].map(n=>[n.dataset.entity,n.dataset.x,n.dataset.y])`);add('wait','5000');
-assert(`window.friendStart.every(([id,x,y])=>{const n=document.querySelector('[data-entity="'+id+'"]');return (n.dataset.x!==x || n.dataset.y!==y) && Number(n.dataset.x)>=.20 && Number(n.dataset.x)<=.46 && Number(n.dataset.y)>=.39 && Number(n.dataset.y)<=.54})`);
+assert(`window.friendStart.every(([id,x,y])=>{const n=document.querySelector('[data-entity="'+id+'"]');return (n.dataset.x!==x || n.dataset.y!==y) && Number(n.dataset.x)>=.26 && Number(n.dataset.x)<=.35 && Number(n.dataset.y)>=.34 && Number(n.dataset.y)<=.70})`);
 screenshot('friends-at-window-grilles');
-walkTo(.69,.665);sitting('couple-front-tree');walkTo(.535,.665);walkTo(.52,.75);sitting('couple-seat-wall');
-assert(`Number(document.querySelector('[data-entity="elias-guest"]').dataset.y)>.65`);
-walkTo(.86,.8);walkTo(.535,.9);add('click','[data-testid="world-interact"]');assert(`document.querySelector('main').dataset.scene==='zoerbig'`);walkTo(.17,.76);add('click','[data-testid="world-interact"]');assert(`document.querySelector('main').dataset.scene==='school'`);
-start('school');walkTo(.535,.65);walkTo(.33,.55);walkTo(.23,.555);add('click','[data-testid="world-interact"]');assert(`document.querySelector('.dialogue-modal h2').textContent==='Elena'`);
+walkTo(.661,.698);sitting('couple-front-tree');walkTo(.555,.843);sitting('couple-seat-wall');
+assert(`Number(document.querySelector('[data-entity="elias-guest"]').dataset.y)>.70`);
+walkTo(.515,.90);walkTo(.505,.945);add('click','[data-testid="world-interact"]');assert(`document.querySelector('main').dataset.scene==='zoerbig'`);walkTo(.17,.76);add('click','[data-testid="world-interact"]');assert(`document.querySelector('main').dataset.scene==='school'`);
+start('school');walkTo(.56,.80);walkTo(.36,.70);walkTo(.29,.68);add('click','[data-testid="world-interact"]');assert(`document.querySelector('.dialogue-modal h2').textContent==='Elena'`);
 add('find','role','button','click','--name','Hinsetzen');add('wait','--fn',`document.querySelector('[data-entity="friends"]').dataset.pose==='sitting'`);screenshot('elena-sitting');
-walkTo(.34,.64);walkTo(.37,.70);walkTo(.395,.744);add('click','[data-testid="world-interact"]');assert(`document.querySelector('.dialogue-modal h2').textContent==='Elena'`);add('find','role','button','click','--name','Hinlegen');add('wait','--fn',`document.querySelector('[data-entity="friends"]').dataset.pose==='lying'`);screenshot('elena-lying');
-for(const p of [[.33,.55],[.10,.55],[.09,.64],[.14,.79]])walkTo(...p);
+walkTo(.38,.71);walkTo(.44,.76);walkTo(.442,.834);add('click','[data-testid="world-interact"]');assert(`document.querySelector('.dialogue-modal h2').textContent==='Elena'`);add('find','role','button','click','--name','Hinlegen');add('wait','--fn',`document.querySelector('[data-entity="friends"]').dataset.pose==='lying'`);screenshot('elena-lying');
+for(const p of [[.44,.915],[.42,.945],[.36,.943],[.335,.887],[.23,.85]])walkTo(...p);
 add('click','[data-testid="world-interact"]');add('find','role','button','click','--name','Aufstehen');assert(`document.querySelector('[data-entity="friends"]').dataset.pose==='standing'`);
-start('school',435);walkTo(.86,.8);walkTo(.875,.68);add('click','[data-testid="world-interact"]');add('find','role','button','click','--name','Unterricht besuchen');assert(`document.querySelector('main').dataset.minute==='780'`);screenshot('school-door-photo');
-start('school',840,'Winter');screenshot('winter-school');add('errors');process.stdout.write(JSON.stringify(commands));
+add('wait','--fn',`Number(document.querySelector('[data-entity="friends"]').dataset.y)<.70`);screenshot('elena-returned-to-grilles');
+start('school',435);walkTo(.73,.75);walkTo(.77,.684);add('click','[data-testid="world-interact"]');add('find','role','button','click','--name','Unterricht besuchen');assert(`document.querySelector('main').dataset.minute==='780'`);screenshot('school-door-photo');
+start('school',840,'Winter');screenshot('winter-school');
+evaluate(`document.querySelector('.scene-backdrop image').dispatchEvent(new Event('error'))`);assert(`!!document.querySelector('.fallback-school')`);screenshot('school-overhead-fallback');
+add('errors');process.stdout.write(JSON.stringify(commands));

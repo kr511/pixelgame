@@ -14,10 +14,10 @@ export function standingActor(position: Point, wait = 0): Actor {
 // Four short routes beside the gray building's basement window grilles.
 // Elias is invited to the separate seating area and has no group patrol.
 export const SCHOOL_ROUTES: Record<string, Point[]> = {
-  friends: [{ x: .215, y: .50 }, { x: .235, y: .49 }, { x: .245, y: .52 }, { x: .225, y: .53 }],
-  jason: [{ x: .272, y: .469 }, { x: .292, y: .459 }, { x: .302, y: .489 }, { x: .282, y: .499 }],
-  luca: [{ x: .328, y: .438 }, { x: .348, y: .428 }, { x: .358, y: .458 }, { x: .338, y: .468 }],
-  wyatt: [{ x: .415, y: .414 }, { x: .447, y: .414 }, { x: .457, y: .456 }, { x: .425, y: .456 }],
+  friends: [{ x: .27, y: .66 }, { x: .30, y: .65 }, { x: .305, y: .678 }, { x: .275, y: .688 }],
+  jason: [{ x: .285, y: .56 }, { x: .315, y: .55 }, { x: .32, y: .578 }, { x: .29, y: .588 }],
+  luca: [{ x: .295, y: .46 }, { x: .325, y: .45 }, { x: .33, y: .478 }, { x: .30, y: .488 }],
+  wyatt: [{ x: .305, y: .36 }, { x: .337, y: .35 }, { x: .342, y: .38 }, { x: .31, y: .39 }],
 };
 export function initialActors(): Actors {
   return Object.fromEntries(Object.values(ENTITIES).flat().filter(e => e.kind === "person" && canChangePose(e.art)).map((e, i) => [e.id, standingActor({ x: e.x, y: e.y }, 1.5 + i % 4)]));
@@ -82,6 +82,12 @@ export function advanceActor(place: Place, id: string, actor: Actor, seconds: nu
   const target = actor.route[0] ?? patrol?.[actor.waypoint];
   if (!target) return actor.moving ? { ...actor, moving: false } : actor;
   const dx = target.x - actor.position.x, dy = target.y - actor.position.y, length = Math.hypot(dx, dy);
+  // After a rest outside the group, return around the courtyard's sitting
+  // walls before resuming the short patrol at the window grilles.
+  if (!actor.route.length && patrol && length > .08) {
+    const route = walkingRoute(place, actor.position, target);
+    return route.length ? advanceActor(place, id, { ...actor, route }, seconds) : { ...actor, moving: false };
+  }
   if (length < .003) {
     const route = actor.route.slice(1);
     if (actor.route.length) {

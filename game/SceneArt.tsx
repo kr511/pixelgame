@@ -53,14 +53,15 @@ export const SceneArt = memo(function SceneArt({ place, christmas }: { place: Pl
     </>}
     {place === "school" && <>
       <rect width="600" height="600" fill="url(#paving)"/>
-      <path d="M0 0H349V180L104 298H0Z" fill="#9d9b92"/><path d="M0 80 338 8M0 158 336 87M0 226 332 149" stroke="#c6c5b9" strokeWidth="5"/>
-      {[130,170,210,250,290].map((x,i)=><g key={x}><Window x={x} y={70-i*15}/><Window x={x} y={135-i*15}/><Window x={x} y={200-i*15}/><rect x={x} y={263-i*15} width="28" height="20" fill="#47504b"/>{[5,11,17,23].map(n=><path key={n} d={`M${x+n} ${263-i*15}v20`} stroke="#bcc2b9" strokeWidth="2"/>)}</g>)}
-      <path d="M25 145v146h65V171M25 179 90 245M25 221 90 288" stroke="#c4cfcb" strokeWidth="5" fill="none"/>
-      <path d="M550 0H600V600L576 600 540 432 528 294Z" fill="#a36143"/>{[80,160,240,320].map(y=><Window key={y} x={557} y={y}/>)}<rect x="558" y="356" width="42" height="55" fill="#463d35"/>
-      <path d="M35 310 600 540" stroke="#ba765a" strokeWidth="50"/>
-      <path d="M0 360 145 388 105 425 160 470 160 540 0 530Z" fill="#7d9870"/>
-      <path d="M65 350 151 380 110 422 168 467 168 530M254 421 283 461" stroke="#9b6250" strokeWidth="12" fill="none"/>
-      {[{x:274,y:227},{x:350,y:157},{x:460,y:251},{x:412,y:347}].map(p=><g key={p.x}><path d={`M${p.x-34} ${p.y+6}l34 -17 35 17 -35 15Z`} fill="#8a6b4e"/><Tree x={p.x} y={p.y}/></g>)}
+      <path d="M0 0H160L129 395H0Z" fill="#b0aa98"/><path d="M0 0H134L108 300H0Z" fill="#777b79"/>
+      {[50,110,170,230,290,345].map((y,i)=><g key={y}><path d={`M${151-i*4} ${y}l-2 25`} stroke="#ede9df" strokeWidth="5"/><path d={`M${158-i*4} ${y+28}l-2 19`} stroke="#65706a" strokeWidth="8"/></g>)}
+      <path d="M30 325h82v67H30ZM30 347h82M30 368h82M68 325v67" stroke="#c5d0cb" strokeWidth="5" fill="none"/>
+      <path d="M466 0H600V600H521L486 399Z" fill="#a36346"/><path d="M499 0H600V600H546L514 400Z" fill="#a7553b"/>
+      {[15,45,75,105,135,165,195,225,255,285,315,345,375,405,435,465,495,525,555].map(y=><path key={y} d={`M505 ${y}H600`} stroke="#733d2e" strokeWidth="2"/>)}
+      <path d="M0 388 510 496" stroke="#ba765a" strokeWidth="44"/><rect x="254" y="0" width="96" height="50" fill="#797a70"/>
+      <path d="M50 440 196 470 183 488 229 510 238 560 60 534Z" fill="#78966b"/>
+      <path d="M115 428 200 452 187 478 235 510 244 554M60 510 160 530M282 474 310 508" stroke="#a16851" strokeWidth="10" fill="none"/>
+      {[{x:246,y:164},{x:374,y:222},{x:293,y:316},{x:400,y:365}].map(p=><g key={p.x}><path d={`M${p.x-30} ${p.y-12}l30 -17 35 17 -30 21Z`} fill="#956d4e"/><circle cx={p.x} cy={p.y-18} r="30" fill="#627e42"/><circle cx={p.x-12} cy={p.y-23} r="20" fill="#7c9850"/><circle cx={p.x+15} cy={p.y-20} r="22" fill="#6f9048"/></g>)}
     </>}
     {place === "range" && <>
       <rect width="600" height="211" fill="#b8baa3"/><path d="M0 192h600" stroke="#8c6d4d" strokeWidth="16"/>

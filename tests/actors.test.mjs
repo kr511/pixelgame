@@ -35,7 +35,7 @@ test("Jeder Freund erreicht Sitz- und Liegeplatz, steht auf und gibt den Platz f
         assert.equal(actor.moving, false);
         actor = requestPose(place, actor, "standing");
         assert.equal(actor.restId, undefined);
-        for (let i = 0; i < 600 && actor.route.length; i++) actor = advanceActor(place, entity.id, actor, 1 / 60);
+        for (let i = 0; i < 1800 && actor.route.length; i++) actor = advanceActor(place, entity.id, actor, 1 / 60);
         assert.equal(actor.route.length, 0, `${entity.id}: Aufstehen`);
         assert.ok(canWalk(place, actor.position.x, actor.position.y));
       }
@@ -93,7 +93,7 @@ test("Elias bleibt außerhalb der vier Schulfreunde am Fenstergitter", () => {
     let actor=initialActors()[id];
     for(let i=0;i<2400;i++) {
       actor=advanceActor("school",id,actor,1/60);
-      assert.ok(actor.position.x>=.20 && actor.position.x<=.46 && actor.position.y>=.39 && actor.position.y<=.54,id);
+      assert.ok(actor.position.x>=.26 && actor.position.x<=.35 && actor.position.y>=.34 && actor.position.y<=.70,id);
     }
   }
 });
@@ -107,4 +107,18 @@ test("Der Weg zur grünen Sitzecke umgeht schmale Mauern zwischen den Rasterpunk
     const a=route[i-1],b=route[i],samples=Math.ceil(Math.hypot(a.x-b.x,a.y-b.y)/.001);
     for(let j=0;j<=samples;j++) assert.ok(canWalk("school",a.x+(b.x-a.x)*j/samples,a.y+(b.y-a.y)*j/samples),`Segment ${i}`);
   }
+});
+
+test("Elena kehrt nach dem Aufstehen um die Sitzmauern zur Fenstergitter-Gruppe zurück", () => {
+  const actors=initialActors();
+  let actor=requestPose("school",actors.friends,"lying",availableSeat("school","lying",actors.friends.position,actors));
+  for(let i=0;i<3000 && actor.pose!=="lying";i++) actor=advanceActor("school","friends",actor,1/60);
+  assert.equal(actor.pose,"lying");
+  actor=requestPose("school",actor,"standing");
+  for(let i=0;i<1800;i++) {
+    actor=advanceActor("school","friends",actor,1/60);
+    assert.ok(canWalk("school",actor.position.x,actor.position.y));
+  }
+  assert.equal(actor.pose,"standing");
+  assert.ok(actor.position.x>=.26 && actor.position.x<=.35 && actor.position.y>=.64 && actor.position.y<=.70);
 });

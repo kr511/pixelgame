@@ -1,20 +1,20 @@
 # V0.75 – Orts- und Szenenprüfung
 
-Geprüft am 06.10.2026 mit Chromium, agent-browser und dem lokalen Vinext-Entwicklungsserver. Alle zehn Orte wurden in 1366 × 900 und 844 × 390 aufgenommen und auf Darstellung sowie horizontales Überlaufen geprüft. Der Schulhof wurde anschließend mit den vier Nutzerfotos neu gestaltet und in beiden Größen erneut geprüft. Die [Ortsreferenzen](SOURCES.md) beschreiben den Fotoabgleich und seine Grenzen.
+Geprüft am 06.10.2026 mit Chromium, agent-browser und dem lokalen Vinext-Entwicklungsserver. Alle zehn Orte wurden in 1366 × 900 und 844 × 390 aufgenommen und auf Darstellung sowie horizontales Überlaufen geprüft. Der Schulhof wurde anschließend mit den vier Nutzerfotos neu gestaltet, auf steile Vogelperspektive umgestellt und in beiden Größen erneut geprüft. Die [Ortsreferenzen](SOURCES.md) beschreiben den Fotoabgleich und seine Grenzen.
 
 ## Ergebnis
 
-- 41 Logiktests bestanden: kollisionsgeprüfte Hin- und Rückwege in den drei Wegszenen, Schul-/Schießrouten über die neuen Ankunftsorte, kompatible Kapitelstände sowie genau vier Freunde am Fenstergitter ohne Elias. Die Wegsuche prüft auch schmale Sitzmauern zwischen ihren Rasterpunkten.
+- 42 Logiktests bestanden: kollisionsgeprüfte Hin- und Rückwege in den drei Wegszenen, Schul-/Schießrouten über die neuen Ankunftsorte, kompatible Kapitelstände sowie genau vier Freunde am Fenstergitter ohne Elias. Die Wegsuche prüft auch schmale Sitzmauern zwischen ihren Rasterpunkten; Schulfreunde finden nach dem Aufstehen um diese Mauern zur Gruppe zurück.
 - TypeScript-Prüfung, ESLint der geänderten Spiel- und QA-Dateien sowie Produktionsbuild bestanden.
 - Browser: Wohnung → Radegast → Haltestelle → Zörbiger Markt → Schule und zurück vollständig mit Tastatur gelaufen. Die Gölzauer Zufahrt wurde nach dem Bildabgleich nochmals in beide Richtungen geprüft, einschließlich Eintritt in den Schießstand. Der abschließende Reise-, Unterrichts- und Winterlauf besteht mit 165 Prüfschritten ohne JavaScript-Fehler.
-- Der fotobasierte Hof zeigt den grauen Schulbau links, das Backsteingebäude rechts, den roten Querweg, Baumbeete und die grüne Ecke mit Sitzmauern. Die vier Freunde bewegen sich entlang der blau markierten unteren Fenstergitter. Ohne Einladung erscheint kein Elias auf dem Hof.
-- Felice und Elias erreichen den Sitzrand am vorderen Baum, die Sitzmauer am Gehweg sowie die Haltestellenbank, sitzen zusammen und stehen wieder auf. Elias bleibt anschließend außerhalb der Schulgruppe ansprechbar. Elena erreicht einen Sitzplatz und die Ruhedecke in der grünen Ecke und kann wieder aufstehen.
+- Der fotobasierte Hof zeigt aus der Vogelperspektive beide Dächer und den grauen Schulbau links, das Backsteingebäude rechts, den roten Querweg, Baumbeete und die grüne Ecke mit Sitzmauern. Die vier Freunde bewegen sich entlang der blau markierten unteren Fenstergitter. Ohne Einladung erscheint kein Elias auf dem Hof.
+- Felice und Elias erreichen den Sitzrand am vorderen Baum, die Sitzmauer am Gehweg sowie die Haltestellenbank, sitzen zusammen und stehen wieder auf. Elias bleibt anschließend außerhalb der Schulgruppe ansprechbar. Elena erreicht einen Sitzplatz und die Ruhedecke in der grünen Ecke und kehrt nach dem Aufstehen zur Gruppe zurück.
 - Unterricht an der neuen Türposition springt von 7:15 auf 13:00. Gehen verbraucht keine zusätzliche Spielzeit; Ortswechsel und Ruheaktionen verwenden die vorhandenen Zeitregeln.
 - Ortsplan markiert den aktuellen Ort; auf Desktop und Handy vollständig sichtbar nach Scrollen im Buch.
 - Joystick per Maus-/Pointer-Drag bei 760 × 390 geprüft: Bewegung startet und stoppt beim Loslassen. Dies prüft den Pointer-Pfad, nicht reale Touch-Hardware.
 - Abschließende Browserläufe melden keine JavaScript-Fehler.
 
-Die Schule besitzt Hindernispolygone für Fassaden, Baumbeete und Sitzmauern sowie passende Vordergrundmasken. Die diagonale Sitzmauer verwendet mehrere Tiefenabschnitte, damit sitzende Figuren sichtbar bleiben. Ein eigener Browserlauf prüft 118 Schritte einschließlich beider Paar-Sitzplätze, Elenas Haltungswechsel, Hofausgang und Rückkehr, Unterricht und Winterdarstellung; alle Schritte bestehen ohne JavaScript-Fehler. Die einfache Ersatzgrafik folgt derselben Hofanordnung.
+Die Schule besitzt Hindernispolygone für Fassaden, Baumbeete und Sitzmauern sowie passende Vordergrundmasken. Die diagonale Sitzmauer verwendet mehrere Tiefenabschnitte, damit sitzende Figuren sichtbar bleiben. Ein eigener Browserlauf prüft 125 Schritte einschließlich beider Paar-Sitzplätze, Elenas Haltungswechsel, Hofausgang und Rückkehr, Unterricht und Winterdarstellung; alle Schritte bestehen ohne JavaScript-Fehler. Die einfache Ersatzgrafik folgt ebenfalls der Vogelperspektive und wird durch einen simulierten Bildfehler geprüft. Die Beschriftungen liegen außerhalb der Figuren; der Hofausgang bleibt vor dem Tor sichtbar und wird gegenüber einem weiter entfernten Sitzplatz bevorzugt.
 
 ## Alle zehn Orte
 
@@ -39,6 +39,8 @@ Die Schule besitzt Hindernispolygone für Fassaden, Baumbeete und Sitzmauern sow
 - [Felice und Elias am vorderen Baum](screenshots/couple-front-tree.png)
 - [Felice und Elias auf der Sitzmauer](screenshots/couple-seat-wall.png)
 - [Schultür nach Unterricht bis 13 Uhr](screenshots/school-door-photo.png)
+- [Elena zurück an den Fenstergittern](screenshots/elena-returned-to-grilles.png)
+- [Ersatzgrafik aus der Vogelperspektive](screenshots/school-overhead-fallback.png)
 - [Zusammen an der Haltestelle](screenshots/couple-bus-bench.png)
 - [Elena sitzt](screenshots/elena-sitting.png) · [Elena liegt auf der Decke](screenshots/elena-lying.png)
 - [Eingang Schützenhaus](screenshots/goelzau-entrance.png) · [Rückweg auf der Zufahrt](screenshots/goelzau-return-road.png)

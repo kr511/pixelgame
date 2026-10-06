@@ -226,7 +226,11 @@
 .version-075[data-scene="radegast"] .entity-person,
 .version-075[data-scene="zoerbig"] .entity-person { width:4.8%!important; }
 
-/* Photo-based school courtyard: match the facade scale and keep the green corner clear. */
+/* High overhead school courtyard: match the figure scale to the visible roofs. */
 .version-075[data-scene="school"] .room-player,
-.version-075[data-scene="school"] .entity-person { width:6.6%!important; }
+.version-075[data-scene="school"] .entity-person { width:4.8%!important; }
 .version-075[data-scene="school"] .rest-mat { width:14%; }
+.version-075[data-scene="school"] .world-exit { z-index:110; }
+
+.version-075[data-scene="school"] [data-rest-id^="school-bench-right"].pose-sitting .room-player-label,
+.version-075[data-scene="school"] [data-rest-id^="school-bench-right"].pose-sitting .entity-name { left:0; transform:translateX(-100%); }

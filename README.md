@@ -6,7 +6,7 @@ Version **0.75**: ein eigenständiges, mobiles 2D-Spiel mit zehn zusammenhängen
 
 - **Radegast:** Von Felices Wohnung führt ein verkürzter, wiedererkennbarer Weg entlang der Hausreihen und Gärten zur neu gestalteten Bushaltestelle.
 - **Zörbig:** Der Bus kommt am Markt an. Von dort geht es zu Fuß an der Kirche vorbei zur Sekundarschule und auf den Pausenhof. Markt, Kirche und Schule folgen der Anordnung im bereitgestellten Luftbild.
-- **Pausenhof:** Die vier Schulhof-Fotos bestimmen den grauen Schulbau links, das Backsteingebäude rechts, den roten Gehweg, Baumbeete mit Sitzrändern und die grüne Ecke mit Sitzmauern. Elena, Jason, Luca und Wyatt bewegen sich an den blau markierten Fenstergittern des grauen Gebäudes. Elias gehört nicht zu dieser Gruppe; Felice kann ihn separat zum Sitzen am Baum oder auf der Sitzmauer einladen.
+- **Pausenhof:** Die steile Vogelperspektive zeigt beide Dächer und den begehbaren Hof. Die vier Schulhof-Fotos bestimmen den grauen Schulbau links, das Backsteingebäude rechts, den roten Gehweg, Baumbeete mit Sitzrändern und die grüne Ecke mit Sitzmauern. Elena, Jason, Luca und Wyatt bewegen sich an den blau markierten Fenstergittern des grauen Gebäudes. Elias gehört nicht zu dieser Gruppe; Felice kann ihn separat zum Sitzen am Baum oder auf der Sitzmauer einladen.
 - **Gölzau:** Der neue Weg führt über die Zufahrt zum Schützenhaus und weiter in den vorhandenen Schießstand. Alle neuen Wege besitzen Rückwege, angepasste Hindernisse und Vordergrundmasken.
 - **Ortsplan:** Das Erinnerungsbuch zeigt die Verbindungen zwischen Wohnung, Radegast, Zörbig und Gölzau sowie den aktuellen Ort. Tagesregeln, Kapitel und bestehende Spielstände bleiben erhalten.
 
@@ -76,7 +76,7 @@ npx eslint game/SceneArt.tsx game/graphics.ts game/Game.tsx game/GameUI.tsx game
 npm run build
 ```
 
-Die 41 Tests umfassen Kapitel, Speicherstände, Erreichbarkeit, Trefferwertung, Kamera, Grafikzuordnung, Ton, Tagesgrenzen, Hinweiszeiten, Schlafen, Jahreszeiten, Bewegung bei verschiedenen Bildraten, Kollisionen, NPC-Laufwege, Platzreservierungen, alle Freundesposen sowie Felices und Elias' Ruhewege und ergänzte Namen. Die Schulgruppe ohne Elias und durchgehend begehbare Wege um schmale Sitzmauern werden ebenfalls geprüft. Browserprüfungen ergänzen sie um Darstellung und Bedienung.
+Die 42 Tests umfassen Kapitel, Speicherstände, Erreichbarkeit, Trefferwertung, Kamera, Grafikzuordnung, Ton, Tagesgrenzen, Hinweiszeiten, Schlafen, Jahreszeiten, Bewegung bei verschiedenen Bildraten, Kollisionen, NPC-Laufwege, Platzreservierungen, alle Freundesposen sowie Felices und Elias' Ruhewege und ergänzte Namen. Die Schulgruppe ohne Elias, durchgehend begehbare Wege um schmale Sitzmauern und die Rückkehr zur Gruppe nach dem Ausruhen werden ebenfalls geprüft. Browserprüfungen ergänzen sie um Darstellung und Bedienung.
 
 ## Lokal starten
 
