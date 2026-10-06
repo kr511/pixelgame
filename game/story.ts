@@ -33,14 +33,7 @@ export const PLACES: Record<Place, { name: string; subtitle: string; exits: Exit
     { x: .47, y: .20, to: "bus", label: "Bus zurück nach Radegast", spawn: { x: .74, y: .47 } },
     { x: .17, y: .76, to: "school", label: "Zum Pausenhof", spawn: { x: .5, y: .85 } },
   ], obstacles: [{ left: .525, right: .555, top: .15, bottom: .21 }] },
-  school: { name: "Sekundarschule Zörbig · Pausenhof", subtitle: "Unser Treffpunkt am Gitter", exits: [{ x: .5, y: .9, to: "zoerbig", label: "Zurück zum Markt und Bus", spawn: { x: .20, y: .75 } }], obstacles: [
-    { left: 0, right: .81, top: 0, bottom: .343 }, { left: .88, right: 1, top: 0, bottom: .76 },
-    { left: .18, right: .49, top: .35, bottom: .414 }, { left: .574, right: .82, top: .35, bottom: .414 },
-    { left: .207, right: .29, top: .416, bottom: .46 }, { left: .312, right: .395, top: .416, bottom: .46 },
-    { left: 0, right: .105, top: .34, bottom: .59 }, { left: 0, right: .32, top: .66, bottom: .815 },
-    { left: .805, right: 1, top: .57, bottom: .68 }, { left: .69, right: 1, top: .755, bottom: .89 },
-    { left: 0, right: .43, top: .82, bottom: .883 }, { left: .59, right: 1, top: .82, bottom: .883 },
-  ] },
+  school: { name: "Sekundarschule Zörbig · Pausenhof", subtitle: "Treffpunkt an den Fenstergittern", exits: [{ x: .535, y: .9, to: "zoerbig", label: "Zurück zum Markt und Bus", spawn: { x: .20, y: .75 } }], obstacles: [] },
   goelzau: { name: "Gölzau · Weg zum Schützenhaus", subtitle: "Ankommen, Freunde treffen, zusammen schießen", exits: [
     { x: .90, y: .65, to: "bus", label: "Zurück nach Radegast", spawn: { x: .82, y: .76 } },
     { x: .265, y: .285, to: "range", label: "Ins Schützenhaus", spawn: { x: .5, y: .82 } },
@@ -88,13 +81,13 @@ export const ENTITIES: Record<Place, Entity[]> = {
     { id: "ticket", name: "Fahrkarte", x: .39, y: .48, display: { x: .405, y: .40 }, kind: "item", art: "ticket", text: "Eine Fahrkarte für den gemeinsamen Weg." },
   ],
   school: [
-    { id: "school-grille", name: "Treffpunkt am Gitter", x: .53, y: .45, display: { x: .70, y: .385 }, kind: "item", art: "landmark", text: "Das Gitter steht direkt am Schulgebäude. Hier treffen Felice und Elias ihre Freunde in der Pause." },
-    { id: "friends", name: "Elena", x: .34, y: .55, kind: "person", art: "elena", text: "Hey Felice! Wir treffen uns am Gitter beim Schulgebäude. Bleibst du noch ein bisschen bei mir?" },
-    { id: "jason", name: "Jason", x: .61, y: .56, kind: "person", art: "jason", text: "Hey. Ich mache gerade eine kleine Pause am Gitter. Du kannst dich gern dazustellen." },
-    { id: "luca", name: "Luca", x: .46, y: .52, kind: "person", art: "luca", text: "Hallo Felice. Heute ist es hier ziemlich ruhig. Das mag ich." },
-    { id: "wyatt", name: "Wyatt", x: .72, y: .59, kind: "person", art: "wyatt", text: "Hey Felice! Schön, dass du da bist." },
-    { id: "notebook", name: "Vergessenes Heft", x: .68, y: .69, kind: "item", art: "book", text: "Jemand hat ein Heft liegen gelassen." },
-    { id: "school-door", name: "Schultür", x: .53, y: .385, display: { x: .52, y: .32 }, kind: "item", art: "bell", text: "Der Unterricht ist vorbei. Zeit für den gemeinsamen Heimweg." },
+    { id: "school-grille", name: "Treffpunkt am Fenstergitter", x: .31, y: .52, display: { x: .43, y: .52 }, kind: "item", art: "landmark", text: "Die niedrigen Gitter sitzen vor den unteren Fenstern des grauen Schulgebäudes. Hier stehen Elena, Jason, Luca und Wyatt in der Pause." },
+    { id: "friends", name: "Elena", x: .215, y: .50, kind: "person", art: "elena", text: "Hey Felice! Wir treffen uns am Gitter beim Schulgebäude. Bleibst du noch ein bisschen bei mir?" },
+    { id: "jason", name: "Jason", x: .272, y: .469, kind: "person", art: "jason", text: "Hey. Ich mache gerade eine kleine Pause am Gitter. Du kannst dich gern dazustellen." },
+    { id: "luca", name: "Luca", x: .328, y: .438, kind: "person", art: "luca", text: "Hallo Felice. Heute ist es hier ziemlich ruhig. Das mag ich." },
+    { id: "wyatt", name: "Wyatt", x: .415, y: .414, kind: "person", art: "wyatt", text: "Hey Felice! Schön, dass du da bist." },
+    { id: "notebook", name: "Vergessenes Heft", x: .58, y: .71, kind: "item", art: "book", text: "Jemand hat ein Heft liegen gelassen." },
+    { id: "school-door", name: "Schultür", x: .875, y: .68, display: { x: .955, y: .63 }, kind: "item", art: "bell", text: "Der Unterricht ist vorbei. Zeit für den gemeinsamen Heimweg." },
   ],
   range: [{ id: "range-host", name: "Am Schießstand", x: .32, y: .57, kind: "person", art: "host", text: "Die Bahn ist bereit. Neun Schüsse, drei Scheiben. Nimm dir Zeit." }, { id: "shoot", name: "Schießbahn", x: .5, y: .44, kind: "item", art: "target", text: "Bereit für deine Runde?" },
     { id: "ida", name: "Ida", x: .19, y: .68, kind: "person", art: "ida", text: "Hallo Felice! Schön, dich beim Schießen zu sehen." },
@@ -176,6 +169,25 @@ const WALK_AREAS: Partial<Record<Place, Point[][]>> = {
   ],
   goelzau: [[{x:.09,y:.26},{x:.61,y:.24},{x:.65,y:.32},{x:.69,y:.43},{x:.77,y:.50},{x:.83,y:.59},{x:.95,y:.59},{x:.95,y:.70},{x:.83,y:.73},{x:.79,y:.63},{x:.72,y:.55},{x:.66,y:.49},{x:.52,y:.45},{x:.35,y:.43},{x:.20,y:.42},{x:.09,y:.35}]],
 };
+// The school photo has diagonal facades and angular tree/wall seating.
+// Use their ground footprints rather than a rectangular fence across the yard.
+const SOLID_AREAS: Partial<Record<Place, Point[][]>> = {
+  school: [
+    [{x:0,y:0},{x:.582,y:0},{x:.567,y:.30},{x:.174,y:.496},{x:0,y:.526}],
+    [{x:.917,y:0},{x:1,y:0},{x:1,y:1},{x:.96,y:1},{x:.90,y:.72},{x:.88,y:.49}],
+    [{x:.677,y:.13},{x:.819,y:.13},{x:.819,y:.197},{x:.677,y:.197}],
+    [{x:.40,y:.362},{x:.455,y:.34},{x:.505,y:.352},{x:.50,y:.382},{x:.45,y:.395},{x:.398,y:.38}],
+    [{x:.55,y:.247},{x:.575,y:.238},{x:.62,y:.249},{x:.608,y:.268},{x:.56,y:.265}],
+    [{x:.837,y:.237},{x:.862,y:.227},{x:.88,y:.242},{x:.87,y:.262},{x:.84,y:.255}],
+    [{x:.754,y:.342},{x:.793,y:.325},{x:.834,y:.334},{x:.831,y:.361},{x:.78,y:.365}],
+    [{x:.707,y:.411},{x:.748,y:.386},{x:.807,y:.389},{x:.826,y:.427},{x:.761,y:.447},{x:.70,y:.431}],
+    [{x:.69,y:.49},{x:.73,y:.478},{x:.783,y:.482},{x:.795,y:.505},{x:.738,y:.518},{x:.684,y:.505}],
+    [{x:.59,y:.55},{x:.64,y:.522},{x:.732,y:.534},{x:.769,y:.581},{x:.664,y:.610},{x:.595,y:.578}],
+    [{x:.115,y:.577},{x:.263,y:.618},{x:.262,y:.636},{x:.125,y:.599}],
+    [{x:.265,y:.618},{x:.260,y:.667},{x:.205,y:.704},{x:.292,y:.757},{x:.292,y:.881},{x:.251,y:.881},{x:.251,y:.782},{x:.178,y:.711},{x:.175,y:.695},{x:.22,y:.656}],
+    [{x:.416,y:.704},{x:.437,y:.696},{x:.490,y:.753},{x:.468,y:.790},{x:.443,y:.785},{x:.414,y:.727}],
+  ],
+};
 function insideArea(x: number, y: number, points: Point[]) {
   let inside = false;
   for (let i = 0, j = points.length - 1; i < points.length; j = i++) {
@@ -185,9 +197,9 @@ function insideArea(x: number, y: number, points: Point[]) {
   return inside;
 }
 export function canWalk(place: Place, x: number, y: number) {
-  return (!WALK_AREAS[place] || WALK_AREAS[place]!.some(points => insideArea(x,y,points))) && x >= .075 && x <= .94 && y >= .16 && y <= .92 && !PLACES[place].obstacles.some(o => x > o.left - .02 && x < o.right + .02 && y > o.top - .015 && y < o.bottom + .015);
+  return (!SOLID_AREAS[place] || !SOLID_AREAS[place]!.some(points => insideArea(x,y,points))) && (!WALK_AREAS[place] || WALK_AREAS[place]!.some(points => insideArea(x,y,points))) && x >= .075 && x <= .94 && y >= .16 && y <= .92 && !PLACES[place].obstacles.some(o => x > o.left - .02 && x < o.right + .02 && y > o.top - .015 && y < o.bottom + .015);
 }
-export const SPAWNS: Record<Place, Point> = { bedroom: { x: .5, y: .7 }, home: { x: .5, y: .78 }, kitchen: { x: .5, y: .85 }, garden: { x: .5, y: .38 }, radegast: { x: .435, y: .28 }, bus: { x: .5, y: .72 }, zoerbig: { x: .61, y: .285 }, school: { x: .5, y: .8 }, goelzau: { x: .86, y: .63 }, range: { x: .5, y: .8 } };
+export const SPAWNS: Record<Place, Point> = { bedroom: { x: .5, y: .7 }, home: { x: .5, y: .78 }, kitchen: { x: .5, y: .85 }, garden: { x: .5, y: .38 }, radegast: { x: .435, y: .28 }, bus: { x: .5, y: .72 }, zoerbig: { x: .61, y: .285 }, school: { x: .535, y: .85 }, goelzau: { x: .86, y: .63 }, range: { x: .5, y: .8 } };
 export function routeTo(from: Place, to: Place): Exit | undefined {
   const queue: { place: Place; first?: Exit }[] = [{ place: from }];
   const seen = new Set<Place>([from]);

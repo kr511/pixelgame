@@ -1,6 +1,6 @@
 # Ortsreferenzen für V0.75
 
-Recherche vom 06.10.2026. Grundlage sind die drei vom Nutzer bereitgestellten Luftbildausschnitte und die folgenden öffentlichen Quellen. Die persönlichen Referenzbilder werden nicht ins Repository aufgenommen.
+Recherche und Fotoabgleich vom 06.10.2026. Grundlage sind die drei vom Nutzer bereitgestellten Luftbildausschnitte, die vier anschließend im Chat sichtbaren Schulhof-Fotos und die folgenden öffentlichen Quellen. Die persönlichen Referenzbilder werden nicht ins Repository aufgenommen.
 
 | Bezug | Quelle | Verwendung und Genauigkeit |
 | --- | --- | --- |
@@ -12,10 +12,11 @@ Recherche vom 06.10.2026. Grundlage sind die drei vom Nutzer bereitgestellten Lu
 | Zörbig, Markt | [Haltestellenplan des Busbetreibers](https://www.mein-bus.net/upload/Fahrplan/Plaene/Lageplan/Lageplan%20Z%C3%B6rbig%2C%20Markt_2025-08-11.pdf) | Suchfund bestätigt den Haltestellennamen. Die PDF ließ sich nicht öffnen; genaue aktuelle Haltepositionen und Fahrzeiten wurden daraus nicht übernommen. |
 | Historischer Ortskern Radegast | [Radegast bei im-bild.org](https://anhalt-bitterfeld.im-bild.org/fotos/geschaefte-gaststaetten/prinz-von-anhalt-radegast), [Stadt Radegast](https://de.wikipedia.org/wiki/Stadt_Radegast) | Ergänzende Beschreibungen des Ortskerns. Veröffentlichte Fotos werden nicht als Spielassets verwendet. |
 | Schützenhaus Gölzau | [Schützenverein Gölzau 1990 e.V.](https://www.schuetzenvereingoelzau1990ev.de/), [Kreisschützenverband Anhalt](https://www.ksv-anhalt.de/ksv.html) | Bestätigen Verein und Schützenhaus/Landesleistungszentrum in Weißandt-Gölzau. Eine ausreichend überprüfbare aktuelle Außenansicht stand nicht zur Verfügung. |
-| Gitter am Schulgebäude | Direkte Nutzerklärung | Das Gitter gehört vor das Schulgebäude. Die Position der Freunde und die beiden benutzbaren Bänke folgen dieser Angabe; Form, Farbe und genaue Abstände sind gestalterische Ergänzungen. |
+| Schulhof, Fassaden und Sitzbereiche | Vier Nutzerfotos im Chat | Langer grauer Schulbau links mit drei Vollgeschossen, unteren Fenstern und Außentreppe; Backsteinbau rechts; graues Pflaster, roter Querweg, polygonale Baumbeete mit Sitzrändern und grüne Fläche mit hellen Sitzmauern. Das zeitweilige Baugerüst wird nicht übernommen. Der gemalte Hintergrund enthält keine Personen aus den Fotos. |
+| Blau markierter Treffpunkt | Nutzerfoto 1 und direkte Nutzerklärung | Die Markierung liegt an den Gittern vor den unteren Fenstern des grauen Gebäudes. Elena, Jason, Luca und Wyatt stehen und bewegen sich dort; Elias nicht. Sitzrand und Sitzmauer sind davon getrennte Ruheplätze. |
 
 ## Grenzen des Abgleichs
 
-Die neuen Hintergründe sind eigens erzeugte, gemalte Spielgrafiken. Die Ortsanordnung orientiert sich an den Luftbildern und belegbaren Quellen. Fassaden, Bäume, Straßenmöbel, Bänke, die genaue Gitterform und das Gölzauer Außengebäude sind spielerische Rekonstruktionen. Ein vollständig fotogenauer Nachbau des heutigen Schulhofs ist mit den zugänglichen Referenzen nicht belegt. Die Internetwerkzeuge lieferten für manche Bilder nur Bildverweise und für gesperrte Fotos keinen Bildinhalt; diese Fotos wurden nicht als visuell abgeglichen ausgegeben.
+Die neuen Hintergründe sind eigens erzeugte, gemalte Spielgrafiken. Der Schulhof wurde visuell anhand der vier sichtbaren Nutzerfotos abgeglichen. Architektur, Bodenbeläge und Treffpunkt folgen diesen Bildern; Maßstab, Baumanzahl, Abstände und kleinere Details sind für die Spielansicht angepasst und nicht vermessen. Das Gölzauer Außengebäude bleibt eine spielerische Rekonstruktion. Gesperrte Internetfotos wurden nicht als visuell geprüft ausgegeben; sie werden für den Schulhofabgleich durch die Nutzerfotos ergänzt.
 
 Die Spielwege sind bewusst kurz. Busverkehr und Ortswechsel verwenden die vorhandene Spielregel von 30 Minuten; reale Fahrpläne und echte Gehzeiten werden nicht simuliert.

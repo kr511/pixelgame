@@ -52,11 +52,15 @@ export const SceneArt = memo(function SceneArt({ place, christmas }: { place: Pl
       <Tree x={56} y={208}/><Tree x={547} y={537}/><path d="M90 531h321" stroke="#b1bd93" strokeWidth="8"/>
     </>}
     {place === "school" && <>
-      <rect x="60" y="200" width="484" height="328" fill="url(#paving)"/><rect x="100" y="38" width="400" height="157" fill="#bb8b68"/><rect x="91" y="33" width="418" height="22" fill="#6a6058"/><path d="M106 182h390" stroke="#e0c39a" strokeWidth="12"/>
-      {[133,207,345,419].map(x=><Window key={x} x={x} y={89}/>)}<rect x="275" y="119" width="50" height="79" fill="#5a7774"/><path d="M300 121v73" stroke="#d8c6a2" strokeWidth="4"/><rect x="218" y="58" width="165" height="26" fill="#ead8b2"/><text x="301" y="69" textAnchor="middle" fill="#715a45" fontSize="9" fontFamily="monospace">SEKUNDARSCHULE</text><text x="301" y="80" textAnchor="middle" fill="#715a45" fontSize="10" fontFamily="monospace">ZÖRBIG</text>
-      {[140,366].map((x,i)=><g key={x}><path d={`M${x} 207h${i?72:136}`} stroke="#455c4a" strokeWidth="7"/>{Array.from({length:i?8:15},(_,n)=><path key={n} d={`M${x+n*9} 193v29`} stroke="#455c4a" strokeWidth="3"/>)}</g>)}
-      {[{x:74,y:329},{x:449,y:329}].map(p=><g key={p.x}><rect x={p.x} y={p.y} width="82" height="17" fill="#a47750"/><rect x={p.x+6} y={p.y+20} width="70" height="13" fill="#886246"/></g>)}<Tree x={48} y={236}/><Tree x={554} y={230}/><Tree x={74} y={551}/><Tree x={527} y={553}/>
-      <path d="M290 526h30v74h-30Z" fill="#c6bda1"/>
+      <rect width="600" height="600" fill="url(#paving)"/>
+      <path d="M0 0H349V180L104 298H0Z" fill="#9d9b92"/><path d="M0 80 338 8M0 158 336 87M0 226 332 149" stroke="#c6c5b9" strokeWidth="5"/>
+      {[130,170,210,250,290].map((x,i)=><g key={x}><Window x={x} y={70-i*15}/><Window x={x} y={135-i*15}/><Window x={x} y={200-i*15}/><rect x={x} y={263-i*15} width="28" height="20" fill="#47504b"/>{[5,11,17,23].map(n=><path key={n} d={`M${x+n} ${263-i*15}v20`} stroke="#bcc2b9" strokeWidth="2"/>)}</g>)}
+      <path d="M25 145v146h65V171M25 179 90 245M25 221 90 288" stroke="#c4cfcb" strokeWidth="5" fill="none"/>
+      <path d="M550 0H600V600L576 600 540 432 528 294Z" fill="#a36143"/>{[80,160,240,320].map(y=><Window key={y} x={557} y={y}/>)}<rect x="558" y="356" width="42" height="55" fill="#463d35"/>
+      <path d="M35 310 600 540" stroke="#ba765a" strokeWidth="50"/>
+      <path d="M0 360 145 388 105 425 160 470 160 540 0 530Z" fill="#7d9870"/>
+      <path d="M65 350 151 380 110 422 168 467 168 530M254 421 283 461" stroke="#9b6250" strokeWidth="12" fill="none"/>
+      {[{x:274,y:227},{x:350,y:157},{x:460,y:251},{x:412,y:347}].map(p=><g key={p.x}><path d={`M${p.x-34} ${p.y+6}l34 -17 35 17 -35 15Z`} fill="#8a6b4e"/><Tree x={p.x} y={p.y}/></g>)}
     </>}
     {place === "range" && <>
       <rect width="600" height="211" fill="#b8baa3"/><path d="M0 192h600" stroke="#8c6d4d" strokeWidth="16"/>

@@ -11,12 +11,13 @@ export function standingActor(position: Point, wait = 0): Actor {
   return { position, pose: "standing", moving: false, frame: 0, direction: "front", distance: 0, waypoint: 1, wait, route: [] };
 }
 
-// Short, separate routes below the school building and its benches.
+// Four short routes beside the gray building's basement window grilles.
+// Elias is invited to the separate seating area and has no group patrol.
 export const SCHOOL_ROUTES: Record<string, Point[]> = {
-  friends: [{ x: .34, y: .55 }, { x: .40, y: .55 }, { x: .40, y: .61 }, { x: .34, y: .61 }],
-  jason: [{ x: .61, y: .56 }, { x: .59, y: .56 }, { x: .59, y: .49 }, { x: .61, y: .49 }],
-  luca: [{ x: .46, y: .52 }, { x: .50, y: .52 }, { x: .50, y: .58 }, { x: .46, y: .58 }],
-  wyatt: [{ x: .72, y: .59 }, { x: .77, y: .59 }, { x: .77, y: .51 }, { x: .72, y: .51 }],
+  friends: [{ x: .215, y: .50 }, { x: .235, y: .49 }, { x: .245, y: .52 }, { x: .225, y: .53 }],
+  jason: [{ x: .272, y: .469 }, { x: .292, y: .459 }, { x: .302, y: .489 }, { x: .282, y: .499 }],
+  luca: [{ x: .328, y: .438 }, { x: .348, y: .428 }, { x: .358, y: .458 }, { x: .338, y: .468 }],
+  wyatt: [{ x: .415, y: .414 }, { x: .447, y: .414 }, { x: .457, y: .456 }, { x: .425, y: .456 }],
 };
 export function initialActors(): Actors {
   return Object.fromEntries(Object.values(ENTITIES).flat().filter(e => e.kind === "person" && canChangePose(e.art)).map((e, i) => [e.id, standingActor({ x: e.x, y: e.y }, 1.5 + i % 4)]));
@@ -25,6 +26,11 @@ export function initialActors(): Actors {
 /** Walkable grid routing, including the exact endpoints, around furniture. */
 export function walkingRoute(place: Place, from: Point, to: Point): Point[] {
   const grid = .02;
+  const clearEdge = (a: Point, b: Point) => {
+    const samples = Math.max(1, Math.ceil(Math.hypot(b.x-a.x,b.y-a.y)/.005));
+    for (let i=1;i<=samples;i++) if (!canWalk(place,a.x+(b.x-a.x)*i/samples,a.y+(b.y-a.y)*i/samples)) return false;
+    return true;
+  };
   const cell = (p: Point) => [Math.round(p.x / grid), Math.round(p.y / grid)];
   const start = cell(from), end = cell(to), key = (x: number, y: number) => `${x},${y}`;
   const queue = [start];
@@ -32,10 +38,10 @@ export function walkingRoute(place: Place, from: Point, to: Point): Point[] {
   let found: number[] | undefined;
   for (let i = 0; i < queue.length; i++) {
     const [x, y] = queue[i];
-    if (Math.hypot(x - end[0], y - end[1]) <= 1) { found = [x, y]; break; }
+    if (Math.hypot(x - end[0], y - end[1]) <= 1 && clearEdge({x:x*grid,y:y*grid},to)) { found = [x, y]; break; }
     for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
       const nx = x + dx, ny = y + dy, id = key(nx, ny);
-      if (previous.has(id) || !canWalk(place, nx * grid, ny * grid)) continue;
+      if (previous.has(id) || !clearEdge({x:x*grid,y:y*grid},{x:nx*grid,y:ny*grid})) continue;
       previous.set(id, [x, y]); queue.push([nx, ny]);
     }
   }

@@ -43,10 +43,19 @@ const sitting=name=>{
 
 for(const [mode,width,height] of [['desktop',1366,900],['mobile',844,390]]){
  add('set','viewport',String(width),String(height));start('school');screenshot(`${mode}-school`);
+ assert(`!document.querySelector('[data-entity="elias-guest"]') && [...document.querySelectorAll('.entity-person')].length===4`);
 }
-add('set','viewport','1366','900');start('school');walkTo(.56,.69);walkTo(.54,.54);walkTo(.25,.51);sitting('couple-at-grille');walkTo(.355,.51);sitting('couple-second-grille-bench');
-start('school');walkTo(.38,.60);add('click','[data-testid="world-interact"]');assert(`document.querySelector('.dialogue-modal h2').textContent==='Elena'`);
+add('set','viewport','1366','900');start('school');
+evaluate(`window.friendStart=[...document.querySelectorAll('.entity-person')].map(n=>[n.dataset.entity,n.dataset.x,n.dataset.y])`);add('wait','5000');
+assert(`window.friendStart.every(([id,x,y])=>{const n=document.querySelector('[data-entity="'+id+'"]');return (n.dataset.x!==x || n.dataset.y!==y) && Number(n.dataset.x)>=.20 && Number(n.dataset.x)<=.46 && Number(n.dataset.y)>=.39 && Number(n.dataset.y)<=.54})`);
+screenshot('friends-at-window-grilles');
+walkTo(.69,.665);sitting('couple-front-tree');walkTo(.535,.665);walkTo(.52,.75);sitting('couple-seat-wall');
+assert(`Number(document.querySelector('[data-entity="elias-guest"]').dataset.y)>.65`);
+walkTo(.86,.8);walkTo(.535,.9);add('click','[data-testid="world-interact"]');assert(`document.querySelector('main').dataset.scene==='zoerbig'`);walkTo(.17,.76);add('click','[data-testid="world-interact"]');assert(`document.querySelector('main').dataset.scene==='school'`);
+start('school');walkTo(.535,.65);walkTo(.33,.55);walkTo(.23,.555);add('click','[data-testid="world-interact"]');assert(`document.querySelector('.dialogue-modal h2').textContent==='Elena'`);
 add('find','role','button','click','--name','Hinsetzen');add('wait','--fn',`document.querySelector('[data-entity="friends"]').dataset.pose==='sitting'`);screenshot('elena-sitting');
-walkTo(.335,.485);add('click','[data-testid="world-interact"]');add('find','role','button','click','--name','Hinlegen');add('wait','--fn',`document.querySelector('[data-entity="friends"]').dataset.pose==='lying'`);screenshot('elena-lying');
-walkTo(.40,.695);add('click','[data-testid="world-interact"]');add('find','role','button','click','--name','Aufstehen');assert(`document.querySelector('[data-entity="friends"]').dataset.pose==='standing'`);
+walkTo(.34,.64);walkTo(.37,.70);walkTo(.395,.744);add('click','[data-testid="world-interact"]');assert(`document.querySelector('.dialogue-modal h2').textContent==='Elena'`);add('find','role','button','click','--name','Hinlegen');add('wait','--fn',`document.querySelector('[data-entity="friends"]').dataset.pose==='lying'`);screenshot('elena-lying');
+for(const p of [[.33,.55],[.10,.55],[.09,.64],[.14,.79]])walkTo(...p);
+add('click','[data-testid="world-interact"]');add('find','role','button','click','--name','Aufstehen');assert(`document.querySelector('[data-entity="friends"]').dataset.pose==='standing'`);
+start('school',435);walkTo(.86,.8);walkTo(.875,.68);add('click','[data-testid="world-interact"]');add('find','role','button','click','--name','Unterricht besuchen');assert(`document.querySelector('main').dataset.minute==='780'`);screenshot('school-door-photo');
 start('school',840,'Winter');screenshot('winter-school');add('errors');process.stdout.write(JSON.stringify(commands));

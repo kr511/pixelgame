@@ -54,10 +54,8 @@ walkTo(.5,.9);add('click','[data-testid="world-interact"]');
 for(const p of [[.48,.36],[.63,.42],[.73,.49],[.80,.60],[.90,.65]])walkTo(...p);
 screenshot('goelzau-return-road');add('click','[data-testid="world-interact"]');assert(`document.querySelector('main').dataset.scene==='bus'`);
 }
-add('set','viewport','1366','900');start('school');walkTo(.38,.60);add('click','[data-testid="world-interact"]');assert(`document.querySelector('.dialogue-modal h2').textContent==='Elena'`);
-add('find','role','button','click','--name','Hinsetzen');add('wait','--fn',`document.querySelector('[data-entity="friends"]').dataset.pose==='sitting'`);screenshot('elena-sitting');
-walkTo(.335,.485);add('click','[data-testid="world-interact"]');add('find','role','button','click','--name','Hinlegen');add('wait','--fn',`document.querySelector('[data-entity="friends"]').dataset.pose==='lying'`);screenshot('elena-lying');
-walkTo(.40,.695);add('click','[data-testid="world-interact"]');add('find','role','button','click','--name','Aufstehen');assert(`document.querySelector('[data-entity="friends"]').dataset.pose==='standing'`);
+// School pose transitions and photo geometry are covered by school-check.mjs.
+add('set','viewport','1366','900');start('school');
 add('press','j');evaluate(`document.querySelector('.world-map-panel').scrollIntoView({block:'center'})`);screenshot('world-map');
 add('set','viewport','844','390');evaluate(`document.querySelector('.world-map-panel').scrollIntoView({block:'center'})`);screenshot('mobile-world-map');
 add('set','viewport','760','390');start('goelzau');evaluate(`window.touchX=document.querySelector('[data-testid="felice-player"]').dataset.x`);

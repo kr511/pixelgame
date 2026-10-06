@@ -1,19 +1,20 @@
 # V0.75 – Orts- und Szenenprüfung
 
-Geprüft am 06.10.2026 mit Chromium, agent-browser und dem lokalen Vinext-Entwicklungsserver. Alle zehn Orte wurden in 1366 × 900 und 844 × 390 aufgenommen und auf Darstellung sowie horizontales Überlaufen geprüft. Die neuen Außenbilder und der Hof wurden anhand der fertigen Hintergründe ausgerichtet. Die [Ortsreferenzen](SOURCES.md) beschreiben die Grenzen des realen Abgleichs.
+Geprüft am 06.10.2026 mit Chromium, agent-browser und dem lokalen Vinext-Entwicklungsserver. Alle zehn Orte wurden in 1366 × 900 und 844 × 390 aufgenommen und auf Darstellung sowie horizontales Überlaufen geprüft. Der Schulhof wurde anschließend mit den vier Nutzerfotos neu gestaltet und in beiden Größen erneut geprüft. Die [Ortsreferenzen](SOURCES.md) beschreiben den Fotoabgleich und seine Grenzen.
 
 ## Ergebnis
 
-- 39 Logiktests bestanden. Neu: vollständige, kollisionsgeprüfte Hin- und Rückwege bis zu allen Ausgängen der drei Wegszenen; Schul-/Schießrouten über die neuen Ankunftsorte; alte Kapitelstände bleiben lesbar.
+- 41 Logiktests bestanden: kollisionsgeprüfte Hin- und Rückwege in den drei Wegszenen, Schul-/Schießrouten über die neuen Ankunftsorte, kompatible Kapitelstände sowie genau vier Freunde am Fenstergitter ohne Elias. Die Wegsuche prüft auch schmale Sitzmauern zwischen ihren Rasterpunkten.
 - TypeScript-Prüfung, ESLint der geänderten Spiel- und QA-Dateien sowie Produktionsbuild bestanden.
-- Browser: Wohnung → Radegast → Haltestelle → Zörbiger Markt → Schule und zurück vollständig mit Tastatur gelaufen. Die Gölzauer Zufahrt wurde nach dem Bildabgleich nochmals in beide Richtungen geprüft, einschließlich Eintritt in den Schießstand.
-- Felice und Elias erreichen beide Bänke am Gitter sowie die Haltestellenbank, sitzen zusammen und stehen wieder auf. Elena erreicht eine Bank und die Ruhedecke und kann wieder aufstehen.
+- Browser: Wohnung → Radegast → Haltestelle → Zörbiger Markt → Schule und zurück vollständig mit Tastatur gelaufen. Die Gölzauer Zufahrt wurde nach dem Bildabgleich nochmals in beide Richtungen geprüft, einschließlich Eintritt in den Schießstand. Der abschließende Reise-, Unterrichts- und Winterlauf besteht mit 165 Prüfschritten ohne JavaScript-Fehler.
+- Der fotobasierte Hof zeigt den grauen Schulbau links, das Backsteingebäude rechts, den roten Querweg, Baumbeete und die grüne Ecke mit Sitzmauern. Die vier Freunde bewegen sich entlang der blau markierten unteren Fenstergitter. Ohne Einladung erscheint kein Elias auf dem Hof.
+- Felice und Elias erreichen den Sitzrand am vorderen Baum, die Sitzmauer am Gehweg sowie die Haltestellenbank, sitzen zusammen und stehen wieder auf. Elias bleibt anschließend außerhalb der Schulgruppe ansprechbar. Elena erreicht einen Sitzplatz und die Ruhedecke in der grünen Ecke und kann wieder aufstehen.
 - Unterricht an der neuen Türposition springt von 7:15 auf 13:00. Gehen verbraucht keine zusätzliche Spielzeit; Ortswechsel und Ruheaktionen verwenden die vorhandenen Zeitregeln.
 - Ortsplan markiert den aktuellen Ort; auf Desktop und Handy vollständig sichtbar nach Scrollen im Buch.
 - Joystick per Maus-/Pointer-Drag bei 760 × 390 geprüft: Bewegung startet und stoppt beim Loslassen. Dies prüft den Pointer-Pfad, nicht reale Touch-Hardware.
 - Abschließende Browserläufe melden keine JavaScript-Fehler.
 
-Bei der Prüfung wurden die Beschriftung der Marktankunft, die zwei Schulbankpositionen, der Gölzauer Rückweg auf der Zufahrt und die geometrischen Grenzen der Straßenkurven ausgerichtet. Lucas ruhiger Laufweg liegt ebenfalls vor dem Gitter. Zwei QA-Schritte wurden korrigiert: Ein Weglabel gehört zur Aktionsbeschreibung über dem Knopf; Elenas Sitzplatz muss vor ihrem Haltungswechsel direkt angesprochen werden. Die betroffenen Schritte wurden erfolgreich wiederholt.
+Die Schule besitzt Hindernispolygone für Fassaden, Baumbeete und Sitzmauern sowie passende Vordergrundmasken. Die diagonale Sitzmauer verwendet mehrere Tiefenabschnitte, damit sitzende Figuren sichtbar bleiben. Ein eigener Browserlauf prüft 118 Schritte einschließlich beider Paar-Sitzplätze, Elenas Haltungswechsel, Hofausgang und Rückkehr, Unterricht und Winterdarstellung; alle Schritte bestehen ohne JavaScript-Fehler. Die einfache Ersatzgrafik folgt derselben Hofanordnung.
 
 ## Alle zehn Orte
 
@@ -34,8 +35,10 @@ Bei der Prüfung wurden die Beschriftung der Marktankunft, die zwei Schulbankpos
 
 - [Radegaster Weg bis zur Haltestelle](screenshots/radegast-path-end.png)
 - [Schulankunft vom Markt aus](screenshots/zoerbig-school-arrival.png)
-- [Felice und Elias auf der ersten Bank beim Gitter](screenshots/couple-at-grille.png)
-- [Auf der zweiten Bank](screenshots/couple-second-grille-bench.png)
+- [Vier Schulfreunde an den Fenstergittern](screenshots/friends-at-window-grilles.png)
+- [Felice und Elias am vorderen Baum](screenshots/couple-front-tree.png)
+- [Felice und Elias auf der Sitzmauer](screenshots/couple-seat-wall.png)
+- [Schultür nach Unterricht bis 13 Uhr](screenshots/school-door-photo.png)
 - [Zusammen an der Haltestelle](screenshots/couple-bus-bench.png)
 - [Elena sitzt](screenshots/elena-sitting.png) · [Elena liegt auf der Decke](screenshots/elena-lying.png)
 - [Eingang Schützenhaus](screenshots/goelzau-entrance.png) · [Rückweg auf der Zufahrt](screenshots/goelzau-return-road.png)
@@ -58,4 +61,4 @@ npx --yes --package agent-browser agent-browser --session v075 batch --bail --js
 npx --yes --package agent-browser agent-browser --session v075 close
 ```
 
-Die drei neuen Wegszenen sind bewusst komprimiert. Die aktuelle Außenform des Schützenhauses und sämtliche Hofdetails konnten nicht vollständig anhand aktueller Fotos belegt werden. Reale Busabfahrtszeiten werden nicht simuliert.
+Die drei neuen Wegszenen sind bewusst komprimiert. Der Schulhof folgt den Nutzerfotos, ohne vermessene Abstände oder einen zugesicherten aktuellen Bauzustand. Die aktuelle Außenform des Schützenhauses ist eine Spielinterpretation. Reale Busabfahrtszeiten werden nicht simuliert.
