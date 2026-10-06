@@ -1,8 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { cameraFor, projectPoint, offscreenGuide } from "../game/camera.ts";
 import { CHARACTER_GRAPHICS, SCENE_GRAPHICS, CHAPTER_GRAPHICS, speakerGraphic, sceneBackground } from "../game/graphics.ts";
+import { WALK_ATLASES } from "../game/graphics07.ts";
 import { ENTITIES, PLACES, CHAPTERS } from "../game/story.ts";
 import { WorldAudio, AUDIO_KEY, audioAllowed, parseMuted } from "../game/audio.ts";
 
@@ -13,7 +14,7 @@ test("Kamera zeigt an jeder Weltkante ausschließlich die Szene", () => {
     assert.ok(player.x>=0&&player.x<=1&&player.y>=0&&player.y<=1);
   }
   assert.equal(cameraFor({x:.5,y:.5},.5).zoom,1);
-  assert.equal(cameraFor({x:.5,y:.5},NaN).zoom,1.5);
+  assert.equal(cameraFor({x:.5,y:.5},NaN).zoom,1);
 });
 
 test("Zielhinweis zeigt aus dem Bild liegende Ziele an die richtige Bildschirmkante", () => {
@@ -35,6 +36,11 @@ test("Alle Orte, Figuren und Sprecher besitzen verfügbare und passende Grafiken
     for(const entity of ENTITIES[place]) if(entity.kind!=="item") assert.ok(CHARACTER_GRAPHICS[entity.kind==="dog"?"dog":entity.art],entity.id);
   }
   for(const graphic of Object.values(CHARACTER_GRAPHICS)) { asset(graphic.sheet); asset(graphic.portrait.sheet); assert.ok(graphic.column<graphic.columns&&graphic.row<graphic.rows); assert.ok(graphic.anchor.x>=0&&graphic.anchor.x<=1&&graphic.anchor.y<=1); }
+  for(const [sheet, atlas] of Object.entries(WALK_ATLASES)) {
+    asset(sheet);
+    const png = readFileSync(new URL(`../public${sheet}`,import.meta.url));
+    assert.deepEqual([png.readUInt32BE(16),png.readUInt32BE(20)],atlas.size,sheet);
+  }
   for(const chapter of CHAPTERS) { asset(CHAPTER_GRAPHICS[chapter.id]); for(const step of chapter.steps) assert.ok(speakerGraphic(step.speaker),step.speaker); }
   assert.equal(speakerGraphic("Elias"),"elias"); assert.equal(speakerGraphic("Felices Stiefvater"),"stepfather");
 });

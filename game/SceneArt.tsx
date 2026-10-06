@@ -20,7 +20,7 @@ export const SceneArt = memo(function SceneArt({ place, christmas }: { place: Pl
       <path d="M36 560h530M36 566h530" stroke="#deceb0" strokeWidth="5"/>{[40,100,160,220,380,440,500,560].map(x=><rect key={x} x={x} y="548" width="7" height="28" fill="#ecdbb9"/>)}
       {[{x:125,y:304},{x:460,y:292},{x:421,y:483}].map(p=><g key={p.x} transform={`translate(${p.x} ${p.y})`}><path d="M0 0v14M18 3v13M-14 5v11" stroke="#527b4d" strokeWidth="3"/><path d="M-5-4h10v8H-5M13-1h10v8H13M-19 1h10v8h-10" fill={christmas ? "#d9ece3" : "#f1d892"}/></g>)}
     </>}
-    {place === "home" && <>
+    {(place === "home" || place === "kitchen") && <>
       <rect width="600" height="91" fill="#d5b18d"/><path d="M0 88h600" stroke="#735343" strokeWidth="9"/><Window x={111} y={23}/><Window x={341} y={23}/>
       <rect x="211" y="196" width="202" height="199" fill="#a36e67"/><path d="M220 204h184v182H220Z" fill="none" stroke="#d7af88" strokeWidth="4"/>
       <rect x="222" y="221" width="173" height="118" fill="#684a3b"/><rect x="225" y="216" width="168" height="108" fill="#cfaa7a"/><rect x="245" y="216" width="34" height="108" fill="#ece0bf"/>
@@ -62,7 +62,16 @@ export function DogArt() {
 }
 
 export function ItemArt({ art }: { art: string }) {
-  return <svg viewBox="0 0 24 24" shapeRendering="crispEdges" aria-hidden="true">
-    {art === "book" || art === "photo" || art === "ticket" || art === "sign" ? <><path d="M4 4h17v17H4Z" fill="#5d5445"/><path d="M5 3h15v16H5Z" fill={art === "book" ? "#b97465" : "#eee0ba"}/><path d="M7 3v16M10 7h7M10 11h7" stroke={art === "book" ? "#f0c78c" : "#7c927b"} strokeWidth="2"/></> : art === "bowl" || art === "plates" ? <><path d="M3 11h18v8H3M5 19h14v2H5" fill="#e0d8ba"/><path d="M5 10h14v6H5" fill={art === "bowl" ? "#80b8c3" : "#f6eacb"}/><path d="M7 11h9v2H7" fill="#d4e9df"/></> : art === "blanket" || art === "bed" ? <><path d="M2 8h20v13H2" fill="#8b6857"/><path d="M4 6h16v12H4" fill="#c69581"/><path d="M5 9h14M8 6v12M16 6v12" stroke="#f0c79d" strokeWidth="2"/></> : art === "ball" ? <><circle cx="12" cy="13" r="8" fill="#d3a364"/><path d="M8 8h5v5H8M13 13h5v5h-5" fill="#e9cc83"/></> : art === "target" ? <>{[10,7,4,1].map((r,i)=><circle key={r} cx="12" cy="12" r={r} fill={i%2?"#657365":"#e9d6b2"}/>)}</> : <path d="M10 2h4v6h6v4h-4v7h-4v-4H8v4H4v-7H1V8h9Z" fill="#ebcf89"/>}
+  return <svg viewBox="0 0 24 24" aria-hidden="true">
+    {art === "book" ? <><rect x="4" y="3" width="16" height="19" rx="2" fill="#674638"/><path d="M6 4h13v15H6Z" fill="#ad745b"/><path d="M7 4v15M10 8h6M10 11h6" stroke="#e5cfa6" strokeWidth="1.2"/><path d="M7 20h11" stroke="#eddfbd"/></>
+    : art === "photo" ? <><rect x="3" y="2" width="18" height="21" rx="1" fill="#eadbbe" stroke="#78553c"/><path d="M5 4h14v13H5Z" fill="#9ba68c"/><path d="m5 16 5-8 4 4 2-3 3 7" fill="#536b52"/><circle cx="16" cy="7" r="2" fill="#f2d497"/></>
+    : art === "ticket" ? <><rect x="2" y="6" width="20" height="12" rx="2" fill="#e8cf9e" stroke="#826642"/><path d="M16 7v10M5 10h7M5 13h5" stroke="#7f755c" strokeWidth="1" strokeDasharray="2 1"/></>
+    : art === "sign" ? <><path d="M12 11v13" stroke="#5d6254" strokeWidth="2"/><rect x="3" y="1" width="18" height="15" rx="2" fill="#e4d8ae" stroke="#6c7b53"/><path d="M8 4v9M16 4v9M8 8h8" stroke="#5f7851" strokeWidth="2"/></>
+    : art === "bowl" || art === "plates" ? <><ellipse cx="12" cy="19" rx="10" ry="3" fill="#3c493c" opacity=".25"/><path d="M3 10q0 10 9 10t9-10" fill="#c7c5ab" stroke="#777f70"/><ellipse cx="12" cy="10" rx="9" ry="4" fill={art === "bowl" ? "#86adb3" : "#efe5cd"} stroke="#d9dcc6"/><path d="M7 9q5-2 10 0" fill="none" stroke="#f0efdb"/></>
+    : art === "blanket" || art === "bed" ? <><rect x="1" y="7" width="22" height="15" rx="5" fill="#836757"/><rect x="3" y="6" width="18" height="13" rx="3" fill="#bd9277"/><path d="M4 10h16M4 14h16M8 7v11M15 7v11" stroke="#dcc0a0" strokeWidth=".7"/><path d="M4 18q7 3 16 0" stroke="#6e574b" fill="none"/></>
+    : art === "ball" ? <><ellipse cx="12" cy="21" rx="8" ry="2" fill="#3c493c" opacity=".25"/><circle cx="12" cy="12" r="9" fill="#c69a60" stroke="#8e714b"/><path d="M5 7q11-3 13 10M8 4q-3 12 8 16" fill="none" stroke="#efd2a0" strokeWidth="2"/><circle cx="8" cy="7" r="2" fill="#f7e2ba" opacity=".5"/></>
+    : art === "target" ? <>{[10,7,4,1].map((r,i)=><circle key={r} cx="12" cy="12" r={r} fill={i%2 ? "#657365" : "#e9d6b2"}/>)}</>
+    : art === "bell" ? <><path d="M5 17h14l-3-4V9a4 4 0 0 0-8 0v4Z" fill="#d3b378" stroke="#82653e"/><circle cx="12" cy="19" r="2" fill="#82653e"/><path d="M12 3v2" stroke="#82653e" strokeWidth="2"/></>
+    : <><ellipse cx="12" cy="13" rx="10" ry="7" fill="#e9dcc1" stroke="#a8916e"/><ellipse cx="12" cy="13" rx="6" ry="4" fill="none" stroke="#c1ac84"/><path d="M1 5v14M23 5v14" stroke="#b0b5a3"/></>}
   </svg>;
 }
