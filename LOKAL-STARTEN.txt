@@ -1,0 +1,12 @@
+FELICE × ELIAS – PIXELZIMMER
+
+STARTEN
+1. Node.js 22.13 oder neuer installieren: https://nodejs.org/
+2. STARTEN.bat doppelklicken.
+3. Beim ersten Start werden die benoetigten Pakete heruntergeladen.
+4. Die Site oeffnet sich unter http://localhost:5173/
+
+Das Terminalfenster waehrend des Spielens geoeffnet lassen.
+Zum Beenden im Terminal Strg+C druecken.
+
+Alle Pixelgrafiken liegen im Ordner public (characters und rooms).

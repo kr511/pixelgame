@@ -1,0 +1,88 @@
+.version-six { --paper:#f4e8d0; --sage:#b6c3a4; --gold:#e9cb8b; }
+.pixel-game.version-six { background:radial-gradient(ellipse at 55% 35%,#3d5047,#1d2e2a 65%,#14231f); }
+.version-six .world-viewport { width:min(calc(100vw - 340px),calc(100dvh - 72px),900px); margin-left:110px; border:3px solid #8b785b; outline:1px solid #d1b98c; isolation:isolate; }
+.world-camera { transform:translate(var(--camera-x),var(--camera-y)) scale(var(--world-zoom)); transform-origin:center; transition:transform 260ms ease-out; will-change:transform; }
+.scene-backdrop,.scene-foreground { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+.scene-backdrop { z-index:0; background:#8c9877; }
+.scene-foreground { pointer-events:none; }
+.fallback-bedroom { background:#6c432f url('/rooms/felice-bedroom-v9.png') center/100% 100%; }
+.character-art { width:100%; display:block; overflow:hidden; }
+.character-fallback { display:block; width:100%; }
+.character-idle>.character-art { animation:character-breathe 4s ease-in-out infinite; transform-origin:50% 94%; }
+.character-idle:nth-child(2n)>.character-art { animation-delay:-1.7s; }
+.character-walking .character-sheet { animation:character-steps .36s steps(1,end) infinite; }
+@keyframes character-steps { 0%,49.99% { transform:translateY(-100px); } 50%,100% { transform:translateY(-200px); } }
+@keyframes character-breathe { 0%,100% { transform:scaleY(1); } 50% { transform:scaleY(1.012); } }
+.version-six .room-player { min-width:0; max-width:none; transform:translate(-50%,-94%); filter:drop-shadow(0 2px 2px #2d2b2455); }
+.version-six .world-entity { filter:drop-shadow(0 2px 1px #25352c55); }
+.version-six .entity-item { width:5%; }
+.version-six .entity-name { font-size:9px; border-color:#9aaa84; box-shadow:0 2px 5px #15241f44; }
+.version-six .room-player-label { opacity:.85; font-size:8px; bottom:95%; }
+.world-atmosphere { position:absolute; inset:0; z-index:115; pointer-events:none; overflow:hidden; box-shadow:inset 0 0 60px #19231b16; }
+.lamp-glow { position:absolute; width:26%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle,var(--scene-light),transparent 68%); opacity:.12; animation:lamp-warmth 6s ease-in-out infinite; mix-blend-mode:screen; }
+.lamp-one { left:3%; top:32%; } .lamp-two { left:55%; top:12%; animation-delay:-2.4s; }
+@keyframes lamp-warmth { 0%,100% { opacity:.08; } 50% { opacity:.16; } }
+.drifting-leaf { position:absolute; width:5px; height:9px; border-radius:50% 0; background:#d4ba795c; left:calc(12% + var(--leaf-index)*22%); top:calc(10% + var(--leaf-index)*14%); animation:leaf-drift 9s ease-in-out infinite; animation-delay:calc(var(--leaf-index)*-2s); }
+.is-winter .drifting-leaf { width:3px; height:3px; border-radius:50%; background:#fff9e8b0; }
+@keyframes leaf-drift { 0%,100% { transform:translate(0,0) rotate(-15deg); opacity:.2; } 50% { transform:translate(13px,25px) rotate(35deg); opacity:.65; } }
+.christmas-lights { position:absolute; top:13%; left:10%; width:80%; display:flex; justify-content:space-between; }
+.christmas-lights i { width:4px; height:4px; border-radius:50%; background:#ffe1a0; box-shadow:0 0 10px 3px #ffc96750; animation:christmas-glow 3s ease-in-out infinite; }
+@keyframes christmas-glow { 50% { opacity:.45; } }
+.version-six[data-atmosphere-active="false"] .world-atmosphere *,.version-six[data-atmosphere-active="false"] .character-idle>.character-art { animation-play-state:paused; }
+.offscreen-guide { position:absolute; z-index:125; transform:translate(-50%,-50%); display:grid; justify-items:center; gap:4px; pointer-events:none; }
+.offscreen-guide>span { display:grid; place-items:center; width:30px; height:30px; border:1px solid #f8e5b7; border-radius:50%; color:#4a4230; background:#f0d599; box-shadow:0 2px 10px #24302755; }
+.offscreen-guide small { padding:3px 5px; max-width:105px; text-align:center; font-size:9px; line-height:1.3; color:#fff0cc; background:#2b3d31ee; }
+.version-six .quest-tracker { left:20px; top:100px; width:190px; padding:13px; border-top-width:2px; }
+.version-six .quest-tracker strong { font-size:19px; }
+.version-six .quest-tracker p { margin:8px 0; font-size:12px; line-height:1.55; }
+.version-six .inventory { margin-top:10px; padding-top:8px; }
+.version-six .world-welcome { display:none; }
+.version-six .journal-button { right:130px; top:20px; min-height:44px; }
+.version-six .pause-button { width:44px; height:44px; }
+.audio-button { pointer-events:auto; position:absolute; z-index:6; right:76px; top:20px; display:grid; place-items:center; width:44px; height:44px; color:#f4e8d0; border:1px solid #89927b; border-radius:4px; background:#2a3c35; cursor:pointer; }
+.version-six .modal-close { width:44px; height:44px; }
+.version-six .journal-modal { background:#283e32; }
+.version-six .journal-heading { padding:23px 25px 18px; align-items:center; }
+.journal-duo { display:flex; width:120px; align-self:flex-end; margin-left:auto; flex-shrink:0; }
+.journal-duo .character-art { width:60px; }
+.version-six .chapter-card { padding:0 0 14px; overflow:hidden; background:#344c3c; }
+.version-six .chapter-card>small,.version-six .chapter-card>h2,.version-six .chapter-card>time,.version-six .chapter-card>p { margin-left:15px; margin-right:15px; }
+.version-six .chapter-card>small { margin-top:15px; }
+.version-six .chapter-card>button { margin:0 14px; width:calc(100% - 28px); min-height:44px; }
+.chapter-cover { position:relative; width:100%; aspect-ratio:1.8; background-size:cover; background-position:center 45%; background-color:#536749; border-bottom:1px solid #7c8b65; }
+.version-six .chapter-symbol { position:absolute; left:12px; bottom:10px; margin:0; width:32px; height:32px; font-size:20px; background:#293e32e6; }
+.version-six .dialogue-modal[open] { grid-template-columns:110px 1fr; padding:25px; gap:23px; }
+.version-six .dialogue-portrait { min-height:115px; padding:0; overflow:hidden; background:radial-gradient(circle at 50% 30%,#6a7b55,#354e3a); }
+.version-six .dialogue-portrait>.character-art { width:100%; align-self:end; }
+.dialogue-duo { display:flex; align-items:end; }
+.dialogue-duo .character-art { width:50%; }
+.version-six .dialogue-actions button { min-height:44px; }
+.version-six .memory-interaction button { min-height:44px; }
+.version-six .memory-primary,.version-six .memory-text-button,.version-six .memory-save-warning button { min-height:44px; min-width:44px; }
+.version-six .range-frame { border-color:#bca57d; box-shadow:0 8px 40px #14281e55; }
+.version-six .shooting-memory { background:radial-gradient(ellipse at 50% 30%,#4b5c49,#21372c); }
+@media (max-width:1000px) { .version-six .world-viewport { width:min(calc(100vw - 265px),calc(100dvh - 70px)); margin-left:130px; } .version-six .quest-tracker { width:165px; left:14px; padding:10px; } .version-six .quest-tracker strong { font-size:17px; } }
+@media (max-height:600px) and (orientation:landscape) {
+  .version-six .world-viewport { width:calc(100dvh - 24px); margin-left:30px; }
+  .version-six .world-title { top:12px; left:12px; padding:5px 8px; }
+  .version-six .world-title strong { font-size:12px; } .version-six .world-title small { font-size:9px; }
+  .version-six .world-title>span { width:28px; height:28px; font-size:9px; }
+  .version-six .quest-tracker { left:12px; top:90px; width:140px; padding:9px; }
+  .version-six .quest-tracker strong { font-size:15px; } .version-six .quest-tracker p { font-size:10px; line-height:1.45; }
+  .version-six .quest-tracker small,.version-six .quest-tracker>span,.version-six .inventory { font-size:9px; }
+  .version-six .journal-button { right:116px; top:12px; width:44px; padding:0; justify-content:center; }
+  .version-six .journal-button span,.version-six .journal-button kbd { display:none; }
+  .version-six .audio-button { right:64px; top:12px; } .version-six .pause-button { right:12px; top:12px; }
+  .version-six .joystick { left:35px; bottom:18px; }
+  .version-six .memory-interaction { right:12px; bottom:24px; max-width:145px; }
+  .version-six .entity-name { font-size:7px; }
+  .version-six .journal-heading { padding:12px 18px; } .version-six .journal-heading h1 { font-size:23px; }
+  .journal-duo { width:70px; } .journal-duo .character-art { width:35px; }
+  .chapter-cover { aspect-ratio:2.6; }
+  .version-six .chapter-card p { margin-bottom:12px; font-size:10px; }
+  .version-six .chapter-card h2 { font-size:19px; }
+  .version-six .dialogue-modal[open] { grid-template-columns:80px 1fr; padding:20px; gap:17px; }
+  .version-six .dialogue-portrait { min-height:85px; }
+}
+@media (max-height:380px) and (orientation:landscape) { .version-six .quest-tracker { width:130px; } .version-six .quest-tracker>span { display:none; } .version-six .joystick { left:25px; width:80px; height:80px; } }
+@media (prefers-reduced-motion:reduce) { .world-camera { transition:none; } .world-atmosphere *,.character-idle>.character-art { animation:none!important; } }
