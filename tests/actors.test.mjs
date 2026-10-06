@@ -69,3 +69,14 @@ test("Alle neuen Lauf- und Ruhebilder liegen vollständig innerhalb ihres Atlass
     assert.ok(x >= 0 && y >= 0 && w > 0 && h > 0 && x + w <= atlas.size[0] && y + h <= atlas.size[1]);
   }
 });
+
+test("Eine neue Haltung während des Aufstehens ersetzt das alte Ziel zuverlässig", () => {
+  const actors = initialActors();
+  let actor = requestPose("school", actors.friends, "sitting", availableSeat("school", "sitting", actors.friends.position, actors));
+  for (let i = 0; i < 3000 && actor.pose !== "sitting"; i++) actor = advanceActor("school", "friends", actor, 1 / 60);
+  actor = requestPose("school", actor, "lying", availableSeat("school", "lying", actor.position, { ...actors, friends: actor }));
+  for (let i = 0; i < 3; i++) actor = advanceActor("school", "friends", actor, 1 / 60);
+  actor = requestPose("school", actor, "sitting", availableSeat("school", "sitting", actor.position, { ...actors, friends: actor }));
+  for (let i = 0; i < 3000 && actor.pose !== "sitting"; i++) actor = advanceActor("school", "friends", actor, 1 / 60);
+  assert.equal(actor.pose, "sitting");
+});

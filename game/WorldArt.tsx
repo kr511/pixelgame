@@ -1,6 +1,7 @@
 import { memo, useId, useState, type CSSProperties } from "react";
 import { SceneArt, PersonArt, DogArt } from "./SceneArt";
 import { CHARACTER_GRAPHICS, REST_GRAPHICS, POSE_ATLASES, SPRITE_FRAMES, SCENE_GRAPHICS, characterGraphic, sceneBackground, type SpriteRect } from "./graphics";
+import { neighborFrame } from "./graphics07";
 import type { Place } from "./story";
 
 export const WorldBackdrop = memo(function WorldBackdrop({ place, winter, bedOccupied = false }: { place: Place; winter: boolean; bedOccupied?: boolean }) {
@@ -20,12 +21,12 @@ export function CharacterArt({ id, portrait = false, direction = "front", walkin
   const column = !portrait && (id === "elias" || id === "felice") ? ["front","left","back","right"].indexOf(direction) : spec.column;
   const duo = id === "felice" || id === "elias";
   const resting = !portrait && pose !== "standing" && id !== "dog";
-  const npcWalking = !portrait && walking && frame !== 0 && !duo && id !== "dog";
-  const sheet = resting ? duo ? REST_GRAPHICS.sheet : "/characters/neighbors-poses-v065.png" : npcWalking ? "/characters/neighbors-walk-v065.png" : spec.sheet;
+  const neighbor = !portrait && !resting && !duo && id !== "dog" ? neighborFrame(spec.column, spec.row, direction, walking ? frame : 0) : null;
+  const sheet = resting ? duo ? REST_GRAPHICS.sheet : "/characters/neighbors-poses-v065.png" : neighbor?.sheet ?? spec.sheet;
   if (failedSource === sheet) return <span className={`character-fallback fallback-pose-${pose}`}>{id === "dog" ? <DogArt/> : <PersonArt variant={id}/>}</span>;
   const atlas = SPRITE_FRAMES[spec.sheet];
-  if (!portrait && (atlas || resting || npcWalking)) {
-    const npcAtlas = POSE_ATLASES[resting ? "/characters/neighbors-poses-v065.png" : "/characters/neighbors-walk-v065.png"];
+  if (!portrait && (atlas || resting || neighbor)) {
+    const npcAtlas = POSE_ATLASES["/characters/neighbors-poses-v065.png"];
     let rect: SpriteRect;
     if (resting && duo) {
       const seated = id === "elias" ? REST_GRAPHICS.eliasSeated : REST_GRAPHICS.feliceSeated;
@@ -33,18 +34,20 @@ export function CharacterArt({ id, portrait = false, direction = "front", walkin
       rect = pose === "lying" ? lying : seated;
     } else if (resting) {
       rect = npcAtlas.frames[spec.row + (pose === "lying" ? 2 : 0)][spec.column];
-    } else if (npcWalking) {
-      rect = npcAtlas.frames[spec.row + (frame === 2 ? 2 : 0)][spec.column];
+    } else if (neighbor) {
+      rect = neighbor.rect;
     } else {
       rect = atlas.frames[walking ? frame : spec.row][column];
     }
-    const size = resting || npcWalking ? [1254,1254] : atlas.size;
+    const size = resting ? [1254,1254] : neighbor?.size ?? atlas.size;
     const height = pose === "sitting" ? 108 : pose === "lying" ? 125 : 132;
     const width = rect[2] / rect[3] * height;
-    return <svg key={sheet} className={`character-art character-${pose}`} viewBox="0 0 100 140" data-frame={walking ? frame : 0} aria-hidden="true">
+    return <svg key={sheet} className={`character-art character-${pose}`} viewBox="0 0 100 140" data-frame={walking ? frame : 0} data-direction={direction} data-sheet={sheet} aria-hidden="true">
+      <g transform={neighbor?.mirror ? "translate(100 0) scale(-1 1)" : undefined}>
       <svg x={50-width/2} y={140-height} width={width} height={height} viewBox={rect.join(" ")} overflow="hidden">
         <image href={sheet} width={size[0]} height={size[1]} onError={() => setFailedSource(sheet)}/>
       </svg>
+      </g>
     </svg>;
   }
   if (portrait && id === "felice") return <svg className="character-art" viewBox="155 15 155 155" aria-hidden="true"><image href={spec.sheet} width="1448" height="1086" onError={() => setFailedSource(sheet)}/></svg>;

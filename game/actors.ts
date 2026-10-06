@@ -7,6 +7,9 @@ export type Actor = { position: Point; pose: Pose; moving: boolean; frame: numbe
 export type Actors = Record<string, Actor>;
 const FRIENDS = new Set(["elias", "elena", "jason", "luca", "wyatt", "ida", "helena", "linda", "lina", "alexandra"]);
 export function canChangePose(art: string) { return FRIENDS.has(art); }
+export function standingActor(position: Point, wait = 0): Actor {
+  return { position, pose: "standing", moving: false, frame: 0, direction: "front", distance: 0, waypoint: 1, wait, route: [] };
+}
 
 // Short, separate routes below the school building and its benches.
 export const SCHOOL_ROUTES: Record<string, Point[]> = {
@@ -16,9 +19,7 @@ export const SCHOOL_ROUTES: Record<string, Point[]> = {
   wyatt: [{ x: .73, y: .7 }, { x: .81, y: .7 }, { x: .81, y: .6 }, { x: .73, y: .6 }],
 };
 export function initialActors(): Actors {
-  return Object.fromEntries(Object.values(ENTITIES).flat().filter(e => e.kind === "person" && canChangePose(e.art)).map((e, i) => [e.id, {
-    position: { x: e.x, y: e.y }, pose: "standing", moving: false, frame: 0, direction: "front", distance: 0, waypoint: 1, wait: 1.5 + i % 4, route: [],
-  }]));
+  return Object.fromEntries(Object.values(ENTITIES).flat().filter(e => e.kind === "person" && canChangePose(e.art)).map((e, i) => [e.id, standingActor({ x: e.x, y: e.y }, 1.5 + i % 4)]));
 }
 
 /** Walkable grid routing, including the exact endpoints, around furniture. */
@@ -42,7 +43,12 @@ export function walkingRoute(place: Place, from: Point, to: Point): Point[] {
   const route: Point[] = [to];
   let current: number[] | null = found;
   while (current) { route.unshift({ x: current[0] * grid, y: current[1] * grid }); current = previous.get(key(current[0], current[1])) ?? null; }
-  return route;
+  // Keep corners and endpoints; straight grid sections need no intermediate stops.
+  return route.filter((point, i) => {
+    if (i === 0 || i === route.length - 1) return true;
+    const a = route[i - 1], b = route[i + 1];
+    return Math.abs((point.x-a.x)*(b.y-point.y)-(point.y-a.y)*(b.x-point.x)) > .000001;
+  });
 }
 
 export function availableSeat(place: Place, pose: Pose, from: Point, actors: Actors, playerSpot?: string): { spot: RestSpot; position: Point; id: string } | undefined {
@@ -53,13 +59,14 @@ export function availableSeat(place: Place, pose: Pose, from: Point, actors: Act
 }
 
 export function requestPose(place: Place, actor: Actor, pose: Pose, seat?: ReturnType<typeof availableSeat>): Actor {
+  const departing = actor.departing ?? (actor.pose !== "standing" || actor.pending && actor.route.length === 1 ? actor.approach : undefined);
   if (pose === "standing") {
-    return { ...actor, pose, pending: undefined, restId: undefined, moving: false, route: actor.approach ? [actor.approach] : [], departing: actor.approach, wait: 2 };
+    return { ...actor, pose, pending: undefined, restId: undefined, moving: false, route: departing ? [departing] : [], approach: undefined, departing, wait: 0 };
   }
   if (!seat) return actor;
-  const route = actor.approach && actor.pose !== "standing" ? [actor.approach, ...walkingRoute(place, actor.approach, seat.spot.approach)] : walkingRoute(place, actor.position, seat.spot.approach);
+  const route = departing ? [departing, ...walkingRoute(place, departing, seat.spot.approach)] : walkingRoute(place, actor.position, seat.spot.approach);
   if (!route.length) return actor;
-  return { ...actor, pose: "standing", pending: pose, restId: seat.id, departing: actor.pose !== "standing" ? actor.approach : undefined, approach: seat.spot.approach, route: [...route, seat.position], wait: 0 };
+  return { ...actor, pose: "standing", pending: pose, restId: seat.id, departing, approach: seat.spot.approach, route: [...route, seat.position], wait: 0 };
 }
 
 export function advanceActor(place: Place, id: string, actor: Actor, seconds: number): Actor {
@@ -71,12 +78,15 @@ export function advanceActor(place: Place, id: string, actor: Actor, seconds: nu
   const dx = target.x - actor.position.x, dy = target.y - actor.position.y, length = Math.hypot(dx, dy);
   if (length < .003) {
     const route = actor.route.slice(1);
-    if (actor.route.length) return { ...actor, position: target, route, departing: actor.departing === target ? undefined : actor.departing, pose: !route.length && actor.pending ? actor.pending : "standing", pending: route.length ? actor.pending : undefined, moving: false };
+    if (actor.route.length) {
+      const next: Actor = { ...actor, position: target, route, departing: actor.departing === target ? undefined : actor.departing, pose: !route.length && actor.pending ? actor.pending : "standing", pending: route.length ? actor.pending : undefined, moving: false };
+      return route.length ? advanceActor(place, id, next, seconds) : next;
+    }
     return { ...actor, position: target, waypoint: (actor.waypoint + 1) % patrol!.length, wait: id === "jason" || id === "luca" ? 3.5 : 1.6, moving: false };
   }
   // Final steps onto a seat are allowed to cross its furniture footprint.
   const usingSeat = actor.departing === target || actor.route.length === 1 && !!actor.pending;
-  const speed = id === "jason" || id === "luca" ? .35 : .45;
+  const speed = id === "felice" ? 1 : id === "jason" || id === "luca" ? .35 : .45;
   const delta = Math.min(seconds, length / (.19 * speed));
   const position = movementStep(actor.position, { x: dx / length, y: dy / length }, delta * speed, (x, y) => usingSeat || canWalk(place, x, y));
   const distance = actor.distance + Math.hypot(position.x - actor.position.x, position.y - actor.position.y);

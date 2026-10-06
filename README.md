@@ -1,6 +1,16 @@
 # Felice × Elias World
 
-Version **0.65**: ein eigenständiges, mobiles 2D-Spiel mit sieben zusammenhängenden Orten, Tageszyklus, Freunden, Ruhepositionen und vier spielbaren Erinnerungskapiteln.
+Version **0.7**: ein eigenständiges, mobiles 2D-Spiel mit sieben zusammenhängenden Orten, Tageszyklus, Freunden, Ruhepositionen und vier spielbaren Erinnerungskapiteln.
+
+## Neu in V0.7
+
+- Freunde schauen beim Laufen nach vorne, hinten, links oder rechts. Jede Richtung verwendet eine neutrale Haltung und zwei wechselnde Schrittbilder auf derselben Fußlinie. Gerade Laufwege enthalten weniger Zwischenstopps.
+- Felice geht zum Sitz- oder Liegeplatz und tritt beim Aufstehen zurück auf den Boden. Elias läuft auf Einladung zum Nachbarplatz, steht mit ihr auf und bleibt anschließend ansprechbar in der Szene. Haltungswechsel lassen sich unterwegs ändern oder abbrechen, ohne im Möbel hängen zu bleiben.
+- Namen sind auf Desktop und Handy größer. Beim Sitzen stehen Felices und Elias' Namen unter den Figuren, damit Tischaktionen sie nicht verdecken; Felices Name erscheint im Bett am Kopfteil.
+- Im Erinnerungsbuch gibt es eine Figurenübersicht mit den neun benannten Freunden und den bisherigen Familien-/Gastgeberrollen. Fehlende Namen lassen sich dort ergänzen, speichern und durch ein leeres Feld zurücksetzen. Die Anzeige ist wählbar: immer, beim Nähern oder Freunde immer. Angepasste Namen erscheinen auch in Gesprächen mit dem passenden Porträt.
+- Namen werden separat unter `felice-elias.names.v07` gespeichert. Kapitel und Tagesstand bleiben kompatibel. Die konkret zusätzlich gewünschten Namen und persönlichen Aussehensangaben stehen noch aus; die vorhandenen Rollen werden bis dahin beibehalten.
+
+[Browserprüfung und Szenenbilder von V0.7](qa/v07/REVIEW.md) · [Grafikvorgaben](game/ART-V07.md)
 
 ## Neu in V0.65
 
@@ -50,11 +60,11 @@ Grafikdateien und Generierungsvorgaben sind in [game/ART-V06.md](game/ART-V06.md
 ```powershell
 npm test
 npx tsc --noEmit
-npx eslint game/Game.tsx game/GameUI.tsx game/WorldArt.tsx game/audio.ts game/camera.ts game/graphics.ts game/story.ts game/memories/ShootingMemory.tsx tests/world.test.mjs
+npx eslint game/Game.tsx game/GameUI.tsx game/WorldArt.tsx game/NamesPanel.tsx game/actors.ts game/rest.ts game/names.ts game/graphics07.ts tests/actors.test.mjs tests/rest.test.mjs tests/names.test.mjs tests/motion.test.mjs tests/world.test.mjs qa/v07/*.mjs
 npm run build
 ```
 
-Die 30 Tests umfassen Kapitel, Speicherstände, Erreichbarkeit, Trefferwertung, Kamera, Grafikzuordnung, Ton sowie Tagesgrenzen, Hinweiszeiten, Schlafen, Jahreszeiten sowie Bewegung bei verschiedenen Bildraten, Kollisionen, NPC-Laufwege, Platzreservierungen und alle Freundesposen. Browserprüfungen ergänzen sie um Darstellung und Bedienung.
+Die 37 Tests umfassen Kapitel, Speicherstände, Erreichbarkeit, Trefferwertung, Kamera, Grafikzuordnung, Ton, Tagesgrenzen, Hinweiszeiten, Schlafen, Jahreszeiten, Bewegung bei verschiedenen Bildraten, Kollisionen, NPC-Laufwege, Platzreservierungen, alle Freundesposen sowie Felices und Elias' Ruhewege und ergänzte Namen. Browserprüfungen ergänzen sie um Darstellung und Bedienung.
 
 ## Lokal starten
 
