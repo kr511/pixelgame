@@ -8,8 +8,41 @@ export const SCENE_GRAPHICS: Record<Place, SceneGraphic> = {
   home: { background: "/rooms/home-v06.png", winter: "/rooms/home-winter-v06.png", outdoors: false, light: "#ffd49a", foreground: [rect(46,23.5,73,48),rect(12,17,40,43),rect(84,12,96,46)] },
   kitchen: { background: "/rooms/kitchen-v065.png", outdoors: false, light: "#ffd49a", foreground: [rect(8.7,9,91.4,28.4),rect(57.6,36,85.4,58.5)] },
   garden: { background: "/rooms/garden-v06.png", winter: "/rooms/garden-winter-v06.png", outdoors: true, light: "#e0eabb", foreground: [rect(27,0,70,19),{ clip: "polygon(3% 9%,13% 6%,25% 10%,33% 20%,29% 28%,22% 30%,21% 38%,14% 38%,13% 30%,5% 27%,2% 20%)", depth:38 },{ clip:"polygon(69% 11%,79% 7%,94% 10%,98% 22%,91% 31%,86% 31%,86% 40%,79% 40%,77% 32%,68% 29%,65% 21%)",depth:40 }] },
-  bus: { background: "/rooms/bus-v06.png", winter: "/rooms/bus-winter-v06.png", outdoors: true, light: "#dbe8e5", foreground: [rect(61,5,87,36),rect(13,21,42,37)] },
-  school: { background: "/rooms/school-v06.png", winter: "/rooms/school-winter-v06.png", outdoors: true, light: "#e9dbb8", foreground: [rect(0,0,100,32),rect(11,38,30,48),rect(70,38,89,48)] },
+  radegast: { background: "/rooms/radegast-walk-v075.png", outdoors: true, light: "#e4dbba", foreground: [
+    { clip: "polygon(0% 0%,31% 0%,35% 16%,39% 30%,44% 44%,50% 58%,56% 72%,66% 94%,68% 100%,0% 100%)", depth:96 },
+    { clip: "polygon(43.5% 16%,50% 30%,56% 44%,62.5% 58%,69% 72%,80% 94%,83% 100%,100% 100%,100% 0%,39% 0%)", depth:96 },
+  ] },
+  bus: { background: "/rooms/radegast-stop-v075.png", outdoors: true, light: "#dbe8e5", foreground: [rect(50,26,89.5,40),rect(23.5,30,43.5,43),rect(0,0,100,24.5)] },
+  zoerbig: { background: "/rooms/zoerbig-walk-v075.png", outdoors: true, light: "#e9dbb8", foreground: [
+    { clip: "polygon(0% 0%,40% 0%,41.4% 28%,40% 35%,34% 39%,31.5% 47%,31% 55%,32% 60%,25% 67%,14% 73%,0% 73%)", depth:82 },
+    { clip: "polygon(68% 0%,100% 0%,100% 100%,18% 100%,18% 80%,31% 71%,38% 65%,40% 61%,37% 54%,37% 46%,39% 42%,43% 38%,47% 33%,67% 31%)", depth:96 },
+    rect(52.5,15,55.5,21),
+  ] },
+  school: { background: "/rooms/school-court-secondary-v075.png", outdoors: true, light: "#e9dbb8", foreground: [
+    rect(0,0,100,22.3),rect(42.1,17.6,57.8,25),
+    { clip: "polygon(1.9% 6.1%,13.6% 6.1%,13.6% 23.3%,10.7% 25.2%,2.2% 23.9%)", depth:25.2 },
+    { clip: "polygon(31.5% 28%,38% 25.5%,45% 28%,48% 33%,46% 38%,45% 40.3%,45.7% 41.5%,38.4% 45.5%,32.3% 42.6%,32.5% 40.2%,31.5% 35%)", depth:45.5 },
+    { clip: "polygon(55% 31%,61% 27.5%,69% 28%,75% 33%,76% 39%,72% 42.2%,74% 43.9%,67.1% 47.8%,59.8% 44%,60.5% 42.1%,56% 39%)", depth:47.8 },
+    { clip: "polygon(36% 50%,41% 45%,50% 44.5%,56% 50%,55% 56%,53.8% 58.4%,55.7% 60.5%,49% 64.5%,40.2% 60.4%,40.9% 58.2%,37% 55%)", depth:64.5 },
+    { clip: "polygon(62% 53%,68% 47%,76% 48%,83% 53%,84% 59%,79.9% 61%,82.1% 63.6%,75.2% 68.3%,66.7% 64.4%,67.6% 61.1%,64% 58%)", depth:68.3 },
+    { clip: "polygon(0% 14%,5% 13%,9% 17%,14% 18%,14% 23.9%,13% 25.6%,5.7% 26.7%,0% 26.7%)", depth:26.7 },
+    { clip: "polygon(0% 26%,8% 27.9%,11.4% 29.6%,9.3% 34%,0% 34%)", depth:34 },
+    { clip: "polygon(0% 32%,8% 31%,13% 38%,13% 46%,10% 51%,11.7% 57.7%,8.8% 63%,0% 63%)", depth:63 },
+    { clip: "polygon(0% 67%,12% 68%,16% 73%,19% 78.3%,16% 79.7%,0% 79.7%)", depth:79.7 },
+    { clip: "polygon(18.3% 72.6%,33.9% 76.5%,34.4% 78.7%,31.7% 82.4%,29.6% 81.9%,32% 77.4%,17.6% 75.1%)", depth:82.4 },
+    { clip: "polygon(30.1% 81.1%,41.5% 86%,43.7% 92.5%,41.6% 93.8%,39.8% 87.9%,29.6% 83.5%)", depth:93.8 },
+    { clip: "polygon(8.2% 84.7%,27.6% 88%,30.5% 90.4%,29.5% 92.6%,27.7% 91.7%,27.4% 90.1%,8% 87%)", depth:92.6 },
+    { clip: "polygon(47.6% 79.6%,49% 78.9%,51.2% 81.4%,48.8% 83.8%,46.4% 81.5%)", depth:82 },
+    { clip: "polygon(48.8% 83.8%,51.2% 81.4%,53.5% 84%,51.1% 86.2%)", depth:85 },
+    { clip: "polygon(51.1% 86.2%,53.5% 84%,55.7% 86%,53.1% 88.5%,52.2% 88%)", depth:88.5 },
+    { clip: "polygon(0% 88.5%,28.6% 92.7%,36.2% 96.4%,39.3% 100%,0% 100%)", depth:100 },
+    { clip: "polygon(62.2% 92.1%,71.7% 92.1%,79% 100%,62.2% 100%)", depth:100 },
+    { clip: "polygon(94.4% 25%,100% 25%,100% 100%,98% 87.5%,95.6% 59.1%)", depth:100 },
+    rect(44.3,92.3,47.9,100,100),rect(55.7,92.3,58.8,100,100),
+  ] },
+  goelzau: { background: "/rooms/goelzau-walk-v075.png", outdoors: true, light: "#dfe5ba", foreground: [rect(5,0,63,24.5),rect(71,0,100,43),
+    { clip: "polygon(0% 40%,20% 42%,35% 43%,52% 45%,66% 49%,72% 55%,79% 63%,83% 73%,0% 100%)", depth:96 },
+  ] },
   range: { background: "/rooms/range-v06.png", outdoors: false, light: "#e3e3ba", foreground: [rect(10,4,90,34)] },
 };
 export function sceneBackground(place: Place, winter: boolean) { const scene = SCENE_GRAPHICS[place]; return winter && scene.winter ? scene.winter : scene.background; }
@@ -76,4 +109,4 @@ export function speakerGraphic(speaker: string): CharacterId | null {
   const friends: Record<string, CharacterId> = { Elena: "elena", Jason: "jason", Luca: "luca", Wyatt: "wyatt", Ida: "ida", Helena: "helena", Linda: "linda", Lina: "lina", Alexandra: "alexandra" };
   return speaker === "Felice & Elias" ? "elias" : speakers[speaker] ?? friends[speaker] ?? null;
 }
-export const CHAPTER_GRAPHICS: Record<ChapterId, string> = { dog: "/rooms/garden-v06.png", christmas: "/rooms/home-winter-v06.png", school: "/rooms/bus-v06.png", shooting: "/rooms/goelzau-range-v1.png" };
+export const CHAPTER_GRAPHICS: Record<ChapterId, string> = { dog: "/rooms/garden-v06.png", christmas: "/rooms/home-winter-v06.png", school: "/rooms/zoerbig-walk-v075.png", shooting: "/rooms/goelzau-range-v1.png" };

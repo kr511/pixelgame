@@ -69,7 +69,7 @@ export class WorldAudio {
       return;
     }
     if (this.ambience) return;
-    const outside = ["garden","bus","school"].includes(this.place);
+    const outside = ["garden","bus","school","radegast","zoerbig","goelzau"].includes(this.place);
     const buffer = this.context.createBuffer(1, this.context.sampleRate * 4, this.context.sampleRate);
     const samples = buffer.getChannelData(0);
     let smooth = 0;
@@ -94,7 +94,7 @@ export class WorldAudio {
         const data = buffer.getChannelData(0);
         for (let i=0;i<data.length;i++) data[i] = (Math.random()*2-1)*Math.exp(-i/data.length*8);
         const noise = ctx.createBufferSource(); noise.buffer = buffer;
-        const filter = ctx.createBiquadFilter(); filter.type = "lowpass"; filter.frequency.value = effect === "shot" ? 1800 : ["garden","bus","school"].includes(this.place) ? 900 : 450;
+        const filter = ctx.createBiquadFilter(); filter.type = "lowpass"; filter.frequency.value = effect === "shot" ? 1800 : ["garden","bus","school","radegast","zoerbig","goelzau"].includes(this.place) ? 900 : 450;
         noise.connect(filter); filter.connect(envelope); source = noise;
         noise.onended = () => { this.effects.delete(noise); filter.disconnect(); envelope.disconnect(); };
       } else {

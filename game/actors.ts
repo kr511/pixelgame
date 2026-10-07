@@ -11,12 +11,13 @@ export function standingActor(position: Point, wait = 0): Actor {
   return { position, pose: "standing", moving: false, frame: 0, direction: "front", distance: 0, waypoint: 1, wait, route: [] };
 }
 
-// Short, separate routes below the school building and its benches.
+// Four short routes beside the gray building's basement window grilles.
+// Elias is invited to the separate seating area and has no group patrol.
 export const SCHOOL_ROUTES: Record<string, Point[]> = {
-  friends: [{ x: .37, y: .55 }, { x: .46, y: .55 }, { x: .46, y: .65 }, { x: .37, y: .65 }],
-  jason: [{ x: .61, y: .61 }, { x: .59, y: .61 }, { x: .59, y: .53 }, { x: .61, y: .53 }],
-  luca: [{ x: .37, y: .73 }, { x: .42, y: .73 }, { x: .42, y: .81 }, { x: .37, y: .81 }],
-  wyatt: [{ x: .73, y: .7 }, { x: .81, y: .7 }, { x: .81, y: .6 }, { x: .73, y: .6 }],
+  friends: [{ x: .18, y: .295 }, { x: .207, y: .285 }, { x: .212, y: .315 }, { x: .185, y: .325 }],
+  jason: [{ x: .25, y: .295 }, { x: .277, y: .285 }, { x: .282, y: .315 }, { x: .255, y: .325 }],
+  luca: [{ x: .18, y: .39 }, { x: .207, y: .38 }, { x: .212, y: .41 }, { x: .185, y: .42 }],
+  wyatt: [{ x: .25, y: .39 }, { x: .277, y: .38 }, { x: .282, y: .41 }, { x: .255, y: .42 }],
 };
 export function initialActors(): Actors {
   return Object.fromEntries(Object.values(ENTITIES).flat().filter(e => e.kind === "person" && canChangePose(e.art)).map((e, i) => [e.id, standingActor({ x: e.x, y: e.y }, 1.5 + i % 4)]));
@@ -25,6 +26,11 @@ export function initialActors(): Actors {
 /** Walkable grid routing, including the exact endpoints, around furniture. */
 export function walkingRoute(place: Place, from: Point, to: Point): Point[] {
   const grid = .02;
+  const clearEdge = (a: Point, b: Point) => {
+    const samples = Math.max(1, Math.ceil(Math.hypot(b.x-a.x,b.y-a.y)/.005));
+    for (let i=1;i<=samples;i++) if (!canWalk(place,a.x+(b.x-a.x)*i/samples,a.y+(b.y-a.y)*i/samples)) return false;
+    return true;
+  };
   const cell = (p: Point) => [Math.round(p.x / grid), Math.round(p.y / grid)];
   const start = cell(from), end = cell(to), key = (x: number, y: number) => `${x},${y}`;
   const queue = [start];
@@ -32,10 +38,10 @@ export function walkingRoute(place: Place, from: Point, to: Point): Point[] {
   let found: number[] | undefined;
   for (let i = 0; i < queue.length; i++) {
     const [x, y] = queue[i];
-    if (Math.hypot(x - end[0], y - end[1]) <= 1) { found = [x, y]; break; }
+    if (Math.hypot(x - end[0], y - end[1]) <= 1 && clearEdge({x:x*grid,y:y*grid},to)) { found = [x, y]; break; }
     for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
       const nx = x + dx, ny = y + dy, id = key(nx, ny);
-      if (previous.has(id) || !canWalk(place, nx * grid, ny * grid)) continue;
+      if (previous.has(id) || !clearEdge({x:x*grid,y:y*grid},{x:nx*grid,y:ny*grid})) continue;
       previous.set(id, [x, y]); queue.push([nx, ny]);
     }
   }
@@ -76,6 +82,12 @@ export function advanceActor(place: Place, id: string, actor: Actor, seconds: nu
   const target = actor.route[0] ?? patrol?.[actor.waypoint];
   if (!target) return actor.moving ? { ...actor, moving: false } : actor;
   const dx = target.x - actor.position.x, dy = target.y - actor.position.y, length = Math.hypot(dx, dy);
+  // After a rest outside the group, return around the courtyard's sitting
+  // walls before resuming the short patrol at the window grilles.
+  if (!actor.route.length && patrol && length > .08) {
+    const route = walkingRoute(place, actor.position, target);
+    return route.length ? advanceActor(place, id, { ...actor, route }, seconds) : { ...actor, moving: false };
+  }
   if (length < .003) {
     const route = actor.route.slice(1);
     if (actor.route.length) {

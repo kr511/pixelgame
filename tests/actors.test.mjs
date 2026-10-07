@@ -1,7 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { advanceActor, availableSeat, initialActors, requestPose, SCHOOL_ROUTES } from "../game/actors.ts";
-import { canWalk, ENTITIES } from "../game/story.ts";
+import { advanceActor, availableSeat, initialActors, requestPose, SCHOOL_ROUTES, standingActor, walkingRoute } from "../game/actors.ts";
+import { REST_SPOTS } from "../game/day.ts";
+import { canWalk, ENTITIES, SPAWNS } from "../game/story.ts";
 import { POSE_ATLASES } from "../game/graphics.ts";
 
 test("Schulfreunde laufen mit echten Zwischenbildern auf begehbaren Wegen", () => {
@@ -34,7 +35,7 @@ test("Jeder Freund erreicht Sitz- und Liegeplatz, steht auf und gibt den Platz f
         assert.equal(actor.moving, false);
         actor = requestPose(place, actor, "standing");
         assert.equal(actor.restId, undefined);
-        for (let i = 0; i < 600 && actor.route.length; i++) actor = advanceActor(place, entity.id, actor, 1 / 60);
+        for (let i = 0; i < 1800 && actor.route.length; i++) actor = advanceActor(place, entity.id, actor, 1 / 60);
         assert.equal(actor.route.length, 0, `${entity.id}: Aufstehen`);
         assert.ok(canWalk(place, actor.position.x, actor.position.y));
       }
@@ -79,4 +80,45 @@ test("Eine neue Haltung während des Aufstehens ersetzt das alte Ziel zuverläss
   actor = requestPose("school", actor, "sitting", availableSeat("school", "sitting", actor.position, { ...actors, friends: actor }));
   for (let i = 0; i < 3000 && actor.pose !== "sitting"; i++) actor = advanceActor("school", "friends", actor, 1 / 60);
   assert.equal(actor.pose, "sitting");
+});
+
+
+test("Elias bleibt außerhalb der vier Schulfreunde am Fenstergitter", () => {
+  assert.deepEqual(ENTITIES.school.filter(e=>e.kind==="person").map(e=>e.name).sort(),["Elena","Jason","Luca","Wyatt"]);
+  let elias=standingActor(SPAWNS.school);
+  for(let i=0;i<2400;i++) elias=advanceActor("school","elias-guest",elias,1/60);
+  assert.deepEqual(elias.position,SPAWNS.school);
+  assert.equal(elias.moving,false);
+  for(const id of Object.keys(SCHOOL_ROUTES)) {
+    let actor=initialActors()[id];
+    for(let i=0;i<2400;i++) {
+      actor=advanceActor("school",id,actor,1/60);
+      assert.ok(actor.position.x>=.17 && actor.position.x<=.295 && actor.position.y>=.28 && actor.position.y<=.435,id);
+    }
+  }
+});
+
+test("Der Weg zur grünen Sitzecke umgeht schmale Mauern zwischen den Rasterpunkten", () => {
+  const from=initialActors().friends.position;
+  const to=REST_SPOTS.find(s=>s.id==="school-picnic").approach;
+  const route=[from,...walkingRoute("school",from,to)];
+  assert.ok(route.length>2);
+  for(let i=1;i<route.length;i++) {
+    const a=route[i-1],b=route[i],samples=Math.ceil(Math.hypot(a.x-b.x,a.y-b.y)/.001);
+    for(let j=0;j<=samples;j++) assert.ok(canWalk("school",a.x+(b.x-a.x)*j/samples,a.y+(b.y-a.y)*j/samples),`Segment ${i}`);
+  }
+});
+
+test("Elena kehrt nach dem Aufstehen um die Sitzmauern zur Fenstergitter-Gruppe zurück", () => {
+  const actors=initialActors();
+  let actor=requestPose("school",actors.friends,"lying",availableSeat("school","lying",actors.friends.position,actors));
+  for(let i=0;i<3000 && actor.pose!=="lying";i++) actor=advanceActor("school","friends",actor,1/60);
+  assert.equal(actor.pose,"lying");
+  actor=requestPose("school",actor,"standing");
+  for(let i=0;i<1800;i++) {
+    actor=advanceActor("school","friends",actor,1/60);
+    assert.ok(canWalk("school",actor.position.x,actor.position.y));
+  }
+  assert.equal(actor.pose,"standing");
+  assert.ok(actor.position.x>=.17 && actor.position.x<=.295 && actor.position.y>=.28 && actor.position.y<=.34);
 });

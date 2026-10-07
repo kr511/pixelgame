@@ -184,12 +184,58 @@
 .name-card button { min-width:44px; min-height:44px; padding:0; border:1px solid #b5b78b; border-radius:4px; background:#9cae80; color:#25392c; font-size:18px; cursor:pointer; }
 .names-panel :is(input,select,button):focus-visible { outline:2px solid #efd397; outline-offset:3px; }
 .names-error { margin:14px 0; color:#ffddb2; font-size:12px; line-height:1.5; }
+.world-map-panel { border-top:1px solid #738263; padding:24px; background:#2c4435; }
+.world-map-heading { display:flex; align-items:start; justify-content:space-between; gap:18px; }
+.world-map-heading h2 { margin:0; font:600 25px/1.2 Georgia,serif; }
+.world-map-heading p { font-size:12px; color:#d0d9be; }
+.world-map-heading>span { font-size:11px; color:#d4ddb9; }
+.world-map-panel>svg { width:100%; display:block; margin-top:10px; }
+.map-town { fill:#263c2f; stroke:#82906e; }
+.map-town-title { fill:#e5d1a1; font-size:13px; letter-spacing:.10em; }
+.map-footpath { fill:none; stroke:#849775; stroke-width:4; }
+.map-connection { fill:none; stroke:#cfb47e; stroke-width:3; stroke-dasharray:6 5; }
+.map-route-label { fill:#e9d8ae; font-size:13px; paint-order:stroke; stroke:#2c4435; stroke-width:5px; }
+.map-node circle { fill:#c7cbaa; stroke:#e9dcc0; stroke-width:2; }
+.map-node rect { fill:#314b3a; }
+.map-node text { fill:#e9e7d0; font-size:13px; }
+.map-node.is-current circle { fill:#f2ce81; stroke:#fff3c7; stroke-width:3; }
+.map-node.is-current rect { fill:#dac490; }
+.map-node.is-current text { fill:#283d2e; font-weight:700; }
+.world-map-caption { margin:10px 0 0; font-size:11px; color:#c9d5b7; line-height:1.5; }
+.town-place-label { position:absolute; z-index:116; transform:translate(-50%,-100%); padding:3px 6px; border:1px solid #b4b590; background:#243b30f2; color:#f3e7c6; font-size:11px; white-space:nowrap; }
+.landmark-marker { display:block; width:22px; height:22px; line-height:22px; text-align:center; border:1px solid #d4c296; border-radius:50%; background:#34503ce8; color:#f3dfa8; font-size:17px; }
+.version-075 .entity-item:has(.landmark-marker) .entity-name { display:block; width:max-content; max-width:150px; white-space:normal; text-align:center; }
+.winter-town { filter:saturate(.52) brightness(1.04); }
+.winter-town~.scene-foreground { filter:saturate(.52) brightness(1.04); }
 .name-saved { margin:12px 0 0; color:#dfecc4; font-size:12px; }
 @media (max-width:1000px) { .names-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media (max-height:600px) and (orientation:landscape) {
   .version-07 .entity-person .entity-name { font-size:9px; max-width:105px; padding:2px 4px; }
   .version-07 .room-player-label,.bed-name-label { font-size:9px; padding:2px 4px; }
   .names-panel { padding:18px; }
+  .world-map-panel { padding:18px; }
+  .world-map-heading h2 { font-size:21px; }
+  .town-place-label { font-size:9px; padding:2px 4px; }
   .names-heading h2 { font-size:21px; }
   .names-heading p { font-size:11px; }
+}
+
+/* Street overviews use a smaller figure scale than the close school courtyard. */
+.version-075[data-scene="radegast"] .room-player,
+.version-075[data-scene="zoerbig"] .room-player,
+.version-075[data-scene="radegast"] .entity-person,
+.version-075[data-scene="zoerbig"] .entity-person { width:4.8%!important; }
+
+/* Overhead school courtyard: match the figure scale to the building and yard. */
+.version-075[data-scene="school"] .room-player,
+.version-075[data-scene="school"] .entity-person { width:4.8%!important; }
+.version-075[data-scene="school"] .rest-mat { width:14%; }
+.version-075[data-scene="school"] .world-exit { z-index:110; }
+
+.version-075[data-scene="school"] [data-rest-id^="school-bench-right"].pose-sitting .room-player-label,
+.version-075[data-scene="school"] [data-rest-id^="school-bench-right"].pose-sitting .entity-name { left:0; transform:translateX(-100%); }
+
+.version-075[data-scene="school"] [data-rest-id^="school-picnic"].pose-lying .entity-name { top:auto; bottom:100%; }
+@media (max-height:600px) and (orientation:landscape) {
+  .version-075[data-scene="school"] .entity-person .entity-name { font-size:8px; padding:1px 2px; }
 }
