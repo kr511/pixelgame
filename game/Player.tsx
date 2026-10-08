@@ -6,10 +6,11 @@ import { Html, useTexture } from "@react-three/drei";
 import { CapsuleCollider, RapierRigidBody, RigidBody } from "@react-three/rapier";
 import * as THREE from "three";
 import { pressedKeys, useInput } from "./input";
+import { assetUrl } from "./assets";
 
 export function Player({ bodyRef }: { bodyRef: RefObject<RapierRigidBody | null> }) {
   const visual = useRef<THREE.Group>(null);
-  const texture = useTexture("/characters/felice-v1.png");
+  const texture = useTexture(assetUrl("/characters/felice-v1.png"));
 
   useEffect(() => {
     texture.colorSpace = THREE.SRGBColorSpace;

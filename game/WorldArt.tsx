@@ -3,6 +3,7 @@ import { SceneArt, PersonArt, DogArt } from "./SceneArt";
 import { CHARACTER_GRAPHICS, REST_GRAPHICS, POSE_ATLASES, SPRITE_FRAMES, SCENE_GRAPHICS, characterGraphic, sceneBackground, type SpriteRect } from "./graphics";
 import { neighborFrame } from "./graphics07";
 import type { Place } from "./story";
+import { assetUrl } from "./assets";
 
 export const WorldBackdrop = memo(function WorldBackdrop({ place, winter, bedOccupied = false }: { place: Place; winter: boolean; bedOccupied?: boolean }) {
   const source = place === "bedroom" && bedOccupied ? "/rooms/felice-bedroom-rest-v065.png" : sceneBackground(place, winter);
@@ -11,8 +12,8 @@ export const WorldBackdrop = memo(function WorldBackdrop({ place, winter, bedOcc
   const [failedSource, setFailedSource] = useState<string | null>(null);
   if (failedSource === source) return <div className={`scene-backdrop fallback-${place}`}><SceneArt place={place} christmas={winter}/></div>;
   return <>
-    <svg className={`scene-backdrop${winter && SCENE_GRAPHICS[place].outdoors && !SCENE_GRAPHICS[place].winter ? " winter-town" : ""}`} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><image href={source} {...framing} preserveAspectRatio="none" onError={() => setFailedSource(source)}/></svg>
-    {SCENE_GRAPHICS[place].foreground.map((layer, index) => <svg key={index} className="scene-foreground" style={{ clipPath: layer.clip, zIndex: Math.round(layer.depth) + 9 }} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><image href={source} {...framing} preserveAspectRatio="none"/></svg>)}
+    <svg className={`scene-backdrop${winter && SCENE_GRAPHICS[place].outdoors && !SCENE_GRAPHICS[place].winter ? " winter-town" : ""}`} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><image href={assetUrl(source)} {...framing} preserveAspectRatio="none" onError={() => setFailedSource(source)}/></svg>
+    {SCENE_GRAPHICS[place].foreground.map((layer, index) => <svg key={index} className="scene-foreground" style={{ clipPath: layer.clip, zIndex: Math.round(layer.depth) + 9 }} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><image href={assetUrl(source)} {...framing} preserveAspectRatio="none"/></svg>)}
   </>;
 });
 
@@ -48,14 +49,14 @@ export function CharacterArt({ id, portrait = false, direction = "front", walkin
     return <svg key={sheet} className={`character-art character-${pose}`} viewBox="0 0 100 140" data-frame={walking ? frame : 0} data-direction={direction} data-sheet={sheet} aria-hidden="true">
       <g transform={neighbor?.mirror ? "translate(100 0) scale(-1 1)" : undefined}>
       <svg x={50-width/2} y={140-height} width={width} height={height} viewBox={rect.join(" ")} overflow="hidden">
-        <image href={sheet} width={size[0]} height={size[1]} onError={() => setFailedSource(sheet)}/>
+        <image href={assetUrl(sheet)} width={size[0]} height={size[1]} onError={() => setFailedSource(sheet)}/>
       </svg>
       </g>
     </svg>;
   }
-  if (portrait && id === "felice") return <svg className="character-art" viewBox="155 15 155 155" aria-hidden="true"><image href={spec.sheet} width="1448" height="1086" onError={() => setFailedSource(sheet)}/></svg>;
+  if (portrait && id === "felice") return <svg className="character-art" viewBox="155 15 155 155" aria-hidden="true"><image href={assetUrl(spec.sheet)} width="1448" height="1086" onError={() => setFailedSource(sheet)}/></svg>;
   return <svg className="character-art" viewBox="0 0 100 100" aria-hidden="true">
-    <image href={spec.sheet} x={-column*100} y={-spec.row*100} width={spec.columns*100} height={spec.rows*100} preserveAspectRatio="none" onError={() => setFailedSource(sheet)}/>
+    <image href={assetUrl(spec.sheet)} x={-column*100} y={-spec.row*100} width={spec.columns*100} height={spec.rows*100} preserveAspectRatio="none" onError={() => setFailedSource(sheet)}/>
   </svg>;
 }
 
@@ -64,7 +65,7 @@ export function BenchArt({ winter = false }: { winter?: boolean }) {
   const clip = useId();
   return <svg viewBox="10.8 37.8 19 10.4" aria-hidden="true">
     <defs><clipPath id={clip}><path d="M11.5 38.5H29.2V45.5H11.5ZM11.1 39H12.1V47.8H11.1ZM28.4 39H29.6V47.8H28.4Z"/></clipPath></defs>
-    <image href={winter ? "/rooms/school-winter-v06.png" : "/rooms/school-v06.png"} width="100" height="100" clipPath={`url(#${clip})`}/>
+    <image href={assetUrl(winter ? "/rooms/school-winter-v06.png" : "/rooms/school-v06.png")} width="100" height="100" clipPath={`url(#${clip})`}/>
   </svg>;
 }
 

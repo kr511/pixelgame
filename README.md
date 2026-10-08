@@ -16,6 +16,52 @@ Version **0.9** erweitert das vorhandene mobile 2D-Pixelspiel zu einer zusammenh
 
 [Datenmodell und Erweiterung](game/STORY-V09.md) · [Prüfung des vollständigen Jahres](qa/v09-year/README.md) · [Prüfbericht der früheren Novemberfassung](qa/v09/REVIEW.md)
 
+## Auf GitHub Pages spielen
+
+Der statische Einstieg [index.html](index.html) lädt dieselbe Spielwelt wie die
+bisherige Serverfassung. Der separate Vite-Build enthält das Spiel und sämtliche
+Grafiken; es werden weder Node-Server noch Datenbank auf GitHub Pages benötigt.
+Die vorhandenen Sites-Buildbefehle bleiben erhalten.
+
+Einmalig in [Settings → Pages](https://github.com/kr511/pixelgame/settings/pages)
+als **Source: GitHub Actions** auswählen. Anschließend unter
+[Actions → Deploy GitHub Pages](https://github.com/kr511/pixelgame/actions/workflows/github-pages.yml)
+**Run workflow** starten. Weitere Pushes auf `main` bauen und veröffentlichen
+automatisch. Solange Pages nicht aktiviert ist, erzeugt der Workflow bereits
+das herunterladbare `github-pages`-Artefakt und zeigt die Einrichtungshinweise.
+Bei privaten Repositories muss der GitHub-Tarif Pages unterstützen; die
+Repository-Sichtbarkeit wird durch diesen Workflow nicht geändert.
+
+Die erwartete Spieladresse ist **https://kr511.github.io/pixelgame/**.
+Die `.html`-Datei im Repository ist der Build-Einstieg. Veröffentlicht wird
+**der gesamte Inhalt von `dist-pages/`**, einschließlich der gebauten
+`index.html`, Skripte, Styles und Grafiken; nur die Quelldatei hochzuladen reicht
+nicht aus.
+
+```sh
+npm run build:pages
+npm run preview:pages -- --port 4174
+```
+
+Die lokale statische Vorschau liegt dann unter
+`http://localhost:4174/pixelgame/`. Für andere Repositorynamen oder eine eigene
+Domain lässt sich `PAGES_BASE_PATH` setzen; der Workflow übernimmt den Pfad aus
+der Pages-Konfiguration. Alle dynamisch geladenen Grafiken berücksichtigen
+diesen Pfad, während Grafik-IDs und Speicherformate unverändert bleiben.
+
+Spielstände bleiben lokal pro Browser und Website-Adresse gespeichert. Ein
+Stand von der bisherigen Website wird deshalb nicht automatisch auf
+`github.io` übertragen. Smartphones verwenden weiterhin Querformat.
+
+## Noch offene persönliche Inhalte
+
+Originalnachrichten und Elias’ Brieftext liegen noch nicht vor. Einige frühere
+Erinnerungen, insbesondere Anuks Ankunft, der ursprüngliche Schulweg und das
+Schießen, benötigen bestätigte historische Daten. Bestimmte Freunde und
+Familienmitglieder verwenden weiterhin vorhandene Grafikvarianten; eigene
+Aussehensangaben und umfangreichere Tagesroutinen können später ergänzt werden.
+Die acht Hauptkapitel sind spielbar; unbekannte Angaben werden nicht erfunden.
+
 ### V0.9 spielen
 
 **Welt betreten** → im Album oder im Story-Hinweis **Geschichte erleben** beziehungsweise **Zeit weiterblättern**. Folge in mehrstufigen Szenen der Markierung und benutze **E** / den Aktionsknopf. Für Chatabende in Felices Zimmer am Schreibtisch oder auf der Bettkante Platz nehmen und **Handy öffnen** wählen. Auf Elias zulaufen, um Gespräche und gemeinsame Aktionen auszulösen. Das Handy öffnet sich außerdem über seinen Weltknopf, das Album mit **J** oder dem Buchknopf. Abgeschlossene Erinnerungen lassen sich im Album erneut erleben. Smartphones verwenden den vorhandenen Touch-Joystick im Querformat.

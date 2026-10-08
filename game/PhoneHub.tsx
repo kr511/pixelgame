@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { PixelPortrait } from "./PixelPortrait";
+import { assetUrl } from "./assets";
 import { STORY_CHAPTERS, STORY_EVENTS, STORY_END, STORY_START, chatTopicForEvent, eventStatus, historicalDate, nextEvent, type StoryEvent, type TimelineSave } from "./timeline";
 import "./phone-album.css";
 
@@ -14,7 +15,7 @@ export function resolveStoryIllustration(illustration: string): string {
     eliasroom: "/rooms/story-eliasroom-v09.svg",
     pasture: "/rooms/radegast-walk-v075.png",
   };
-  return scenes[illustration] ?? illustration;
+  return assetUrl(scenes[illustration] ?? illustration);
 }
 
 export function eventDateText(event: StoryEvent) {

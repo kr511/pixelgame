@@ -3,6 +3,7 @@
 import { useId } from "react";
 import { CHARACTER_GRAPHICS, characterGraphic } from "./graphics";
 import { EMOTION_NAMES, portraitSeed, type Emotion } from "./dialogue";
+import { assetUrl } from "./assets";
 
 export type PixelPortraitProps = { id: string; emotion?: Emotion };
 
@@ -28,8 +29,8 @@ export function PixelPortrait({ id, emotion = "neutral" }: PixelPortraitProps) {
     <g clipPath={`url(#${clip})`}>
       <path d="M0 0H100V112H0Z" fill={emotion === "love" ? "#59404b" : emotion === "sad" ? "#36444f" : "#394d46"}/>
       <path d="M0 80H100V112H0Z" fill="#293c37"/>
-      {normalized === "dog" ? <svg x="3" y="12" width="94" height="100" viewBox="0 0 100 100"><image href={graphic.sheet} width="100" height="100" preserveAspectRatio="xMidYMax meet"/></svg> : normalized === "narrator" ? <NarratorPortrait/> : <>
-        {known ? <svg x="0" y="0" width="100" height="112" viewBox={portraitFrame} preserveAspectRatio={isFelice ? "xMidYMin meet" : "none"} overflow="hidden"><image href={graphic.sheet} {...dimensions} preserveAspectRatio="none"/></svg> : <FallbackPortrait seed={seed} skin={skin}/>}
+      {normalized === "dog" ? <svg x="3" y="12" width="94" height="100" viewBox="0 0 100 100"><image href={assetUrl(graphic.sheet)} width="100" height="100" preserveAspectRatio="xMidYMax meet"/></svg> : normalized === "narrator" ? <NarratorPortrait/> : <>
+        {known ? <svg x="0" y="0" width="100" height="112" viewBox={portraitFrame} preserveAspectRatio={isFelice ? "xMidYMin meet" : "none"} overflow="hidden"><image href={assetUrl(graphic.sheet)} {...dimensions} preserveAspectRatio="none"/></svg> : <FallbackPortrait seed={seed} skin={skin}/>}
         {/* Faces have real independent eyes, eyebrows and mouths for all eight emotions. */}
         {main ? <g transform={isElias ? "translate(0 5) rotate(-9 50 50)" : "translate(0 -1)"} data-face-expression={emotion}>
           <path d="M30 36H69V48H73V57H68V63H61V67H40V63H33V57H28V46H30Z" fill={skin}/>

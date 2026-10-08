@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { GameUI } from "./GameUI";
+import { assetUrl } from "./assets";
 import { GraduationPhotos } from "./GraduationPhotos";
 import { personalConversation } from "./conversations";
 import { NamesPanel } from "./NamesPanel";
@@ -604,10 +605,10 @@ export function Game() {
   const arrow = questTarget ? offscreenGuide(questTarget, camera) : null;
 
   return <main className="game-shell pixel-game version-five version-six version-061 version-065 version-07 version-075 version-08 version-09" data-name-mode={names.visibility} data-scene={inWorld ? save.place : "shooting"} data-chapter={event?.id ?? save.chapter ?? "free"} data-replay={Boolean(replay)} data-atmosphere-active={active} data-minute={day.minute} data-date={day.date} data-day={day.day} data-season={sceneSeason}>
-    <link rel="preload" as="image" href="/rooms/felice-bedroom-rest-v065.png"/>
-    <link rel="preload" as="image" href="/characters/rest-poses-v065.png"/>
-    <link rel="preload" as="image" href="/characters/neighbors-poses-v065.png"/>
-    {Object.keys(WALK_ATLASES).map(sheet => <link key={sheet} rel="preload" as="image" href={sheet}/>)}
+    <link rel="preload" as="image" href={assetUrl("/rooms/felice-bedroom-rest-v065.png")}/>
+    <link rel="preload" as="image" href={assetUrl("/characters/rest-poses-v065.png")}/>
+    <link rel="preload" as="image" href={assetUrl("/characters/neighbors-poses-v065.png")}/>
+    {Object.keys(WALK_ATLASES).map(sheet => <link key={sheet} rel="preload" as="image" href={assetUrl(sheet)}/>)}
     <div className={`pixel-viewport world-viewport ${save.place === "bedroom" ? "bedroom-viewport" : ""}`} hidden={!inWorld && phase !== "entering"} role="group" aria-label={PLACES[save.place].name}>
       <div key={save.place} className="world-scene world-camera" style={{ "--camera-x": `${camera.x*100}%`, "--camera-y": `${camera.y*100}%`, "--world-zoom": camera.zoom } as CSSProperties}>
         {event?.scene === "encounter" ? <RadegastPasture/> : <WorldBackdrop place={save.place} winter={winter} bedOccupied={bedOccupied}/>}
