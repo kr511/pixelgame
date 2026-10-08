@@ -58,7 +58,7 @@ export function walkingRoute(place: Place, from: Point, to: Point): Point[] {
 }
 
 export function availableSeat(place: Place, pose: Pose, from: Point, actors: Actors, playerSpot?: string): { spot: RestSpot; position: Point; id: string } | undefined {
-  return REST_SPOTS.filter(spot => spot.place === place && (pose === "lying" ? spot.kind === "mat" : spot.kind === "bench" || spot.kind === "chair"))
+  return REST_SPOTS.filter(spot => spot.place === place && (pose === "lying" ? spot.kind === "bed" : spot.kind === "bench" || spot.kind === "chair"))
     .flatMap(spot => [spot.position, ...(spot.companion ? [spot.companion] : [])].map((position, i) => ({ spot, position, id: `${spot.id}:${i}` })))
     .filter(slot => slot.spot.id !== playerSpot && !Object.values(actors).some(actor => actor.restId === slot.id))
     .sort((a, b) => Math.hypot(a.spot.approach.x - from.x, a.spot.approach.y - from.y) - Math.hypot(b.spot.approach.x - from.x, b.spot.approach.y - from.y))[0];
@@ -69,7 +69,7 @@ export function requestPose(place: Place, actor: Actor, pose: Pose, seat?: Retur
   if (pose === "standing") {
     return { ...actor, pose, pending: undefined, restId: undefined, moving: false, route: departing ? [departing] : [], approach: undefined, departing, wait: 0 };
   }
-  if (!seat) return actor;
+  if (!seat || seat.spot.place !== place || (pose === "lying" && seat.spot.kind !== "bed")) return actor;
   const route = departing ? [departing, ...walkingRoute(place, departing, seat.spot.approach)] : walkingRoute(place, actor.position, seat.spot.approach);
   if (!route.length) return actor;
   return { ...actor, pose: "standing", pending: pose, restId: seat.id, departing, approach: seat.spot.approach, route: [...route, seat.position], wait: 0 };

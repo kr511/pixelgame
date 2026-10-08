@@ -44,3 +44,14 @@ test("Hinsetzen lässt sich mitten im Übergang ohne Hängenbleiben abbrechen", 
     assert.ok(canWalk(spot.place, motion.actor.position.x, motion.actor.position.y));
   }
 });
+
+
+test("Liegen ist ausschließlich im Bett möglich, Sitzplätze und Freunde bleiben erhalten", () => {
+  for (const spot of REST_SPOTS) {
+    let motion = beginRest(spot.place, spot.approach, spot);
+    for (let i=0;i<1000 && motion.phase!=="resting";i++) motion=advanceRest(spot.place,"felice",motion,1/60);
+    assert.equal(motion.actor.pose,spot.kind==="bed"?"lying":"sitting",spot.id);
+  }
+  assert.ok(REST_SPOTS.some(spot=>spot.kind==="bed"));
+  assert.ok(REST_SPOTS.every(spot=>!spot.name.toLowerCase().includes("decke")));
+});

@@ -255,8 +255,8 @@ export function Game() {
       const matches = step?.place === save.place && step.target === nearbyEntity.id;
       if (!matches && nearbyEntity.kind === "person" && canChangePose(nearbyEntity.art)) {
         const actor = actorsRef.current[nearbyEntity.id];
-        const choices = ["Hinsetzen", "Hinlegen", "Aufstehen", "Weiterreden"];
-        setDialogue({ speaker: nearbyEntity.name, art: nearbyEntity.art, text: `${nearbyEntity.text}\n${actor?.pose === "sitting" ? "Du kannst mich gern wieder zum Aufstehen einladen." : actor?.pose === "lying" ? "Hier auf der Decke kann man gut ausruhen." : "Ein bisschen Zeit für eine Pause?"}`, actorId: nearbyEntity.id, action: "pose", choices }); return;
+        const choices = ["Hinsetzen", "Aufstehen", "Weiterreden"];
+        setDialogue({ speaker: nearbyEntity.name, art: nearbyEntity.art, text: `${nearbyEntity.text}\n${actor?.pose === "sitting" ? "Du kannst mich gern wieder zum Aufstehen einladen." : "Ein bisschen Zeit für eine Pause?"}`, actorId: nearbyEntity.id, action: "pose", choices }); return;
       }
       const original = ENTITIES[save.place].find(entity => entity.id === nearbyEntity.id);
       const entitySpeaks = !matches || step.speaker === original?.name;
@@ -278,7 +278,7 @@ export function Game() {
     }
     if (dialogue.action === "pose" && dialogue.actorId) {
       if (choice !== "Weiterreden") {
-        const pose: Pose = choice === "Aufstehen" ? "standing" : choice === "Hinlegen" ? "lying" : "sitting";
+        const pose: Pose = choice === "Aufstehen" ? "standing" : "sitting";
         const actor = actorsRef.current[dialogue.actorId];
         const seat = pose === "standing" ? undefined : availableSeat(save.place, pose, actor.position, actorsRef.current, rest?.spot.id);
         if (pose !== "standing" && !seat) { setDialogue({ speaker: dialogue.speaker, art: dialogue.art, text: "Die Ruheplätze sind gerade belegt. Lass uns später noch einmal schauen." }); return; }
@@ -357,7 +357,7 @@ export function Game() {
         <WorldBackdrop place={save.place} winter={winter} bedOccupied={bedOccupied}/>
         {save.place === "radegast" && <span className="town-place-label" style={labelStyle({ x: .19, y: .17 })}>Felices Wohnung</span>}
         {spots.map(spot => <div key={spot.id} className={`rest-spot rest-${spot.kind}${restTarget?.id === spot.id ? " nearby-rest" : ""}`} style={{...labelStyle(spot.furniture ?? spot.approach), zIndex: Math.round((spot.furniture ?? spot.position).y*100)+8}} aria-label={spot.name}>
-          {spot.furniture && (spot.kind === "mat" ? <PicnicArt/> : <BenchArt winter={winter && save.place === "garden"}/>)}
+          {spot.furniture && <BenchArt winter={winter && save.place === "garden"}/>}
           {restTarget?.id === spot.id && !rest && <span className="entity-name">{spot.name}</span>}
         </div>)}
         {exits.map(exit => <div key={exit.to} className={`world-exit ${guide?.to === exit.to ? "quest-exit" : ""}`} style={labelStyle(exit)}><span><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 19 19 5M6 5h13v13" fill="none" stroke="currentColor" strokeWidth="2"/></svg></span><small>{exit.label}</small></div>)}
@@ -381,12 +381,12 @@ export function Game() {
       {notices[0] && active && <aside className="day-notice" role="status" data-testid="day-notice" key={`${notices[0].date}-${notices[0].minute}`}><strong>Uhrzeit: {clockText(notices[0].minute)}</strong><span>{notices[0].label}</span></aside>}
       <button className="journal-button" aria-label="Erinnerungsbuch öffnen" onClick={() => { clearMovement(); setJournal(true); }}>▤ <span>Erinnerungsbuch</span> <kbd>J</kbd></button>
       <aside className="quest-tracker" aria-live="polite"><small>{chapter ? `${chapter.date} · ${Math.min(save.step+1,chapter.steps.length)}/${chapter.steps.length}` : "Version 0.75 · Frei erkunden"}</small><strong>{chapter?.title ?? "Eure kleine Welt"}</strong><p>{step?.label ?? (chapter ? "Kapitel bewahrt ♥ Wähle im Buch die nächste Geschichte." : "Freunde treffen, gemeinsam sitzen und eure Welt erkunden. Über Radegast und den Zörbiger Markt zur Schule. Eure Wege und Namen findest du im Buch.")}</p>{step && <span>{step.place === save.place ? "✦ Folge der goldenen Markierung" : `↗ ${guide?.label ?? PLACES[step.place].name}`}</span>}{save.bag.length > 0 && <div className="inventory">Tasche · {save.bag.join(" · ")}</div>}</aside>
-      {active && rest && <div className="memory-interaction rest-actions"><span>{!settled ? rest.motion.phase === "leaving" ? "Du stehst auf" : "Du gehst zum Ruheplatz" : rest.spot.kind === "bed" ? "Du liegst wach im Bett" : rest.spot.kind === "mat" ? "Du liegst auf der Decke" : rest.elias ? "Ein Moment mit Elias" : rest.spot.kind === "chair" ? "Du sitzt gemütlich" : "Du sitzt auf der Bank"}</span><button data-testid="world-interact" disabled={rest.motion.phase === "leaving"} onClick={interact}><kbd>E</kbd>Aufstehen · 10 Min.</button>{settled && (rest.spot.kind === "bed" ? <button onClick={() => { setNotices([]); persistDay(sleepUntilMorning(dayRef.current)); position(rest.spot.approach); changeRest(null); setDialogue({ speaker: "Felice", text: "Ein neuer Morgen. Es ist 5:00 Uhr. Du bist ausgeschlafen.", morning: true }); }}>Schlafen bis 5:00 Uhr</button> : <><button onClick={() => spendTime(ACTION_MINUTES)}>Ausruhen · 10 Min.</button>{!rest.elias && rest.spot.kind !== "mat" && <button onClick={() => { const native = sourceEntities.find(entity => entity.art === "elias");
+      {active && rest && <div className="memory-interaction rest-actions"><span>{!settled ? rest.motion.phase === "leaving" ? "Du stehst auf" : "Du gehst zum Ruheplatz" : rest.spot.kind === "bed" ? "Du liegst wach im Bett" : rest.elias ? "Ein Moment mit Elias" : rest.spot.kind === "chair" ? "Du sitzt gemütlich" : "Du sitzt auf der Bank"}</span><button data-testid="world-interact" disabled={rest.motion.phase === "leaving"} onClick={interact}><kbd>E</kbd>Aufstehen · 10 Min.</button>{settled && (rest.spot.kind === "bed" ? <button onClick={() => { setNotices([]); persistDay(sleepUntilMorning(dayRef.current)); position(rest.spot.approach); changeRest(null); setDialogue({ speaker: "Felice", text: "Ein neuer Morgen. Es ist 5:00 Uhr. Du bist ausgeschlafen.", morning: true }); }}>Schlafen bis 5:00 Uhr</button> : <><button onClick={() => spendTime(ACTION_MINUTES)}>Ausruhen · 10 Min.</button>{!rest.elias && <button onClick={() => { const native = sourceEntities.find(entity => entity.art === "elias");
         const start = native ? actorsRef.current[native.id]?.position ?? native : SPAWNS[save.place];
         const shift = canWalk(save.place, rest.spot.approach.x + .07, rest.spot.approach.y) ? .07 : -.07;
         const companionSpot = { ...rest.spot, position: rest.spot.companion ?? rest.spot.position, approach: { x: rest.spot.approach.x + shift, y: rest.spot.approach.y } };
         changeRest({ ...rest, elias: true, companion: beginRest(save.place, start, companionSpot) }); spendTime(ACTION_MINUTES); }}>Mit Elias sitzen</button>}</>)}</div>}
-      {active && !rest && target && <div className="memory-interaction"><span>{targetName}</span><button data-testid="world-interact" onClick={interact}><kbd>E</kbd>{restTarget ? restTarget.kind === "bed" || restTarget.kind === "mat" ? "Hinlegen · 10 Min." : "Hinsetzen · 10 Min." : nearbyEntity ? nearbyEntity.id === "school-door" && day.minute < SCHOOL_END ? "Unterricht besuchen" : nearbyEntity.kind === "person" || nearbyEntity.kind === "dog" ? "Ansprechen · 10 Min." : save.place === "kitchen" ? "Aktion wählen" : "Anschauen / benutzen" : "Weitergehen · 30 Min."}</button></div>}
+      {active && !rest && target && <div className="memory-interaction"><span>{targetName}</span><button data-testid="world-interact" onClick={interact}><kbd>E</kbd>{restTarget ? restTarget.kind === "bed" ? "Hinlegen · 10 Min." : "Hinsetzen · 10 Min." : nearbyEntity ? nearbyEntity.id === "school-door" && day.minute < SCHOOL_END ? "Unterricht besuchen" : nearbyEntity.kind === "person" || nearbyEntity.kind === "dog" ? "Ansprechen · 10 Min." : save.place === "kitchen" ? "Aktion wählen" : "Anschauen / benutzen" : "Weitergehen · 30 Min."}</button></div>}
       {!save.chapter && <div className="world-welcome">Dein Zimmer ist erst der Anfang. Geh durch die Tür oder öffne das Buch.</div>}
     </>}
     {journal && <dialog ref={journalRef} className="story-modal journal-modal" onCancel={() => { setJournal(false); clearMovement(); }}>
@@ -416,10 +416,6 @@ function WorldEntity({ entity, actor, quest, nearby }: { entity: Entity; actor?:
   return <div className={`world-entity entity-${entity.kind} pose-${pose} ${actor?.moving ? "actor-walking" : ""} ${quest ? "quest-entity" : ""} ${nearby ? "nearby-entity" : ""}`} data-entity={entity.id} data-rest-id={actor?.restId} data-friend={!["mother","stepfather","halfsister","partner-one","stepsister","partner-two"].includes(entity.art)} data-pose={pose} data-moving={actor?.moving ?? false} data-x={point.x.toFixed(3)} data-y={point.y.toFixed(3)} style={{...(entity.kind !== "item" ? characterStyle(entity.kind === "dog" ? "dog" : entity.art) : {}),left:`${point.x*100}%`,top:`${point.y*100}%`,zIndex:entity.display ? 110 : Math.round(entity.y*100)+9}} aria-label={entity.name}>
     {quest && <span className="quest-marker">!</span>}{entity.kind === "person" ? <CharacterArt id={entity.art} pose={pose} walking={actor?.moving} frame={actor?.frame} direction={actor?.direction}/> : entity.kind === "dog" ? <CharacterArt id="dog"/> : entity.art === "action" ? <span className="kitchen-action-marker" aria-hidden="true">✦</span> : entity.art === "landmark" ? <span className="landmark-marker" aria-hidden="true">◇</span> : <ItemArt art={entity.art}/>}<span className="entity-name">{entity.name}</span>
   </div>;
-}
-
-function PicnicArt() {
-  return <svg viewBox="0 0 100 78" aria-hidden="true"><path d="M4 4L96 0 100 73 0 78Z" fill="#c8b58e" stroke="#756f53" strokeWidth="2"/><path d="M4 20L97 16M3 39L98 35M2 58L99 54M23 3L22 76M48 2L48 75M73 1L74 74" stroke="#7b9171" strokeWidth="5" opacity=".65"/><path d="M6 8L92 4 95 68 5 72Z" fill="none" stroke="#f1ddaf" strokeWidth="1"/></svg>;
 }
 
 const ELIAS_GUEST: Entity = { id: "elias-guest", name: "Elias", x: .5, y: .7, kind: "person", art: "elias", text: "Ich bleibe noch ein bisschen bei dir. Machen wir zusammen eine Pause?" };

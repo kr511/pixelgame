@@ -20,10 +20,10 @@ test("Schulfreunde laufen mit echten Zwischenbildern auf begehbaren Wegen", () =
   }
 });
 
-test("Jeder Freund erreicht Sitz- und Liegeplatz, steht auf und gibt den Platz frei", () => {
+test("Jeder Freund erreicht einen Sitzplatz, steht auf und gibt den Platz frei", () => {
   for (const place of ["school", "range", "home", "bus", "kitchen"]) {
     for (const entity of ENTITIES[place].filter(e => initialActors()[e.id])) {
-      for (const pose of ["sitting", "lying"]) {
+      for (const pose of ["sitting"]) {
         let actors = initialActors();
         const seat = availableSeat(place, pose, actors[entity.id].position, actors);
         assert.ok(seat, `${place}: ${entity.id} ${pose}`);
@@ -51,10 +51,10 @@ test("Ruheplätze werden während des Hinlaufens reserviert; Felices Platz bleib
   assert.notEqual(availableSeat("school", "sitting", actors.jason.position, actors, seat.spot.id).spot.id, seat.spot.id);
 });
 
-test("Haltungswechsel verlassen zuerst die alte Bank und führen zur Decke und zurück", () => {
+test("Haltungswechsel verlassen zuerst den alten Sitzplatz und kehren zurück", () => {
   for (const place of ["school", "range", "home", "bus", "kitchen"]) for (const entity of ENTITIES[place].filter(e => initialActors()[e.id])) {
     const actors = initialActors();
-    for (const pose of ["sitting", "lying", "sitting", "standing"]) {
+    for (const pose of ["sitting", "standing", "sitting", "standing"]) {
       const seat = pose === "standing" ? undefined : availableSeat(place, pose, actors[entity.id].position, actors);
       let actor = requestPose(place, actors[entity.id], pose, seat);
       for (let i = 0; i < 3000 && (actor.pose !== pose || actor.route.length); i++) actor = advanceActor(place, entity.id, actor, 1 / 60);
@@ -75,7 +75,7 @@ test("Eine neue Haltung während des Aufstehens ersetzt das alte Ziel zuverläss
   const actors = initialActors();
   let actor = requestPose("school", actors.friends, "sitting", availableSeat("school", "sitting", actors.friends.position, actors));
   for (let i = 0; i < 3000 && actor.pose !== "sitting"; i++) actor = advanceActor("school", "friends", actor, 1 / 60);
-  actor = requestPose("school", actor, "lying", availableSeat("school", "lying", actor.position, { ...actors, friends: actor }));
+  actor = requestPose("school", actor, "standing");
   for (let i = 0; i < 3; i++) actor = advanceActor("school", "friends", actor, 1 / 60);
   actor = requestPose("school", actor, "sitting", availableSeat("school", "sitting", actor.position, { ...actors, friends: actor }));
   for (let i = 0; i < 3000 && actor.pose !== "sitting"; i++) actor = advanceActor("school", "friends", actor, 1 / 60);
@@ -100,7 +100,7 @@ test("Elias bleibt außerhalb der vier Schulfreunde am Fenstergitter", () => {
 
 test("Der Weg zur grünen Sitzecke umgeht schmale Mauern zwischen den Rasterpunkten", () => {
   const from=initialActors().friends.position;
-  const to=REST_SPOTS.find(s=>s.id==="school-picnic").approach;
+  const to=REST_SPOTS.find(s=>s.id==="school-bench-right").approach;
   const route=[from,...walkingRoute("school",from,to)];
   assert.ok(route.length>2);
   for(let i=1;i<route.length;i++) {
@@ -111,14 +111,26 @@ test("Der Weg zur grünen Sitzecke umgeht schmale Mauern zwischen den Rasterpunk
 
 test("Elena kehrt nach dem Aufstehen um die Sitzmauern zur Fenstergitter-Gruppe zurück", () => {
   const actors=initialActors();
-  let actor=requestPose("school",actors.friends,"lying",availableSeat("school","lying",actors.friends.position,actors));
-  for(let i=0;i<3000 && actor.pose!=="lying";i++) actor=advanceActor("school","friends",actor,1/60);
-  assert.equal(actor.pose,"lying");
+  let actor=requestPose("school",actors.friends,"sitting",availableSeat("school","sitting",actors.friends.position,actors));
+  for(let i=0;i<3000 && actor.pose!=="sitting";i++) actor=advanceActor("school","friends",actor,1/60);
+  assert.equal(actor.pose,"sitting");
   actor=requestPose("school",actor,"standing");
   for(let i=0;i<1800;i++) {
     actor=advanceActor("school","friends",actor,1/60);
-    assert.ok(canWalk("school",actor.position.x,actor.position.y));
+    if (!actor.departing) assert.ok(canWalk("school",actor.position.x,actor.position.y));
   }
   assert.equal(actor.pose,"standing");
   assert.ok(actor.position.x>=.17 && actor.position.x<=.295 && actor.position.y>=.28 && actor.position.y<=.34);
+});
+
+
+test("Freunde können sich an den ehemaligen Deckenorten nicht mehr hinlegen", () => {
+  const actors=initialActors();
+  for(const place of ["school","range","home","bus","kitchen","garden"]) {
+    const actor=standingActor(SPAWNS[place]);
+    assert.equal(availableSeat(place,"lying",actor.position,actors),undefined,place);
+    const seat=availableSeat(place,"sitting",actor.position,actors);
+    assert.ok(seat,place);
+    assert.deepEqual(requestPose(place,actor,"lying",seat),actor,"Sitzplatz darf nicht zum Liegeplatz werden");
+  }
 });

@@ -27,7 +27,7 @@ test("Inventar wird aufgenommen und abgegeben; falscher Ort zählt nicht", () =>
   let s = beginChapter(EMPTY_STORY,"dog");
   assert.equal(advanceStory({...s,place:"bus"},"family").step,0);
   s = advanceStory(s,"family"); s = advanceStory(s,"blanket");
-  assert.deepEqual(s.bag,["Kuscheldecke"]);
+  assert.deepEqual(s.bag,["Hundekissen"]);
   s = advanceStory({...s,place:"garden"},"dog-bed");
   assert.deepEqual(s.bag,[]);
 });
@@ -66,4 +66,12 @@ test("Jede Person, jedes Questobjekt und jeder Ausgang ist laufend erreichbar", 
 test("Kaputte oder zukünftige Spielstände werden erkannt, vorhandene Daten bleiben intakt", () => {
   for(const raw of ["broken","null",JSON.stringify({...EMPTY_STORY,version:2}),JSON.stringify({...EMPTY_STORY,place:"toString"}),JSON.stringify({...EMPTY_STORY,step:90}),JSON.stringify({...EMPTY_STORY,completed:["unknown"]})]) assert.throws(()=>parseStory(raw));
   assert.deepEqual(parseStory(null),EMPTY_STORY);
+});
+
+
+test("Gespeicherte Kuscheldecke wird zum Hundekissen und Anuks Kapitel bleibt fortsetzbar", () => {
+  const old={version:1,chapter:"dog",step:2,completed:[],place:"garden",bag:["Kuscheldecke"]};
+  const saved=parseStory(JSON.stringify(old));
+  assert.deepEqual(saved.bag,["Hundekissen"]);
+  assert.deepEqual(advanceStory(saved,"dog-bed").bag,[]);
 });

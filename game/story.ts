@@ -84,7 +84,7 @@ export const ENTITIES: Record<Place, Entity[]> = {
     { id: "elias-home", name: "Elias", x: .57, y: .77, kind: "person", art: "elias", text: "Am schönsten ist es, wenn wir gemeinsam hier sind." },
     { id: "dishes", name: "Geschirr", x: .77, y: .35, display: { x: .685, y: .345 }, kind: "item", art: "plates", text: "Teller, Besteck und Gläser für einen gemeinsamen Abend." },
     { id: "table", name: "Esstisch", x: .57, y: .53, display: { x: .57, y: .44 }, kind: "item", art: "star", text: "Ein Tisch voller kleiner Dinge, an die man sich später erinnert." },
-    { id: "blanket", name: "Kuscheldecke", x: .3, y: .48, display: { x: .235, y: .325 }, kind: "item", art: "blanket", text: "Eine weiche Decke für einen neuen Lieblingsplatz." },
+    { id: "blanket", name: "Hundekissen", x: .3, y: .48, display: { x: .235, y: .325 }, kind: "item", art: "cushion", text: "Ein weiches Kissen für Anuks neuen Lieblingsplatz." },
   ],
   garden: [
     { id: "anuk", name: "Anuk", x: .58, y: .53, kind: "dog", art: "dog", text: "Anuk, euer American Akita, schnuppert an deiner Hand. Sein eingerollter Schwanz wippt zufrieden." },
@@ -119,10 +119,10 @@ export const ENTITIES: Record<Place, Entity[]> = {
 };
 
 export const CHAPTERS: Chapter[] = [
-  { id: "dog", title: "Willkommen, Anuk", date: "Der Tag, an dem Anuk kam", icon: "♥", intro: "Anuk, ein American Akita, kommt an. Bereite ihm einen gemütlichen Platz vor und lerne ihn in Ruhe kennen.", ending: "Ein Napf, eine Decke, ein gemeinsames Spiel. Aus einem neuen Ort wird für Anuk ein Zuhause.", reward: "Anuk begleitet dich im Garten", steps: [
+  { id: "dog", title: "Willkommen, Anuk", date: "Der Tag, an dem Anuk kam", icon: "♥", intro: "Anuk, ein American Akita, kommt an. Bereite ihm einen gemütlichen Platz vor und lerne ihn in Ruhe kennen.", ending: "Ein Napf, ein Kissen, ein gemeinsames Spiel. Aus einem neuen Ort wird für Anuk ein Zuhause.", reward: "Anuk begleitet dich im Garten", steps: [
     { id: "dog-family", place: "home", target: "family", label: "Sprich zu Hause mit Felices Mutter", speaker: "Felices Mutter", text: "Heute kommt Anuk. Lass uns seinen Platz vorbereiten, bevor wir ihn begrüßen." },
-    { id: "dog-blanket", place: "home", target: "blanket", label: "Hol die Kuscheldecke", speaker: "Felice", text: "Die ist schön weich. Genau richtig für Anuks neuen Platz.", item: "Kuscheldecke" },
-    { id: "dog-bed", place: "garden", target: "dog-bed", label: "Lege die Decke auf Anuks Platz im Garten", speaker: "Felice", text: "So. Ein gemütlicher Rückzugsort, ganz für dich.", item: "-Kuscheldecke" },
+    { id: "dog-blanket", place: "home", target: "blanket", label: "Hol das Hundekissen", speaker: "Felice", text: "Die ist schön weich. Genau richtig für Anuks neuen Platz.", item: "Hundekissen" },
+    { id: "dog-bed", place: "garden", target: "dog-bed", label: "Lege das Kissen auf Anuks Platz im Garten", speaker: "Felice", text: "So. Ein gemütlicher Rückzugsort, ganz für dich.", item: "-Hundekissen" },
     { id: "dog-water", place: "garden", target: "bowl", label: "Fülle Anuks Wassernapf", speaker: "Felice", text: "Frisches Wasser steht bereit. Jetzt darfst du erst einmal ankommen." },
     { id: "dog-hello", place: "garden", target: "anuk", label: "Begrüße Anuk ganz vorsichtig", speaker: "Anuk", text: "Eine feuchte Nase an deiner Hand. Anuk schnuppert, wartet kurz – und wedelt." },
     { id: "dog-ball", place: "garden", target: "ball", label: "Hol den Spielball", speaker: "Felice", text: "Ob du Lust auf eine kleine Runde hast?", item: "Spielball" },
@@ -177,7 +177,7 @@ export function parseStory(raw: string | null): StorySave {
   const s = JSON.parse(raw);
   const chapter = CHAPTERS.find(c => c.id === s?.chapter);
   if (s?.version !== 1 || !Object.hasOwn(PLACES, s.place) || (s.chapter !== null && !chapter) || !Number.isInteger(s.step) || s.step < 0 || s.step > (chapter?.steps.length ?? 0) || !Array.isArray(s.completed) || !s.completed.every((id: unknown) => CHAPTERS.some(c => c.id === id)) || !Array.isArray(s.bag) || !s.bag.every((i: unknown) => typeof i === "string")) throw new Error("Unbekannter Spielstand");
-  return { version: 1, chapter: s.chapter, step: s.step, completed: [...new Set<ChapterId>(s.completed)], place: s.place, bag: s.bag };
+  return { version: 1, chapter: s.chapter, step: s.step, completed: [...new Set<ChapterId>(s.completed)], place: s.place, bag: s.bag.map((item: string) => item === "Kuscheldecke" ? "Hundekissen" : item) };
 }
 // Ground corridors measured against the V0.75 paintings. Their edges keep
 // walkers on the pavement, including the curves between Markt and school.

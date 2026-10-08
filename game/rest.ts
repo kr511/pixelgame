@@ -3,7 +3,7 @@ import type { RestSpot } from "./day.ts";
 import type { Place, Point } from "./story.ts";
 
 export type RestMotion = { actor: Actor; phase: "entering" | "resting" | "leaving"; pose: Pose };
-export function restPose(spot: RestSpot): Pose { return spot.kind === "bed" || spot.kind === "mat" ? "lying" : "sitting"; }
+export function restPose(spot: RestSpot): Pose { return spot.kind === "bed" ? "lying" : "sitting"; }
 
 export function beginRest(place: Place, from: Point, spot: RestSpot): RestMotion {
   // Reach the bed's foot first. The painted lying state takes over from there.
