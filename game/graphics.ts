@@ -1,23 +1,25 @@
+const SCHOOL_WAY_CROP = { x: .08, y: .30, width: .84, height: .70 };
 import type { ChapterId, Place, Point } from "./story";
 
-export type SceneGraphic = { background: string; winter?: string; outdoors: boolean; light: string; foreground: { clip: string; depth: number }[] };
+export type SceneGraphic = { background: string; crop?: { x: number; y: number; width: number; height: number }; winter?: string; outdoors: boolean; light: string; foreground: { clip: string; depth: number }[] };
 // Each foreground copies only the specified furniture/tree silhouette from the same scene.
 const rect = (left: number, top: number, right: number, bottom: number, depth = bottom) => ({ clip: `polygon(${left}% ${top}%,${right}% ${top}%,${right}% ${bottom}%,${left}% ${bottom}%)`, depth });
 export const SCENE_GRAPHICS: Record<Place, SceneGraphic> = {
   bedroom: { background: "/rooms/felice-bedroom-v9.png", outdoors: false, light: "#ffbd65", foreground: [rect(12,8.5,49.5,43),rect(49,14,74.5,30),rect(11,43,21.5,59.5),rect(84,33,95,58.5),rect(53,81,96,100,98)] },
-  home: { background: "/rooms/home-v06.png", winter: "/rooms/home-winter-v06.png", outdoors: false, light: "#ffd49a", foreground: [rect(46,23.5,73,48),rect(12,17,40,43),rect(84,12,96,46)] },
-  kitchen: { background: "/rooms/kitchen-v065.png", outdoors: false, light: "#ffd49a", foreground: [rect(8.7,9,91.4,28.4),rect(57.6,36,85.4,58.5)] },
+  home: { background: "/rooms/home-v06.png", winter: "/rooms/home-winter-v06.png", outdoors: false, light: "#ffd49a", foreground: [rect(46,23.5,73,48),{ clip: "polygon(12% 17%,40% 17%,40% 30%,24.7% 30%,24.7% 43%,12% 43%)", depth:43 },rect(84,12,96,46)] },
+  kitchen: { background: "/rooms/kitchen-v065.png", outdoors: false, light: "#ffd49a", foreground: [rect(8.7,9,91.4,28.4),rect(57.6,36,85.4,51.5),rect(61,51.5,70,58.5),rect(74,51.5,82,58.5)] },
   garden: { background: "/rooms/garden-v06.png", winter: "/rooms/garden-winter-v06.png", outdoors: true, light: "#e0eabb", foreground: [rect(27,0,70,19),{ clip: "polygon(3% 9%,13% 6%,25% 10%,33% 20%,29% 28%,22% 30%,21% 38%,14% 38%,13% 30%,5% 27%,2% 20%)", depth:38 },{ clip:"polygon(69% 11%,79% 7%,94% 10%,98% 22%,91% 31%,86% 31%,86% 40%,79% 40%,77% 32%,68% 29%,65% 21%)",depth:40 }] },
-  radegast: { background: "/rooms/radegast-walk-v075.png", outdoors: true, light: "#e4dbba", foreground: [
-    { clip: "polygon(0% 0%,31% 0%,35% 16%,39% 30%,44% 44%,50% 58%,56% 72%,66% 94%,68% 100%,0% 100%)", depth:96 },
-    { clip: "polygon(43.5% 16%,50% 30%,56% 44%,62.5% 58%,69% 72%,80% 94%,83% 100%,100% 100%,100% 0%,39% 0%)", depth:96 },
-  ] },
+  radegast: { background: "/rooms/radegast-walk-v075.png", outdoors: true, light: "#e4dbba", foreground: [] },
   bus: { background: "/rooms/radegast-stop-v075.png", outdoors: true, light: "#dbe8e5", foreground: [rect(50,26,89.5,40),rect(23.5,30,43.5,43),rect(0,0,100,24.5)] },
-  zoerbig: { background: "/rooms/zoerbig-walk-v075.png", outdoors: true, light: "#e9dbb8", foreground: [
-    { clip: "polygon(0% 0%,40% 0%,41.4% 28%,40% 35%,34% 39%,31.5% 47%,31% 55%,32% 60%,25% 67%,14% 73%,0% 73%)", depth:82 },
-    { clip: "polygon(68% 0%,100% 0%,100% 100%,18% 100%,18% 80%,31% 71%,38% 65%,40% 61%,37% 54%,37% 46%,39% 42%,43% 38%,47% 33%,67% 31%)", depth:96 },
-    rect(52.5,15,55.5,21),
+  zoerbig: { background: "/rooms/zoerbig-market-v08.png", outdoors: true, light: "#e9dbb8", foreground: [
+    { clip: "polygon(49% 21.5%,50% 21.5%,51% 33%,53.5% 36%,53.5% 38.5%,46.3% 38.5%,46.3% 36%,48% 33%)", depth: 38.5 },
+    { clip: "polygon(25% 42%,28% 38%,36% 37%,42% 42%,43% 48%,39% 52%,34% 52%,34% 57%,32% 57%,32% 52%,26% 50%)", depth: 57 },
+    { clip: "polygon(25% 59%,29% 55%,35% 55%,40% 59%,41% 64%,36% 68%,32% 68%,32% 71%,30% 71%,30% 68%,25% 65%)", depth: 71 },
+    { clip: "polygon(58% 48%,61% 44%,66% 44%,70% 49%,71% 54%,67% 58%,66% 58%,66% 59%,64% 59%,64% 58%,59% 55%)", depth: 59 },
+    { clip: "polygon(60% 61%,64% 57%,69% 57%,73% 62%,73% 67%,70% 71%,69% 71%,69% 73%,67% 73%,67% 71%,61% 68%)", depth: 73 },
+    { clip: "polygon(49% 53.2%,51% 54%,52% 60%,57% 60%,59.2% 63%,57% 67.7%,43% 67.7%,40.8% 64%,43% 60%,48% 60%)", depth: 67.7 },
   ] },
+  schoolway: { background: "/rooms/zoerbig-walk-v075.png", crop: SCHOOL_WAY_CROP, outdoors: true, light: "#e9dbb8", foreground: [] },
   school: { background: "/rooms/school-court-secondary-v075.png", outdoors: true, light: "#e9dbb8", foreground: [
     rect(0,0,100,22.3),rect(42.1,17.6,57.8,25),
     { clip: "polygon(1.9% 6.1%,13.6% 6.1%,13.6% 23.3%,10.7% 25.2%,2.2% 23.9%)", depth:25.2 },
@@ -40,9 +42,7 @@ export const SCENE_GRAPHICS: Record<Place, SceneGraphic> = {
     { clip: "polygon(94.4% 25%,100% 25%,100% 100%,98% 87.5%,95.6% 59.1%)", depth:100 },
     rect(44.3,92.3,47.9,100,100),rect(55.7,92.3,58.8,100,100),
   ] },
-  goelzau: { background: "/rooms/goelzau-walk-v075.png", outdoors: true, light: "#dfe5ba", foreground: [rect(5,0,63,24.5),rect(71,0,100,43),
-    { clip: "polygon(0% 40%,20% 42%,35% 43%,52% 45%,66% 49%,72% 55%,79% 63%,83% 73%,0% 100%)", depth:96 },
-  ] },
+  goelzau: { background: "/rooms/goelzau-walk-v075.png", outdoors: true, light: "#dfe5ba", foreground: [rect(5,0,63,24.5),rect(71,0,100,43)] },
   range: { background: "/rooms/range-v06.png", outdoors: false, light: "#e3e3ba", foreground: [rect(10,4,90,34)] },
 };
 export function sceneBackground(place: Place, winter: boolean) { const scene = SCENE_GRAPHICS[place]; return winter && scene.winter ? scene.winter : scene.background; }
@@ -110,4 +110,4 @@ export function speakerGraphic(speaker: string): CharacterId | null {
   const friends: Record<string, CharacterId> = { Elena: "elena", Jason: "jason", Luca: "luca", Wyatt: "wyatt", Ida: "ida", Helena: "helena", Linda: "linda", Lina: "lina", Alexandra: "alexandra", Alexander: "alexander", Magdalena: "magdalena" };
   return speaker === "Felice & Elias" ? "elias" : speakers[speaker] ?? friends[speaker] ?? null;
 }
-export const CHAPTER_GRAPHICS: Record<ChapterId, string> = { dog: "/rooms/garden-v06.png", christmas: "/rooms/home-winter-v06.png", school: "/rooms/zoerbig-walk-v075.png", shooting: "/rooms/goelzau-range-v1.png" };
+export const CHAPTER_GRAPHICS: Record<ChapterId, string> = { dog: "/rooms/garden-v06.png", christmas: "/rooms/home-winter-v06.png", school: "/rooms/zoerbig-market-v08.png", shooting: "/rooms/goelzau-range-v1.png" };

@@ -9,7 +9,7 @@ function Window({ x, y }: { x: number; y: number }) {
 }
 export const SceneArt = memo(function SceneArt({ place, christmas }: { place: Place; christmas: boolean }) {
   if (place === "bedroom") return null;
-  const outdoors = ["garden", "bus", "school", "radegast", "zoerbig", "goelzau"].includes(place);
+  const outdoors = ["garden", "bus", "school", "radegast", "zoerbig","schoolway", "goelzau"].includes(place);
   return <svg className="scene-art" viewBox="0 0 600 600" aria-hidden="true" shapeRendering="crispEdges">
     <defs><pattern id="grass" width="36" height="36" patternUnits="userSpaceOnUse"><rect width="36" height="36" fill={christmas ? "#cad5c4" : "#8ca779"}/><path d="M7 11h3v3H7M23 25h5v2h-5" fill={christmas ? "#e3e8d8" : "#779466"}/></pattern><pattern id="floor" width="90" height="30" patternUnits="userSpaceOnUse"><rect width="90" height="30" fill="#b68a64"/><path d="M0 29h90M1 0v30M45 0v5M18 12h32" stroke="#9c7556" strokeWidth="2"/></pattern><pattern id="paving" width="36" height="24" patternUnits="userSpaceOnUse"><rect width="36" height="24" fill="#c6bda1"/><path d="M0 23h36M0 0v24" stroke="#afa88f"/></pattern></defs>
     <rect width="600" height="600" fill={outdoors ? "url(#grass)" : "url(#floor)"}/>
@@ -17,7 +17,8 @@ export const SceneArt = memo(function SceneArt({ place, christmas }: { place: Pl
       <path d="M250 50L264 210 318 330 408 570" fill="none" stroke="#d9ccb1" strokeWidth="110"/><path d="M250 50L264 210 318 330 408 570" fill="none" stroke="#787c77" strokeWidth="62"/>
       {[[25,40,150,85],[30,220,145,100],[30,400,200,160],[385,30,180,210],[455,320,145,220]].map(([x,y,w,h])=><g key={`${x}-${y}`}><rect x={x} y={y} width={w} height={h} fill="#b79d7c"/><path d={`M${x-4} ${y}h${w+8}v${h-12}h-${w+8}Z`} fill="#736e60"/><path d={`M${x+w/2} ${y}v${h-12}`} stroke="#a4937e" strokeWidth="4"/></g>)}
     </>}
-    {place === "zoerbig" && <>
+    {place === "zoerbig" && <><rect x="135" y="100" width="320" height="365" fill="url(#paving)"/><rect x="20" y="35" width="130" height="160" fill="#cfbc96"/><text x="30" y="100" fontSize="15" fill="#873b34">Löwen-Apotheke</text><rect x="460" y="80" width="130" height="320" fill="#a05f45"/><path d="M285 130h20l10 100h-40Z" fill="#b29d76"/><ellipse cx="300" cy="385" rx="55" ry="25" fill="#90aaa0"/><Tree x={190} y={340}/><Tree x={410} y={360}/></>}
+    {place === "schoolway" && <>
       <path d="M170 60H435V215H170ZM275 190L240 252 180 345 120 420 90 510" fill="none" stroke="#d6c7a9" strokeWidth="75"/>
       <rect x="12" y="12" width="120" height="190" fill="#96795f"/><rect x="465" y="12" width="125" height="190" fill="#96795f"/>
       <rect x="392" y="285" width="130" height="103" fill="#b2a182"/><rect x="431" y="230" width="44" height="74" fill="#716b60"/>

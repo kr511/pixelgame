@@ -65,7 +65,8 @@ export function activityAt(place: Place, minute: number) {
   if (place === "range") return "Schießen · Gölzau";
   if (place === "goelzau") return "Gölzau · Auf dem Weg zum Schießen";
   if (place === "radegast") return "Radegast · Auf dem Weg zur Haltestelle";
-  if (place === "zoerbig") return "Zörbig · Markt und Schulweg";
+  if (place === "schoolway") return "Zörbig · Schulweg";
+  if (place === "zoerbig") return "Zörbig · Markt";
   if (place === "school") return minute >= SCHOOL_START && minute < SCHOOL_END ? "Schule · Unterrichtszeit" : "Schule · Schulhof";
   return "Radegast · Haltestelle";
 }

@@ -1,5 +1,7 @@
-export type Place = "bedroom" | "home" | "kitchen" | "garden" | "radegast" | "bus" | "zoerbig" | "school" | "goelzau" | "range";
+export type Place = "bedroom" | "home" | "kitchen" | "garden" | "radegast" | "bus" | "zoerbig" | "schoolway" | "school" | "goelzau" | "range";
 export type Point = { x: number; y: number };
+export const SCHOOL_WAY_CROP = { x: .08, y: .30, width: .84, height: .70 };
+const schoolWayPoint = (x: number, y: number): Point => ({ x: (x-.08)/.84, y: (y-.30)/.70 });
 export type ChapterId = "dog" | "christmas" | "school" | "shooting";
 export type Step = { id: string; place: Place; target: string; label: string; speaker: string; text: string; item?: string };
 export type Chapter = { id: ChapterId; title: string; date: string; icon: string; intro: string; ending: string; reward: string; steps: Step[] };
@@ -22,18 +24,29 @@ export const PLACES: Record<Place, { name: string; subtitle: string; exits: Exit
     { x: .5, y: .23, to: "home", label: "Ins Haus", spawn: { x: .5, y: .8 } }, { x: .91, y: .69, to: "radegast", label: "Auf den Weg zur Haltestelle", spawn: { x: .46, y: .42 } },
   ], obstacles: [{ left: .27, right: .7, top: .04, bottom: .19 }, { left: .07, right: .2, top: .23, bottom: .42 }, { left: .73, right: .9, top: .2, bottom: .4 }, { left: .15, right: .35, top: .52, bottom: .60 }] },
   bus: { name: "Radegast · Bushaltestelle", subtitle: "Mit dem Bus nach Zörbig", exits: [
-    { x: .18, y: .68, to: "radegast", label: "Zurück zur Wohnung", spawn: { x: .71, y: .85 } }, { x: .735, y: .445, to: "zoerbig", label: "Bus nach Zörbig · Markt", spawn: { x: .61, y: .285 } }, { x: .835, y: .73, to: "goelzau", label: "Auf den Weg nach Gölzau", spawn: { x: .86, y: .63 } },
+    { x: .18, y: .68, to: "radegast", label: "Zurück zur Wohnung", spawn: { x: .71, y: .85 } }, { x: .735, y: .445, to: "zoerbig", label: "Bus nach Zörbig · Markt", spawn: { x: .43, y: .275 } }, { x: .835, y: .73, to: "goelzau", label: "Auf den Weg nach Gölzau", spawn: { x: .86, y: .63 } },
   ], obstacles: [{ left: 0, right: 1, top: 0, bottom: .245 }, { left: .50, right: .895, top: .26, bottom: .40 }, { left: .235, right: .435, top: .30, bottom: .43 }, { left: 0, right: .12, top: .57, bottom: 1 }, { left: .87, right: 1, top: .60, bottom: 1 }, { left: .16, right: .30, top: .71, bottom: .86 }, { left: .34, right: .53, top: .88, bottom: 1 }, { left: .67, right: 1, top: .89, bottom: 1 }] },
   radegast: { name: "Radegast · Weg zur Haltestelle", subtitle: "Von Felices Wohnung durch den Ort", exits: [
     { x: .38, y: .21, to: "home", label: "In Felices Wohnung", spawn: { x: .17, y: .52 } },
     { x: .46, y: .42, to: "garden", label: "In den Garten", spawn: { x: .82, y: .69 } },
     { x: .71, y: .89, to: "bus", label: "Zur Bushaltestelle", spawn: { x: .20, y: .68 } },
   ], obstacles: [] },
-  zoerbig: { name: "Zörbig · Markt und Schulweg", subtitle: "Von der Bushaltestelle zur Grünstraße", exits: [
-    { x: .47, y: .20, to: "bus", label: "Bus zurück nach Radegast", spawn: { x: .74, y: .47 } },
-    { x: .17, y: .76, to: "school", label: "Zum Pausenhof", spawn: { x: .52, y: .92 } },
-  ], obstacles: [{ left: .525, right: .555, top: .15, bottom: .21 }] },
-  school: { name: "Sekundarschule Zörbig · Pausenhof", subtitle: "Treffpunkt an den Fenstergittern", exits: [{ x: .515, y: .95, to: "zoerbig", label: "Zurück zum Markt und Bus", spawn: { x: .20, y: .75 } }], obstacles: [] },
+  zoerbig: { name: "Zörbig · Markt", subtitle: "Löwen-Apotheke, Rathaus und Brunnen", exits: [
+    { x: .397, y: .255, to: "bus", label: "Bus zurück nach Radegast", spawn: { x: .74, y: .47 } },
+    { x: .205, y: .74, to: "schoolway", label: "Auf den Schulweg", spawn: schoolWayPoint(.35,.43) },
+  ], obstacles: [
+    { left: .463, right: .535, top: .34, bottom: .385 },
+    { left: .408, right: .592, top: .592, bottom: .677 },
+    { left: .32, right: .34, top: .55, bottom: .57 },
+    { left: .30, right: .32, top: .69, bottom: .71 },
+    { left: .64, right: .66, top: .57, bottom: .59 },
+    { left: .67, right: .69, top: .71, bottom: .73 },
+  ] },
+  schoolway: { name: "Zörbig · Schulweg", subtitle: "An St. Mauritius vorbei zur Grünstraße", exits: [
+    { ...schoolWayPoint(.34,.43), to: "zoerbig", label: "Zurück zum Markt", spawn: { x: .24, y: .70 } },
+    { ...schoolWayPoint(.17,.76), to: "school", label: "Zum Pausenhof", spawn: { x: .52, y: .92 } },
+  ], obstacles: [] },
+  school: { name: "Sekundarschule Zörbig · Pausenhof", subtitle: "Treffpunkt an den Fenstergittern", exits: [{ x: .515, y: .95, to: "schoolway", label: "Zurück zum Schulweg", spawn: schoolWayPoint(.20,.75) }], obstacles: [] },
   goelzau: { name: "Gölzau · Weg zum Schützenhaus", subtitle: "Ankommen, Freunde treffen, zusammen schießen", exits: [
     { x: .90, y: .65, to: "bus", label: "Zurück nach Radegast", spawn: { x: .82, y: .76 } },
     { x: .265, y: .285, to: "range", label: "Ins Schützenhaus", spawn: { x: .5, y: .82 } },
@@ -46,8 +59,12 @@ export const PLACES: Record<Place, { name: string; subtitle: string; exits: Exit
 export const ENTITIES: Record<Place, Entity[]> = {
   radegast: [{ id: "radegast-way", name: "Weg zur Bushaltestelle", x: .56, y: .61, kind: "item", art: "sign", text: "Von Felices Wohnung geht es entlang der Häuser und am Grün vorbei zur Haltestelle. Der Weg ist für das Spiel verkürzt." }],
   zoerbig: [
-    { id: "zoerbig-stop", name: "Zörbig · Markt", x: .61, y: .285, display: { x: .59, y: .07 }, kind: "item", art: "landmark", text: "Hier kommt ihr mit dem Bus in Zörbig an. Von hier führt der Fußweg südlich zur Sekundarschule in der Grünstraße." },
-    { id: "zoerbig-church", name: "St. Mauritius", x: .37, y: .60, display: { x: .70, y: .50 }, kind: "item", art: "landmark", text: "Die Kirche hilft bei der Orientierung: Der Markt liegt nördlich, die Schule südwestlich davon." },
+    { id: "zoerbig-stop", name: "Zörbig · Markt", x: .60, y: .26, display: { x: .60, y: .19 }, kind: "item", art: "landmark", text: "Am Markt kommt ihr mit dem Bus an. Links oben liegt die Löwen-Apotheke, rechts das Rathaus. Unten links beginnt der Schulweg." },
+    { id: "zoerbig-pharmacy", name: "Löwen-Apotheke", x: .255, y: .285, display: { x: .17, y: .165 }, kind: "item", art: "landmark", text: "Die Löwen-Apotheke steht an der oberen linken Ecke des Marktes." },
+    { id: "zoerbig-townhall", name: "Rathaus Zörbig", x: .715, y: .42, display: { x: .827, y: .315 }, kind: "item", art: "landmark", text: "Das Rathaus mit seinem Uhrturm liegt an der rechten Marktseite." },
+  ],
+  schoolway: [
+    { id: "zoerbig-church", name: "St. Mauritius", ...schoolWayPoint(.37,.60), display: schoolWayPoint(.70,.50), kind: "item", art: "landmark", text: "Am Weg zwischen Markt und Schule liegt St. Mauritius. Weiter südwestlich geht es zum Pausenhof." },
   ],
   goelzau: [{ id: "goelzau-sign", name: "Schützenhaus Gölzau", x: .43, y: .35, display: { x: .40, y: .24 }, kind: "item", art: "landmark", text: "Am Schützenhaus in Weißandt-Gölzau trefft ihr eure Schießfreunde. Durch den Eingang geht es zur Bahn." }],
   bedroom: [{ id: "album", name: "Unser Erinnerungsbuch", x: .77, y: .32, display: { x: .68, y: .23 }, kind: "item", art: "book", text: "Vier Kapitel, viele kleine Momente. Öffne das Erinnerungsbuch oben rechts und wähle eine Geschichte." }, { id: "photo", name: "Foto aus Gölzau", x: .79, y: .52, display: { x: .885, y: .45 }, kind: "item", art: "photo", text: "Das Foto führt dich direkt zum Schießen in Gölzau." }],
@@ -166,10 +183,8 @@ export function parseStory(raw: string | null): StorySave {
 // walkers on the pavement, including the curves between Markt and school.
 const WALK_AREAS: Partial<Record<Place, Point[][]>> = {
   radegast: [[{x:.35,y:.16},{x:.39,y:.30},{x:.44,y:.44},{x:.50,y:.58},{x:.56,y:.72},{x:.645,y:.90},{x:.66,y:.94},{x:.80,y:.94},{x:.69,y:.72},{x:.625,y:.58},{x:.56,y:.44},{x:.50,y:.30},{x:.435,y:.16}]],
-  zoerbig: [
-    [{x:.414,y:.14},{x:.65,y:.14},{x:.67,y:.31},{x:.414,y:.31}],
-    [{x:.415,y:.28},{x:.40,y:.35},{x:.34,y:.39},{x:.315,y:.47},{x:.31,y:.55},{x:.32,y:.60},{x:.25,y:.67},{x:.14,y:.73},{x:.12,y:.77},{x:.18,y:.80},{x:.31,y:.71},{x:.38,y:.65},{x:.40,y:.61},{x:.37,y:.54},{x:.37,y:.46},{x:.39,y:.42},{x:.43,y:.38},{x:.47,y:.33},{x:.48,y:.28}],
-  ],
+  zoerbig: [[{x:.245,y:.17},{x:.74,y:.17},{x:.755,y:.745},{x:.30,y:.78},{x:.18,y:.76},{x:.225,y:.41}]],
+  schoolway: [[{x:.33,y:.40},{x:.315,y:.47},{x:.31,y:.55},{x:.32,y:.60},{x:.25,y:.67},{x:.14,y:.73},{x:.12,y:.77},{x:.18,y:.80},{x:.31,y:.71},{x:.38,y:.65},{x:.40,y:.61},{x:.37,y:.54},{x:.37,y:.46},{x:.39,y:.40}].map(p => schoolWayPoint(p.x,p.y))],
   goelzau: [[{x:.09,y:.26},{x:.61,y:.24},{x:.65,y:.32},{x:.69,y:.43},{x:.77,y:.50},{x:.83,y:.59},{x:.95,y:.59},{x:.95,y:.70},{x:.83,y:.73},{x:.79,y:.63},{x:.72,y:.55},{x:.66,y:.49},{x:.52,y:.45},{x:.35,y:.43},{x:.20,y:.42},{x:.09,y:.35}]],
 };
 // Secondary-school facade and centered entrance at the back of the courtyard.
@@ -209,7 +224,7 @@ function insideArea(x: number, y: number, points: Point[]) {
 export function canWalk(place: Place, x: number, y: number) {
   return (!SOLID_AREAS[place] || !SOLID_AREAS[place]!.some(points => insideArea(x,y,points))) && (!WALK_AREAS[place] || WALK_AREAS[place]!.some(points => insideArea(x,y,points))) && x >= .075 && x <= .94 && y >= .16 && y <= (place === "school" ? .96 : .92) && !PLACES[place].obstacles.some(o => x > o.left - .02 && x < o.right + .02 && y > o.top - .015 && y < o.bottom + .015);
 }
-export const SPAWNS: Record<Place, Point> = { bedroom: { x: .5, y: .7 }, home: { x: .5, y: .78 }, kitchen: { x: .5, y: .85 }, garden: { x: .5, y: .38 }, radegast: { x: .435, y: .28 }, bus: { x: .5, y: .72 }, zoerbig: { x: .61, y: .285 }, school: { x: .52, y: .92 }, goelzau: { x: .86, y: .63 }, range: { x: .5, y: .8 } };
+export const SPAWNS: Record<Place, Point> = { bedroom: { x: .5, y: .7 }, home: { x: .5, y: .78 }, kitchen: { x: .5, y: .85 }, garden: { x: .5, y: .38 }, radegast: { x: .435, y: .28 }, bus: { x: .5, y: .72 }, zoerbig: { x: .43, y: .275 }, schoolway: schoolWayPoint(.35,.43), school: { x: .52, y: .92 }, goelzau: { x: .86, y: .63 }, range: { x: .5, y: .8 } };
 export function routeTo(from: Place, to: Place): Exit | undefined {
   const queue: { place: Place; first?: Exit }[] = [{ place: from }];
   const seen = new Set<Place>([from]);

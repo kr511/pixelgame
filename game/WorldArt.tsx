@@ -6,11 +6,13 @@ import type { Place } from "./story";
 
 export const WorldBackdrop = memo(function WorldBackdrop({ place, winter, bedOccupied = false }: { place: Place; winter: boolean; bedOccupied?: boolean }) {
   const source = place === "bedroom" && bedOccupied ? "/rooms/felice-bedroom-rest-v065.png" : sceneBackground(place, winter);
+  const crop = SCENE_GRAPHICS[place].crop;
+  const framing = crop ? { x: -crop.x/crop.width*100, y: -crop.y/crop.height*100, width: 100/crop.width, height: 100/crop.height } : { x: 0, y: 0, width: 100, height: 100 };
   const [failedSource, setFailedSource] = useState<string | null>(null);
   if (failedSource === source) return <div className={`scene-backdrop fallback-${place}`}><SceneArt place={place} christmas={winter}/></div>;
   return <>
-    <svg className={`scene-backdrop${winter && SCENE_GRAPHICS[place].outdoors && !SCENE_GRAPHICS[place].winter ? " winter-town" : ""}`} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><image href={source} width="100" height="100" preserveAspectRatio="none" onError={() => setFailedSource(source)}/></svg>
-    {SCENE_GRAPHICS[place].foreground.map((layer, index) => <svg key={index} className="scene-foreground" style={{ clipPath: layer.clip, zIndex: Math.round(layer.depth) + 9 }} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><image href={source} width="100" height="100" preserveAspectRatio="none"/></svg>)}
+    <svg className={`scene-backdrop${winter && SCENE_GRAPHICS[place].outdoors && !SCENE_GRAPHICS[place].winter ? " winter-town" : ""}`} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><image href={source} {...framing} preserveAspectRatio="none" onError={() => setFailedSource(source)}/></svg>
+    {SCENE_GRAPHICS[place].foreground.map((layer, index) => <svg key={index} className="scene-foreground" style={{ clipPath: layer.clip, zIndex: Math.round(layer.depth) + 9 }} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><image href={source} {...framing} preserveAspectRatio="none"/></svg>)}
   </>;
 });
 

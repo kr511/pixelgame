@@ -5,6 +5,7 @@ const nodes: { x: number; y: number; name: string; places: Place[] }[] = [
   { x: 125, y: 155, name: "Weg durch Radegast", places: ["radegast"] },
   { x: 125, y: 225, name: "Bushaltestelle", places: ["bus"] },
   { x: 390, y: 85, name: "Markt · Busankunft", places: ["zoerbig"] },
+  { x: 390, y: 155, name: "Schulweg · St. Mauritius", places: ["schoolway"] },
   { x: 390, y: 225, name: "Schule · Gitter & Hof", places: ["school"] },
   { x: 655, y: 155, name: "Weg zum Schützenhaus", places: ["goelzau"] },
   { x: 655, y: 225, name: "Schießstand", places: ["range"] },
@@ -19,7 +20,7 @@ export function WorldMap({ place }: { place: Place }) {
       <path d="M125 225C250 225 250 85 390 85M125 225C170 326 620 326 655 155" className="map-connection"/>
       <text x="248" y="136" className="map-route-label" textAnchor="middle">Bus</text><text x="508" y="274" className="map-route-label" textAnchor="middle">Nach Gölzau</text>
       {nodes.map(node => <g key={node.name} className={node.places.includes(place) ? "map-node is-current" : "map-node"}><circle cx={node.x} cy={node.y} r="8"/><rect x={node.x-96} y={node.y+14} width="192" height="25" rx="4"/><text x={node.x} y={node.y+31} textAnchor="middle">{node.name}</text></g>)}
-      <text x="408" y="159" className="map-route-label">zu Fuß</text>
+      <text x="408" y="210" className="map-route-label">zu Fuß</text>
     </svg>
     <p className="world-map-caption">Die Wege sind für das Spiel verkürzt. Der Markt und der Pausenhof in Zörbig sind eigene Orte.</p>
   </section>;

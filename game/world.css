@@ -239,3 +239,6 @@
 @media (max-height:600px) and (orientation:landscape) {
   .version-075[data-scene="school"] .entity-person .entity-name { font-size:8px; padding:1px 2px; }
 }
+
+.version-075[data-scene="schoolway"] .room-player,
+.version-075[data-scene="schoolway"] .entity-person { width:4.8%!important; }

@@ -370,7 +370,7 @@ export function Game() {
         {rest?.companion && <div className={`room-player pose-${rest.companion.actor.pose} bench-companion`} style={{...labelStyle(rest.companion.actor.position), zIndex: Math.round(rest.companion.actor.position.y*100)+10}} aria-label={rest.companion.phase === "resting" ? "Elias sitzt neben Felice" : "Elias geht zum Ruheplatz"} data-testid="seated-elias" data-rest-id={rest.spot.id} data-pose={rest.companion.actor.pose}><CharacterArt id="elias" pose={rest.companion.actor.pose} direction={rest.companion.actor.direction} walking={rest.companion.actor.moving} frame={rest.companion.actor.frame}/><span className="room-player-label">Elias</span></div>}
         <WorldAtmosphere place={save.place} winter={winter}/>
         {save.place === "kitchen" && kitchenEffect && <div className={`kitchen-effect kitchen-${kitchenEffect}`} role="status"><span>{kitchenEffect === "breakfast" ? "Frühstück steht bereit" : kitchenEffect === "warm-drink" ? "Dein Getränk ist fertig" : "Die Küche ist aufgeräumt"}</span><i/><i/><i/></div>}
-        <div className="daylight-shade" style={{ opacity: (1-light.daylight) * (["garden", "bus", "school", "radegast", "zoerbig", "goelzau"].includes(save.place) ? .62 : .18) }} aria-hidden="true"/>
+        <div className="daylight-shade" style={{ opacity: (1-light.daylight) * (["garden", "bus", "school", "radegast", "zoerbig","schoolway", "goelzau"].includes(save.place) ? .62 : .18) }} aria-hidden="true"/>
       </div>
       {active && arrow && <div className="offscreen-guide" style={labelStyle(arrow)} role="status" aria-label={`Aufgabenziel: ${step?.label}`}><span style={{ transform: `rotate(${arrow.angle}deg)` }}>➜</span><small>{guide?.label ?? "Dein nächstes Ziel"}</small></div>}
     </div>
