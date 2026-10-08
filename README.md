@@ -29,6 +29,7 @@ als **Source: GitHub Actions** auswählen. Anschließend unter
 **Run workflow** starten. Weitere Pushes auf `main` bauen und veröffentlichen
 automatisch. Solange Pages nicht aktiviert ist, erzeugt der Workflow bereits
 das herunterladbare `github-pages`-Artefakt und zeigt die Einrichtungshinweise.
+Der Workflow verwendet Node 24, passend zu den Optionen des bestehenden Testskripts.
 Bei privaten Repositories muss der GitHub-Tarif Pages unterstützen; die
 Repository-Sichtbarkeit wird durch diesen Workflow nicht geändert.
 

@@ -37,3 +37,8 @@ Zusätzlich bestehen 70 Node-Tests, TypeScript-Prüfung sowie statischer und
 bisheriger Serverbuild. Der Workflow verändert die Repository-Sichtbarkeit
 nicht. Ein fremder Website-Spielstand wird nicht automatisch auf die neue
 Browser-Origin übertragen.
+
+Der erste GitHub-Lauf erkannte, dass das vorhandene Testskript
+`--test-isolation=none` benötigt und Node 22 diese Option nicht unterstützt.
+Der Workflow verwendet deshalb Node 24, dieselbe Hauptversion wie die lokale
+Prüfung. Die Spielimplementierung wurde dafür nicht geändert.
