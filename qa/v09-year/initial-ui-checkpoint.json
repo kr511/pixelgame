@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "clock": {
+    "version": 1,
+    "date": "2025-11-17",
+    "minute": 780,
+    "day": 17,
+    "season": "Herbst"
+  },
+  "progress": {
+    "beginning-2025-11-01": {
+      "cursor": 3,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:10:52.961Z"
+    },
+    "chat-2025-11-13": {
+      "cursor": 0,
+      "topics": [
+        "space",
+        "collin"
+      ],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "typed": 85,
+      "completedAt": "2026-10-08T09:11:08.806Z"
+    },
+    "chat-2025-11-14": {
+      "cursor": 0,
+      "topics": [
+        "space",
+        "collin"
+      ],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "typed": 85,
+      "completedAt": "2026-10-08T09:11:19.164Z"
+    },
+    "chat-2025-11-15": {
+      "cursor": 0,
+      "topics": [
+        "space",
+        "collin"
+      ],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "typed": 85,
+      "completedAt": "2026-10-08T09:11:27.018Z"
+    },
+    "radegast-chocolate": {
+      "cursor": 4,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:11:36.357Z"
+    },
+    "chat-2025-11-16": {
+      "cursor": 0,
+      "topics": [
+        "space",
+        "collin"
+      ],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "typed": 85,
+      "completedAt": "2026-10-08T09:11:48.795Z"
+    },
+    "school-first-feelings-17": {
+      "cursor": 1,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 0
+    }
+  },
+  "active": {
+    "id": "school-first-feelings-17",
+    "returnPlayer": {
+      "x": 0.5,
+      "y": 0.7
+    },
+    "returnDirection": "front"
+  }
+}

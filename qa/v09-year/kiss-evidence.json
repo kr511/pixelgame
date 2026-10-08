@@ -1,0 +1,109 @@
+{
+  "poses": [
+    {
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "poses": [
+        {
+          "animation": "pixel-kiss-elias",
+          "transform": "matrix(0.987688, -0.156434, 0.156434, 0.987688, -5, 0)",
+          "rect": {
+            "x": 626.26318359375,
+            "y": 332.7136535644531,
+            "width": 87.7130126953125,
+            "height": 111.87930297851562,
+            "top": 332.7136535644531,
+            "right": 713.9761962890625,
+            "bottom": 444.59295654296875,
+            "left": 626.26318359375
+          }
+        },
+        {
+          "animation": "pixel-kiss-felice",
+          "transform": "matrix(0.987688, 0.156434, -0.156434, 0.987688, 5, 0)",
+          "rect": {
+            "x": 617.2221069335938,
+            "y": 335.44384765625,
+            "width": 85.46673583984375,
+            "height": 109.00839233398438,
+            "top": 335.44384765625,
+            "right": 702.6888427734375,
+            "bottom": 444.4522399902344,
+            "left": 617.2221069335938
+          }
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "poses": [
+        {
+          "animation": "pixel-kiss-elias",
+          "transform": "matrix(0.987688, -0.156434, 0.156434, 0.987688, -5, 0)",
+          "rect": {
+            "x": 394.87353515625,
+            "y": 144.1248016357422,
+            "width": 39.088623046875,
+            "height": 49.847991943359375,
+            "top": 144.1248016357422,
+            "right": 433.962158203125,
+            "bottom": 193.97279357910156,
+            "left": 394.87353515625
+          }
+        },
+        {
+          "animation": "pixel-kiss-felice",
+          "transform": "matrix(0.987688, 0.156434, -0.156434, 0.987688, 5, 0)",
+          "rect": {
+            "x": 397.2823791503906,
+            "y": 145.3313446044922,
+            "width": 38.089080810546875,
+            "height": 48.578704833984375,
+            "top": 145.3313446044922,
+            "right": 435.3714599609375,
+            "bottom": 193.91004943847656,
+            "left": 397.2823791503906
+          }
+        }
+      ]
+    }
+  ],
+  "checks": [
+    "Desktop earned Christmas replay preserves clock and first completion; both sprites lean for the kiss",
+    "Touch earned Christmas replay preserves clock and first completion; both sprites lean for the kiss"
+  ],
+  "screenshots": [
+    "first-kiss-christmas",
+    "first-kiss-christmas-animation-7",
+    "first-kiss-christmas",
+    "first-kiss-christmas-animation-7",
+    "first-kiss-christmas",
+    "first-kiss-christmas",
+    "first-kiss-christmas-animation-7",
+    "first-kiss-christmas",
+    "first-kiss-christmas-animation-7",
+    "first-kiss-christmas",
+    "first-kiss-christmas-animation-7-lean-close",
+    "first-kiss-christmas",
+    "first-kiss-christmas-animation-7",
+    "mobile-first-kiss-christmas",
+    "mobile-first-kiss-christmas-animation-7",
+    "mobile-first-kiss-christmas",
+    "mobile-first-kiss-christmas-animation-7",
+    "mobile-first-kiss-christmas",
+    "mobile-first-kiss-christmas",
+    "mobile-first-kiss-christmas-animation-7",
+    "mobile-first-kiss-christmas",
+    "mobile-first-kiss-christmas-animation-7",
+    "mobile-first-kiss-christmas",
+    "mobile-first-kiss-christmas-animation-7-lean-close",
+    "mobile-first-kiss-christmas",
+    "mobile-first-kiss-christmas-animation-7"
+  ],
+  "errors": []
+}

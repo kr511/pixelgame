@@ -1,0 +1,375 @@
+{
+  "version": 1,
+  "clock": {
+    "version": 1,
+    "date": "2026-11-02",
+    "minute": 1000,
+    "day": 367,
+    "season": "Herbst"
+  },
+  "progress": {
+    "beginning-2025-11-01": {
+      "cursor": 3,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:10:52.961Z"
+    },
+    "chat-2025-11-13": {
+      "cursor": 0,
+      "topics": [
+        "space",
+        "collin"
+      ],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "typed": 85,
+      "completedAt": "2026-10-08T09:11:08.806Z"
+    },
+    "chat-2025-11-14": {
+      "cursor": 0,
+      "topics": [
+        "space",
+        "collin"
+      ],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "typed": 85,
+      "completedAt": "2026-10-08T09:11:19.164Z"
+    },
+    "chat-2025-11-15": {
+      "cursor": 0,
+      "topics": [
+        "space",
+        "collin"
+      ],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "typed": 85,
+      "completedAt": "2026-10-08T09:11:27.018Z"
+    },
+    "radegast-chocolate": {
+      "cursor": 4,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:11:36.357Z"
+    },
+    "chat-2025-11-16": {
+      "cursor": 0,
+      "topics": [
+        "space",
+        "collin"
+      ],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "typed": 85,
+      "completedAt": "2026-10-08T09:11:48.795Z"
+    },
+    "school-first-feelings-17": {
+      "cursor": 3,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:15:38.992Z"
+    },
+    "chat-2025-11-17": {
+      "cursor": 0,
+      "topics": [
+        "space",
+        "collin"
+      ],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "typed": 85,
+      "completedAt": "2026-10-08T09:15:47.463Z"
+    },
+    "chat-2025-11-18": {
+      "cursor": 0,
+      "topics": [
+        "space",
+        "collin"
+      ],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "typed": 85,
+      "completedAt": "2026-10-08T09:15:55.400Z"
+    },
+    "school-first-feelings-19": {
+      "cursor": 3,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:16:00.567Z"
+    },
+    "chat-2025-11-19": {
+      "cursor": 0,
+      "topics": [
+        "space",
+        "collin"
+      ],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "typed": 85,
+      "completedAt": "2026-10-08T09:16:09.685Z"
+    },
+    "chat-2025-11-20": {
+      "cursor": 0,
+      "topics": [
+        "space",
+        "collin"
+      ],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "typed": 85,
+      "completedAt": "2026-10-08T09:16:18.116Z"
+    },
+    "school-first-feelings-21": {
+      "cursor": 3,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:16:22.557Z"
+    },
+    "chat-2025-11-21": {
+      "cursor": 0,
+      "topics": [
+        "space",
+        "collin"
+      ],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "typed": 85,
+      "completedAt": "2026-10-08T09:16:30.393Z"
+    },
+    "chat-2025-11-22": {
+      "cursor": 0,
+      "topics": [
+        "space",
+        "collin"
+      ],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "typed": 85,
+      "completedAt": "2026-10-08T09:16:38.509Z"
+    },
+    "chat-2025-11-23": {
+      "cursor": 0,
+      "topics": [
+        "space",
+        "collin"
+      ],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "typed": 85,
+      "completedAt": "2026-10-08T09:16:46.538Z"
+    },
+    "confession-2025-11-24": {
+      "cursor": 4,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "typed": 123,
+      "answers": {
+        "0": "Den Gedanken ehrlich aussprechen",
+        "2": "Über den Weihnachtsmarkt schreiben"
+      },
+      "completedAt": "2026-10-08T09:16:58.894Z"
+    },
+    "chat-2025-11-24": {
+      "cursor": 0,
+      "topics": [
+        "space",
+        "collin"
+      ],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "typed": 85,
+      "completedAt": "2026-10-08T09:17:06.702Z"
+    },
+    "handholding-2025-11-25": {
+      "cursor": 3,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:17:12.805Z"
+    },
+    "first-i-love-you": {
+      "cursor": 2,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "typed": 15,
+      "completedAt": "2026-10-08T09:17:20.456Z"
+    },
+    "playground-2025-12-01": {
+      "cursor": 4,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:17:34.516Z"
+    },
+    "christmas-market-2025-12-06": {
+      "cursor": 4,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:17:58.586Z"
+    },
+    "first-kiss-christmas": {
+      "cursor": 7,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:18:35.702Z"
+    },
+    "morning-after-2025-12-26": {
+      "cursor": 3,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:18:48.801Z"
+    },
+    "new-year-2026": {
+      "cursor": 4,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:18:57.468Z"
+    },
+    "january-everyday": {
+      "cursor": 3,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:19:07.367Z"
+    },
+    "first-valentine": {
+      "cursor": 4,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:19:23.380Z"
+    },
+    "old-messages-2026-03-18": {
+      "cursor": 4,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:19:37.290Z"
+    },
+    "elias-room-weekend": {
+      "cursor": 4,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:19:53.237Z"
+    },
+    "spring-everyday": {
+      "cursor": 3,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:20:03.944Z"
+    },
+    "longer-visit-plan": {
+      "cursor": 3,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:20:10.740Z"
+    },
+    "may-everyday": {
+      "cursor": 3,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:20:15.770Z"
+    },
+    "summer-everyday": {
+      "cursor": 4,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:20:27.230Z"
+    },
+    "summer-july": {
+      "cursor": 3,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:20:35.335Z"
+    },
+    "summer-august": {
+      "cursor": 4,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:20:46.163Z"
+    },
+    "autumn-everyday": {
+      "cursor": 3,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:20:51.679Z"
+    },
+    "morning-2026-10-08": {
+      "cursor": 3,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "typed": 150,
+      "answers": {
+        "1": "Liebevoll antworten"
+      },
+      "completedAt": "2026-10-08T09:20:59.354Z"
+    },
+    "our-story-finale": {
+      "cursor": 4,
+      "topics": [],
+      "topic": null,
+      "line": 0,
+      "visits": 1,
+      "completedAt": "2026-10-08T09:21:13.161Z"
+    }
+  },
+  "active": null
+}

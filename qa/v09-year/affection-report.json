@@ -1,0 +1,21 @@
+{
+  "checks": [
+    "Umarmen animates and advances only the active game clock",
+    "Hand geben animates and advances only the active game clock",
+    "Elias follows actual walking inputs through the house door into the garden without duplicate actors",
+    "Companionship ends through the dialogue choice"
+  ],
+  "positions": [
+    {
+      "player": {
+        "x": 0.585,
+        "y": 0.647
+      },
+      "companion": {
+        "x": 0.648,
+        "y": 0.627
+      }
+    }
+  ],
+  "errors": []
+}

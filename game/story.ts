@@ -1,4 +1,4 @@
-export type Place = "bedroom" | "home" | "kitchen" | "garden" | "radegast" | "bus" | "zoerbig" | "schoolway" | "school" | "gym" | "goelzau" | "range";
+export type Place = "bedroom" | "home" | "kitchen" | "garden" | "radegast" | "bus" | "zoerbig" | "schoolway" | "school" | "gym" | "goelzau" | "range" | "playground" | "christmasmarket" | "eliasroom";
 export type Point = { x: number; y: number };
 export const SCHOOL_WAY_CROP = { x: .08, y: .30, width: .84, height: .70 };
 const schoolWayPoint = (x: number, y: number): Point => ({ x: (x-.08)/.84, y: (y-.30)/.70 });
@@ -30,10 +30,13 @@ export const PLACES: Record<Place, { name: string; subtitle: string; exits: Exit
     { x: .38, y: .21, to: "home", label: "In Felices Wohnung", spawn: { x: .17, y: .52 } },
     { x: .46, y: .42, to: "garden", label: "In den Garten", spawn: { x: .82, y: .69 } },
     { x: .71, y: .89, to: "bus", label: "Zur Bushaltestelle", spawn: { x: .20, y: .68 } },
+    { x: .61, y: .70, to: "playground", label: "Zum Spielplatz · verkürzter Spielweg", spawn: { x: .50, y: .86 } },
   ], obstacles: [] },
   zoerbig: { name: "Zörbig · Markt", subtitle: "Löwen-Apotheke, Rathaus und Brunnen", exits: [
     { x: .397, y: .255, to: "bus", label: "Bus zurück nach Radegast", spawn: { x: .74, y: .47 } },
     { x: .205, y: .74, to: "schoolway", label: "Auf den Schulweg", spawn: schoolWayPoint(.35,.43) },
+    { x: .67, y: .47, to: "christmasmarket", label: "Zum Weihnachtsmarkt · Spielweg", spawn: { x: .50, y: .87 } },
+    { x: .70, y: .29, to: "eliasroom", label: "Zu Elias · verkürzter Spielweg", spawn: { x: .50, y: .85 } },
   ], obstacles: [
     { left: .463, right: .535, top: .34, bottom: .385 },
     { left: .408, right: .592, top: .592, bottom: .677 },
@@ -58,11 +61,43 @@ export const PLACES: Record<Place, { name: string; subtitle: string; exits: Exit
     { x: .265, y: .285, to: "range", label: "Ins Schützenhaus", spawn: { x: .5, y: .82 } },
   ], obstacles: [{ left: .05, right: .63, top: 0, bottom: .245 }, { left: .71, right: 1, top: 0, bottom: .43 }, { left: .505, right: .635, top: .26, bottom: .305 }] },
   range: { name: "Schießstand · Gölzau", subtitle: "Einmal tief durchatmen", exits: [{ x: .5, y: .9, to: "goelzau", label: "Vor das Schützenhaus", spawn: { x: .275, y: .32 } }], obstacles: [{ left: .1, right: .9, top: .04, bottom: .34 }, { left: .66, right: .86, top: .76, bottom: .835 }] },
+  playground: { name: "Spielplatz · Ein Platz für uns", subtitle: "Parkbank, leise Gespräche und Zeit draußen", exits: [{ x: .50, y: .90, to: "radegast", label: "Zurück nach Radegast", spawn: { x: .61, y: .70 } }], obstacles: [
+    { left: .25, right: .32, top: .15, bottom: .36 }, { left: .16, right: .25, top: .31, bottom: .39 },
+    { left: .68, right: .85, top: .34, bottom: .46 }, { left: .35, right: .52, top: .47, bottom: .52 },
+    { left: .80, right: .85, top: .62, bottom: .68 }, { left: .105, right: .18, top: .59, bottom: .63 },
+  ] },
+  christmasmarket: { name: "Unser Weihnachtsmarkt", subtitle: "Lichter, Winterluft und ein gemeinsamer Spaziergang", exits: [{ x: .50, y: .91, to: "zoerbig", label: "Zurück zum Zörbiger Markt", spawn: { x: .66, y: .47 } }], obstacles: [
+    { left: .11, right: .31, top: .23, bottom: .365 }, { left: .67, right: .88, top: .23, bottom: .365 },
+    { left: .10, right: .29, top: .56, bottom: .695 }, { left: .755, right: .865, top: .69, bottom: .72 },
+    { left: .455, right: .55, top: .30, bottom: .37 },
+  ] },
+  eliasroom: { name: "Elias’ Zimmer", subtitle: "Ein wiederkehrender Ort · Einrichtung als Spielinterpretation", exits: [{ x: .50, y: .90, to: "zoerbig", label: "Nach draußen · verkürzter Spielweg", spawn: { x: .69, y: .29 } }], obstacles: [
+    { left: .15, right: .40, top: .19, bottom: .335 }, { left: .60, right: .86, top: .16, bottom: .465 },
+    { left: .075, right: .16, top: .49, bottom: .65 }, { left: .74, right: .90, top: .73, bottom: .82 },
+    { left: .44, right: .565, top: .12, bottom: .265 },
+  ] },
 };
 
 // Bestätigt: acht Personen beim Weihnachtsessen; Namen noch offen.
 // Dialoge, Kleidung und genaue Szenengestaltung sind spielerische Entwürfe.
 export const ENTITIES: Record<Place, Entity[]> = {
+  playground: [
+    { id: "playground-elias", name: "Elias", x: .53, y: .63, kind: "person", art: "elias", text: "Sollen wir uns einen Moment auf die Bank setzen? Hier können wir in Ruhe reden. Dieses Gespräch ist eine freie Rekonstruktion." },
+    { id: "playground-swings", name: "Schaukeln", x: .70, y: .51, display: { x: .75, y: .37 }, kind: "item", art: "landmark", text: "Die Schaukeln bewegen sich leise im Wind. Der Spielplatz ist eine atmosphärische Interpretation, kein maßstabsgetreuer Ortsplan." },
+    { id: "playground-leaves", name: "Ein kleiner Weg", x: .29, y: .70, kind: "item", art: "landmark", text: "Ein kurzer Spaziergang, eine Pause auf der Bank. Hier darf der Alltag einfach langsam sein." },
+  ],
+  christmasmarket: [
+    { id: "market-elias", name: "Elias", x: .58, y: .74, kind: "person", art: "elias", text: "Die Lichter sehen schön aus. Wollen wir noch eine kleine Runde zusammen gehen? Freie Dialogrekonstruktion." },
+    { id: "market-lights", name: "Lichterketten", x: .56, y: .45, display: { x: .61, y: .185 }, kind: "item", art: "star", text: "Warme Lichter über dem Weg. Der Aufbau der Stände ist für das Spiel gestaltet; er behauptet keine historischen Einzelheiten." },
+    { id: "market-tree", name: "Weihnachtsbaum", x: .49, y: .425, display: { x: .51, y: .225 }, kind: "item", art: "star", text: "Ein beleuchteter Baum, kalte Winterluft und Zeit zu zweit. Euer Besuch am 06.12.2025 gehört zur gemeinsamen Geschichte." },
+    { id: "market-stall", name: "Ein warmer Stand", x: .32, y: .42, display: { x: .20, y: .295 }, kind: "item", art: "landmark", text: "An den Ständen wird es warm und gemütlich. Was ihr damals gegessen oder gekauft habt, bleibt offen." },
+  ],
+  eliasroom: [
+    { id: "elias-room-elias", name: "Elias", x: .49, y: .56, kind: "person", art: "elias", text: "Schön, dass du hier bist. Wir können reden, den Computer ansehen oder uns einfach hinsetzen. Freie Dialogrekonstruktion." },
+    { id: "elias-computer", name: "Elias’ Computer", x: .29, y: .38, display: { x: .275, y: .255 }, kind: "item", art: "landmark", text: "Computer und Programmieren waren schon am Anfang gemeinsame Gesprächsthemen. Die Einrichtung dieses Zimmers ist eine Spielinterpretation." },
+    { id: "elias-shelf", name: "Regal", x: .22, y: .57, display: { x: .12, y: .52 }, kind: "item", art: "book", text: "Ein paar Bücher und freie Plätze im Regal. Diese Gegenstände gestalten den Raum, ohne weitere biografische Tatsachen zu behaupten." },
+    { id: "elias-notes", name: "Platz für Gedanken", x: .67, y: .76, display: { x: .80, y: .745 }, kind: "item", art: "book", text: "Wünsche, Ideen, gemeinsame Erinnerungen. Manche Gespräche brauchen keine große Unternehmung." },
+  ],
   radegast: [{ id: "radegast-way", name: "Weg zur Bushaltestelle", x: .56, y: .61, kind: "item", art: "sign", text: "Von Felices Wohnung geht es entlang der Häuser und am Grün vorbei zur Haltestelle. Der Weg ist für das Spiel verkürzt." }],
   zoerbig: [
     { id: "zoerbig-stop", name: "Zörbig · Markt", x: .60, y: .26, display: { x: .60, y: .19 }, kind: "item", art: "landmark", text: "Am Markt kommt ihr mit dem Bus an. Links oben liegt die Löwen-Apotheke, rechts das Rathaus. Unten links beginnt der Schulweg." },
@@ -250,7 +285,23 @@ function insideArea(x: number, y: number, points: Point[]) {
 export function canWalk(place: Place, x: number, y: number) {
   return (!SOLID_AREAS[place] || !SOLID_AREAS[place]!.some(points => insideArea(x,y,points))) && (!WALK_AREAS[place] || WALK_AREAS[place]!.some(points => insideArea(x,y,points))) && x >= .075 && x <= .94 && y >= .16 && y <= (place === "school" ? .96 : .92) && !PLACES[place].obstacles.some(o => x > o.left - .02 && x < o.right + .02 && y > o.top - .015 && y < o.bottom + .015);
 }
-export const SPAWNS: Record<Place, Point> = { bedroom: { x: .5, y: .7 }, home: { x: .5, y: .78 }, kitchen: { x: .5, y: .85 }, garden: { x: .5, y: .38 }, radegast: { x: .435, y: .28 }, bus: { x: .5, y: .72 }, zoerbig: { x: .43, y: .275 }, schoolway: schoolWayPoint(.35,.43), school: { x: .52, y: .92 }, gym: { x: .5, y: .85 }, goelzau: { x: .86, y: .63 }, range: { x: .5, y: .8 } };
+export const SPAWNS: Record<Place, Point> = { bedroom: { x: .5, y: .7 }, home: { x: .5, y: .78 }, kitchen: { x: .5, y: .85 }, garden: { x: .5, y: .38 }, radegast: { x: .435, y: .28 }, bus: { x: .5, y: .72 }, zoerbig: { x: .43, y: .275 }, schoolway: schoolWayPoint(.35,.43), school: { x: .52, y: .92 }, gym: { x: .5, y: .85 }, goelzau: { x: .86, y: .63 }, range: { x: .5, y: .8 }, playground: { x: .50, y: .86 }, christmasmarket: { x: .50, y: .87 }, eliasroom: { x: .50, y: .85 } };
+
+/** Story-pasture collisions match the fence rails, horses, barn and tree trunks. */
+export function storyCanWalk(place: Place, x: number, y: number, options: { pasture?: boolean } = {}) {
+  if (place !== "radegast" || !options.pasture) return canWalk(place, x, y);
+  if (x < .075 || x > .94 || y < .16 || y > .92) return false;
+  const solids = [
+    { left: .045, right: .080, top: .18, bottom: .70 },
+    { left: .06, right: .365, top: .185, bottom: .285 },
+    { left: .06, right: .49, top: .58, bottom: .70 },
+    { left: .105, right: .265, top: .34, bottom: .45 },
+    { left: .245, right: .41, top: .47, bottom: .58 },
+    { left: .69, right: .91, top: .275, bottom: .45 },
+    ...[{ x:.10,y:.19 },{ x:.26,y:.16 },{ x:.615,y:.19 },{ x:.865,y:.24 },{ x:.865,y:.685 },{ x:.125,y:.92 }].map(p => ({ left:p.x-.015,right:p.x+.015,top:p.y-.06,bottom:p.y })),
+  ];
+  return !solids.some(o => x > o.left-.02 && x < o.right+.02 && y > o.top-.015 && y < o.bottom+.015);
+}
 export function routeTo(from: Place, to: Place): Exit | undefined {
   const queue: { place: Place; first?: Exit }[] = [{ place: from }];
   const seen = new Set<Place>([from]);

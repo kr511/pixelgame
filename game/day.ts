@@ -68,6 +68,9 @@ export function activityAt(place: Place, minute: number) {
   if (place === "schoolway") return "Zörbig · Schulweg";
   if (place === "zoerbig") return "Zörbig · Markt";
   if (place === "gym") return "Abschlusszeugnisse · Sommer 2026";
+  if (place === "playground") return "Spielplatz · Zeit draußen";
+  if (place === "christmasmarket") return "Weihnachtsmarkt · Lichter und Winterluft";
+  if (place === "eliasroom") return "Bei Elias zu Hause";
   if (place === "school") return minute >= SCHOOL_START && minute < SCHOOL_END ? "Schule · Unterrichtszeit" : "Schule · Schulhof";
   return "Radegast · Haltestelle";
 }
@@ -81,6 +84,11 @@ export function seasonalLight(season: Season, minute: number) {
 }
 
 export const REST_SPOTS: RestSpot[] = [
+  { id: "playground-bench", place: "playground", name: "Unsere Parkbank", kind: "bench", approach: { x: .43, y: .585 }, position: { x: .405, y: .515 }, companion: { x: .47, y: .515 } },
+  { id: "market-bench", place: "christmasmarket", name: "Bank unter den Lichtern", kind: "bench", approach: { x: .78, y: .77 }, position: { x: .75, y: .715 }, companion: { x: .81, y: .715 } },
+  { id: "elias-desk", place: "eliasroom", name: "Stuhl am Computer", kind: "chair", approach: { x: .30, y: .465 }, position: { x: .30, y: .405 }, companion: { x: .37, y: .405 } },
+  { id: "elias-bed-edge", place: "eliasroom", name: "Elias’ Bettkante", kind: "chair", approach: { x: .735, y: .545 }, position: { x: .70, y: .48 }, companion: { x: .78, y: .48 } },
+  { id: "elias-bed", place: "eliasroom", name: "Elias’ Bett", kind: "bed", approach: { x: .62, y: .58 }, position: { x: .755, y: .335 }, companion: { x: .70, y: .335 } },
   { id: "felice-desk", place: "bedroom", name: "Stuhl am Schreibtisch", kind: "chair", approach: { x: .60, y: .395 }, position: { x: .61, y: .335 }, companion: { x: .69, y: .345 } },
   { id: "felice-bed-edge", place: "bedroom", name: "Bettkante", kind: "chair", approach: { x: .40, y: .49 }, position: { x: .40, y: .425 }, companion: { x: .47, y: .425 } },
   { id: "home-sofa", place: "home", name: "Sofa im Wohnzimmer", kind: "chair", approach: { x: .36, y: .48 }, position: { x: .275, y: .412 }, companion: { x: .345, y: .412 } },

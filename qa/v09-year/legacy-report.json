@@ -1,0 +1,25 @@
+{
+  "url": "http://localhost:4173/",
+  "checks": [
+    "graduation gallery, pause, completion, reload and replay",
+    "nine shots, medal and durable score",
+    "NPC patrol, name editing and durable visibility mode",
+    "three kitchen actions and sitting with Elias",
+    "bed edge sitting, Elias, lying and standing",
+    "undated dog/Christmas/school draft return and clock separation"
+  ],
+  "failures": [],
+  "pageErrors": [],
+  "graduationDetails": [
+    "six actual ceremony dialogues",
+    "white camera flash",
+    "all three gallery images",
+    "Escape pauses sequence",
+    "completion survives reload",
+    "photo replay increments visits and preserves clock"
+  ],
+  "harnessNotes": [
+    "Graduation was rerun after correcting the test to use the existing Escape pause and read the temporary photo index atomically. No game-code change was required.",
+    "All checks use actual controls and isolated old-format starting saves. Completions and scores are never seeded."
+  ]
+}

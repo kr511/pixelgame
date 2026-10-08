@@ -1,0 +1,687 @@
+{
+  "events": [
+    {
+      "id": "beginning-2025-11-01",
+      "date": "2025-11-01",
+      "chapter": 1,
+      "scene": "sequence",
+      "clock": {
+        "version": 1,
+        "date": "2025-11-01",
+        "minute": 330,
+        "day": 1,
+        "season": "Herbst"
+      }
+    },
+    {
+      "id": "chat-2025-11-13",
+      "date": "2025-11-13",
+      "chapter": 1,
+      "scene": "chat",
+      "clock": {
+        "version": 1,
+        "date": "2025-11-13",
+        "minute": 1380,
+        "day": 13,
+        "season": "Herbst"
+      }
+    },
+    {
+      "id": "chat-2025-11-14",
+      "date": "2025-11-14",
+      "chapter": 1,
+      "scene": "chat",
+      "clock": {
+        "version": 1,
+        "date": "2025-11-14",
+        "minute": 1380,
+        "day": 14,
+        "season": "Herbst"
+      }
+    },
+    {
+      "id": "chat-2025-11-15",
+      "date": "2025-11-15",
+      "chapter": 1,
+      "scene": "chat",
+      "clock": {
+        "version": 1,
+        "date": "2025-11-15",
+        "minute": 1380,
+        "day": 15,
+        "season": "Herbst"
+      }
+    },
+    {
+      "id": "radegast-chocolate",
+      "date": "2025-11-16",
+      "chapter": 1,
+      "scene": "encounter",
+      "clock": {
+        "version": 1,
+        "date": "2025-11-16",
+        "minute": 990,
+        "day": 16,
+        "season": "Herbst"
+      }
+    },
+    {
+      "id": "chat-2025-11-16",
+      "date": "2025-11-16",
+      "chapter": 1,
+      "scene": "chat",
+      "clock": {
+        "version": 1,
+        "date": "2025-11-16",
+        "minute": 1380,
+        "day": 16,
+        "season": "Herbst"
+      }
+    },
+    {
+      "id": "school-first-feelings-17",
+      "date": "2025-11-17",
+      "chapter": 1,
+      "scene": "sequence",
+      "clock": {
+        "version": 1,
+        "date": "2025-11-17",
+        "minute": 800,
+        "day": 17,
+        "season": "Herbst"
+      }
+    },
+    {
+      "id": "chat-2025-11-17",
+      "date": "2025-11-17",
+      "chapter": 1,
+      "scene": "chat",
+      "clock": {
+        "version": 1,
+        "date": "2025-11-17",
+        "minute": 1380,
+        "day": 17,
+        "season": "Herbst"
+      }
+    },
+    {
+      "id": "chat-2025-11-18",
+      "date": "2025-11-18",
+      "chapter": 1,
+      "scene": "chat",
+      "clock": {
+        "version": 1,
+        "date": "2025-11-18",
+        "minute": 1380,
+        "day": 18,
+        "season": "Herbst"
+      }
+    },
+    {
+      "id": "school-first-feelings-19",
+      "date": "2025-11-19",
+      "chapter": 1,
+      "scene": "sequence",
+      "clock": {
+        "version": 1,
+        "date": "2025-11-19",
+        "minute": 800,
+        "day": 19,
+        "season": "Herbst"
+      }
+    },
+    {
+      "id": "chat-2025-11-19",
+      "date": "2025-11-19",
+      "chapter": 1,
+      "scene": "chat",
+      "clock": {
+        "version": 1,
+        "date": "2025-11-19",
+        "minute": 1380,
+        "day": 19,
+        "season": "Herbst"
+      }
+    },
+    {
+      "id": "chat-2025-11-20",
+      "date": "2025-11-20",
+      "chapter": 1,
+      "scene": "chat",
+      "clock": {
+        "version": 1,
+        "date": "2025-11-20",
+        "minute": 1380,
+        "day": 20,
+        "season": "Herbst"
+      }
+    },
+    {
+      "id": "school-first-feelings-21",
+      "date": "2025-11-21",
+      "chapter": 1,
+      "scene": "sequence",
+      "clock": {
+        "version": 1,
+        "date": "2025-11-21",
+        "minute": 800,
+        "day": 21,
+        "season": "Herbst"
+      }
+    },
+    {
+      "id": "chat-2025-11-21",
+      "date": "2025-11-21",
+      "chapter": 1,
+      "scene": "chat",
+      "clock": {
+        "version": 1,
+        "date": "2025-11-21",
+        "minute": 1380,
+        "day": 21,
+        "season": "Herbst"
+      }
+    },
+    {
+      "id": "chat-2025-11-22",
+      "date": "2025-11-22",
+      "chapter": 1,
+      "scene": "chat",
+      "clock": {
+        "version": 1,
+        "date": "2025-11-22",
+        "minute": 1380,
+        "day": 22,
+        "season": "Herbst"
+      }
+    },
+    {
+      "id": "chat-2025-11-23",
+      "date": "2025-11-23",
+      "chapter": 1,
+      "scene": "chat",
+      "clock": {
+        "version": 1,
+        "date": "2025-11-23",
+        "minute": 1380,
+        "day": 23,
+        "season": "Herbst"
+      }
+    },
+    {
+      "id": "confession-2025-11-24",
+      "date": "2025-11-24",
+      "chapter": 1,
+      "scene": "confession",
+      "clock": {
+        "version": 1,
+        "date": "2025-11-24",
+        "minute": 1060,
+        "day": 24,
+        "season": "Herbst"
+      }
+    },
+    {
+      "id": "chat-2025-11-24",
+      "date": "2025-11-24",
+      "chapter": 1,
+      "scene": "chat",
+      "clock": {
+        "version": 1,
+        "date": "2025-11-24",
+        "minute": 1380,
+        "day": 24,
+        "season": "Herbst"
+      }
+    },
+    {
+      "id": "handholding-2025-11-25",
+      "date": "2025-11-25",
+      "chapter": 1,
+      "scene": "sequence",
+      "clock": {
+        "version": 1,
+        "date": "2025-11-25",
+        "minute": 890,
+        "day": 25,
+        "season": "Herbst"
+      }
+    },
+    {
+      "id": "first-i-love-you",
+      "date": "2025-11-25",
+      "chapter": 1,
+      "scene": "love",
+      "clock": {
+        "version": 1,
+        "date": "2025-11-25",
+        "minute": 1210,
+        "day": 25,
+        "season": "Herbst"
+      }
+    },
+    {
+      "id": "playground-2025-12-01",
+      "date": "2025-12-01",
+      "chapter": 2,
+      "scene": "sequence",
+      "clock": {
+        "version": 1,
+        "date": "2025-12-01",
+        "minute": 1020,
+        "day": 31,
+        "season": "Winter"
+      }
+    },
+    {
+      "id": "christmas-market-2025-12-06",
+      "date": "2025-12-06",
+      "chapter": 2,
+      "scene": "sequence",
+      "clock": {
+        "version": 1,
+        "date": "2025-12-06",
+        "minute": 1140,
+        "day": 36,
+        "season": "Winter"
+      }
+    },
+    {
+      "id": "first-kiss-christmas",
+      "date": "2025-12-25",
+      "chapter": 2,
+      "scene": "sequence",
+      "clock": {
+        "version": 1,
+        "date": "2025-12-25",
+        "minute": 1380,
+        "day": 55,
+        "season": "Winter"
+      }
+    },
+    {
+      "id": "morning-after-2025-12-26",
+      "date": "2025-12-26",
+      "chapter": 2,
+      "scene": "sequence",
+      "clock": {
+        "version": 1,
+        "date": "2025-12-26",
+        "minute": 600,
+        "day": 56,
+        "season": "Winter"
+      }
+    },
+    {
+      "id": "new-year-2026",
+      "date": "2026-01-01",
+      "chapter": 3,
+      "scene": "sequence",
+      "clock": {
+        "version": 1,
+        "date": "2026-01-01",
+        "minute": 30,
+        "day": 62,
+        "season": "Winter"
+      }
+    },
+    {
+      "id": "january-everyday",
+      "date": "2026-01-02",
+      "chapter": 3,
+      "scene": "sequence",
+      "clock": {
+        "version": 1,
+        "date": "2026-01-02",
+        "minute": 1080,
+        "day": 63,
+        "season": "Winter"
+      }
+    },
+    {
+      "id": "first-valentine",
+      "date": "2026-02-14",
+      "chapter": 4,
+      "scene": "sequence",
+      "clock": {
+        "version": 1,
+        "date": "2026-02-14",
+        "minute": 1080,
+        "day": 106,
+        "season": "Winter"
+      }
+    },
+    {
+      "id": "old-messages-2026-03-18",
+      "date": "2026-03-18",
+      "chapter": 5,
+      "scene": "sequence",
+      "clock": {
+        "version": 1,
+        "date": "2026-03-18",
+        "minute": 1200,
+        "day": 138,
+        "season": "Frühling"
+      }
+    },
+    {
+      "id": "elias-room-weekend",
+      "date": "2026-03-20",
+      "chapter": 5,
+      "scene": "sequence",
+      "clock": {
+        "version": 1,
+        "date": "2026-03-20",
+        "minute": 1140,
+        "day": 140,
+        "season": "Frühling"
+      }
+    },
+    {
+      "id": "spring-everyday",
+      "date": "2026-04-01",
+      "chapter": 6,
+      "scene": "sequence",
+      "clock": {
+        "version": 1,
+        "date": "2026-04-01",
+        "minute": 1080,
+        "day": 152,
+        "season": "Frühling"
+      }
+    },
+    {
+      "id": "longer-visit-plan",
+      "date": "2026-05-06",
+      "chapter": 6,
+      "scene": "sequence",
+      "clock": {
+        "version": 1,
+        "date": "2026-05-06",
+        "minute": 1170,
+        "day": 187,
+        "season": "Frühling"
+      }
+    },
+    {
+      "id": "may-everyday",
+      "date": "2026-05-14",
+      "chapter": 6,
+      "scene": "sequence",
+      "clock": {
+        "version": 1,
+        "date": "2026-05-14",
+        "minute": 1080,
+        "day": 195,
+        "season": "Frühling"
+      }
+    },
+    {
+      "id": "summer-everyday",
+      "date": "2026-06-01",
+      "chapter": 7,
+      "scene": "sequence",
+      "clock": {
+        "version": 1,
+        "date": "2026-06-01",
+        "minute": 1110,
+        "day": 213,
+        "season": "Sommer"
+      }
+    },
+    {
+      "id": "summer-july",
+      "date": "2026-07-01",
+      "chapter": 7,
+      "scene": "sequence",
+      "clock": {
+        "version": 1,
+        "date": "2026-07-01",
+        "minute": 1110,
+        "day": 243,
+        "season": "Sommer"
+      }
+    },
+    {
+      "id": "summer-august",
+      "date": "2026-08-01",
+      "chapter": 7,
+      "scene": "sequence",
+      "clock": {
+        "version": 1,
+        "date": "2026-08-01",
+        "minute": 1110,
+        "day": 274,
+        "season": "Sommer"
+      }
+    },
+    {
+      "id": "autumn-everyday",
+      "date": "2026-09-01",
+      "chapter": 8,
+      "scene": "sequence",
+      "clock": {
+        "version": 1,
+        "date": "2026-09-01",
+        "minute": 900,
+        "day": 305,
+        "season": "Herbst"
+      }
+    },
+    {
+      "id": "morning-2026-10-08",
+      "date": "2026-10-08",
+      "chapter": 8,
+      "scene": "message",
+      "clock": {
+        "version": 1,
+        "date": "2026-10-08",
+        "minute": 500,
+        "day": 342,
+        "season": "Herbst"
+      }
+    },
+    {
+      "id": "our-story-finale",
+      "date": "2026-11-02",
+      "chapter": 8,
+      "scene": "sequence",
+      "clock": {
+        "version": 1,
+        "date": "2026-11-02",
+        "minute": 1000,
+        "day": 367,
+        "season": "Herbst"
+      }
+    }
+  ],
+  "portraits": [
+    {
+      "character": "elias",
+      "emotion": "shy",
+      "markup": "<defs><clipPath id=\"_r_0_\"><path d=\"M6 0H94V6H100V106H94V112H6V106H0V6H6Z\"></path></clipPath></defs><g clip-path=\"url(#_r_0_)\"><path d=\"M0 0H100V112H0Z\" fill=\"#394d46\"></path><path d=\"M0 80H100V112H0Z\" fill=\"#293c37\"></path><svg x=\"0\" y=\"0\" width=\"100\" height=\"112\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"none\" overflow=\"hidden\"><image href=\"/characters/elias-portrait-v06.png\" x=\"0\" y=\"0\" width=\"100\" height=\"100\" preserveAspectRatio=\"none\"></image></svg><g transform=\"translate(0 5) rotate(-9 50 50)\" data-face-expression=\"shy\"><path d=\"M30 36H69V48H73V57H68V63H61V67H40V63H33V57H28V46H30Z\" fill=\"#ffc59d\"></path><path d=\"M30 51H33V57H37V61H41V63H60V61H65V58H68V53H71V58H68V64H61V68H40V64H33V58H30Z\" fill=\"#dc9c7a\" opacity=\".45\"></path><path d=\"M31 36H41V38H31ZM58 36H68V38H58Z\" fill=\"#795340\"></path><path d=\"M31 42H43V50H31ZM56 42H68V50H56Z\" fill=\"#fff5df\"></path><path d=\"M31 43H38V50H31ZM56 43H63V50H56Z\" fill=\"#658ca2\"></path><path d=\"M32 44H36V49H32ZM57 44H61V49H57Z\" fill=\"#303535\"></path><path d=\"M34 43H37V45H34ZM59 43H62V45H59Z\" fill=\"#fffdf0\"></path><path d=\"M30 41H43V43H30ZM56 41H69V43H56Z\" fill=\"#493b33\"></path><path d=\"M48 49H51V52H54V54H48Z\" fill=\"#d89179\" opacity=\".8\"></path><path d=\"M26 49H34V53H26ZM66 49H74V53H66Z\" fill=\"#df8492\" opacity=\".85\"></path><path d=\"M45 59H54V61H45Z\" fill=\"#a66d67\"></path></g></g>"
+    },
+    {
+      "character": "felice",
+      "emotion": "happy",
+      "markup": "<defs><clipPath id=\"_r_1_\"><path d=\"M6 0H94V6H100V106H94V112H6V106H0V6H6Z\"></path></clipPath></defs><g clip-path=\"url(#_r_1_)\"><path d=\"M0 0H100V112H0Z\" fill=\"#394d46\"></path><path d=\"M0 80H100V112H0Z\" fill=\"#293c37\"></path><svg x=\"0\" y=\"0\" width=\"100\" height=\"112\" viewBox=\"155 15 155 180\" preserveAspectRatio=\"xMidYMin meet\" overflow=\"hidden\"><image href=\"/characters/felice-walk-v1.png\" x=\"0\" y=\"0\" width=\"1448\" height=\"1086\" preserveAspectRatio=\"none\"></image></svg><g transform=\"translate(0 -1)\" data-face-expression=\"happy\"><path d=\"M30 36H69V48H73V57H68V63H61V67H40V63H33V57H28V46H30Z\" fill=\"#f5b69a\"></path><path d=\"M30 51H33V57H37V61H41V63H60V61H65V58H68V53H71V58H68V64H61V68H40V64H33V58H30Z\" fill=\"#d98d79\" opacity=\".45\"></path><path d=\"M31 36H42V38H31ZM57 36H68V38H57Z\" fill=\"#684b3b\"></path><path d=\"M31 42H34V44H39V42H42V45H39V47H34V45H31ZM57 42H60V44H65V42H68V45H65V47H60V45H57Z\" fill=\"#493b33\"></path><path d=\"M48 49H51V52H54V54H48Z\" fill=\"#d89179\" opacity=\".8\"></path><path d=\"M26 49H34V53H26ZM66 49H74V53H66Z\" fill=\"#e79d96\" opacity=\".55\"></path><path d=\"M41 56H44V59H56V56H59V61H56V63H44V61H41Z\" fill=\"#9d5f58\"></path></g></g>"
+    },
+    {
+      "character": "npc:ein paar seiten weiter",
+      "emotion": "neutral",
+      "markup": "<defs><clipPath id=\"_r_2_\"><path d=\"M6 0H94V6H100V106H94V112H6V106H0V6H6Z\"></path></clipPath></defs><g clip-path=\"url(#_r_2_)\"><path d=\"M0 0H100V112H0Z\" fill=\"#394d46\"></path><path d=\"M0 80H100V112H0Z\" fill=\"#293c37\"></path><path d=\"M25 13H75V20H82V73H73V81H24V73H17V25H25Z\" fill=\"#454244\"></path><path d=\"M28 75H72V82H84V93H92V112H8V93H16V82H28Z\" fill=\"#57777e\"></path><path d=\"M42 62H60V78H42Z\" fill=\"#f1bd9e\"></path><path d=\"M26 22H73V29H67V34H28Z\" fill=\"#454244\"></path><g transform=\"translate(0 -1)\" data-face-expression=\"neutral\"><path d=\"M30 29H69V42H73V56H69V64H62V68H40V64H32V55H28V40H30Z\" fill=\"#f1bd9e\"></path><path d=\"M31 36H42V38H31ZM57 36H68V38H57Z\" fill=\"#684b3b\"></path><path d=\"M31 42H43V50H31ZM56 42H68V50H56Z\" fill=\"#fff5df\"></path><path d=\"M34 43H41V50H34ZM59 43H66V50H59Z\" fill=\"#865b40\"></path><path d=\"M36 44H39V49H36ZM61 44H64V49H61Z\" fill=\"#303535\"></path><path d=\"M34 43H37V45H34ZM59 43H62V45H59Z\" fill=\"#fffdf0\"></path><path d=\"M30 41H43V43H30ZM56 41H69V43H56Z\" fill=\"#493b33\"></path><path d=\"M48 49H51V52H54V54H48Z\" fill=\"#d89179\" opacity=\".8\"></path><path d=\"M43 59H57V61H43Z\" fill=\"#a66d67\"></path><path d=\"M48 63H58V65H48Z\" fill=\"#a67858\"></path></g></g>"
+    },
+    {
+      "character": "felice",
+      "emotion": "neutral",
+      "markup": "<defs><clipPath id=\"_r_3_\"><path d=\"M6 0H94V6H100V106H94V112H6V106H0V6H6Z\"></path></clipPath></defs><g clip-path=\"url(#_r_3_)\"><path d=\"M0 0H100V112H0Z\" fill=\"#394d46\"></path><path d=\"M0 80H100V112H0Z\" fill=\"#293c37\"></path><svg x=\"0\" y=\"0\" width=\"100\" height=\"112\" viewBox=\"155 15 155 180\" preserveAspectRatio=\"xMidYMin meet\" overflow=\"hidden\"><image href=\"/characters/felice-walk-v1.png\" x=\"0\" y=\"0\" width=\"1448\" height=\"1086\" preserveAspectRatio=\"none\"></image></svg><g transform=\"translate(0 -1)\" data-face-expression=\"neutral\"><path d=\"M30 36H69V48H73V57H68V63H61V67H40V63H33V57H28V46H30Z\" fill=\"#f5b69a\"></path><path d=\"M30 51H33V57H37V61H41V63H60V61H65V58H68V53H71V58H68V64H61V68H40V64H33V58H30Z\" fill=\"#d98d79\" opacity=\".45\"></path><path d=\"M31 36H42V38H31ZM57 36H68V38H57Z\" fill=\"#684b3b\"></path><path d=\"M31 42H43V50H31ZM56 42H68V50H56Z\" fill=\"#fff5df\"></path><path d=\"M34 43H41V50H34ZM59 43H66V50H59Z\" fill=\"#865b40\"></path><path d=\"M36 44H39V49H36ZM61 44H64V49H61Z\" fill=\"#303535\"></path><path d=\"M34 43H37V45H34ZM59 43H62V45H59Z\" fill=\"#fffdf0\"></path><path d=\"M30 41H43V43H30ZM56 41H69V43H56Z\" fill=\"#493b33\"></path><path d=\"M48 49H51V52H54V54H48Z\" fill=\"#d89179\" opacity=\".8\"></path><path d=\"M43 59H57V61H43Z\" fill=\"#a66d67\"></path></g></g>"
+    },
+    {
+      "character": "elias",
+      "emotion": "neutral",
+      "markup": "<defs><clipPath id=\"_r_3_\"><path d=\"M6 0H94V6H100V106H94V112H6V106H0V6H6Z\"></path></clipPath></defs><g clip-path=\"url(#_r_3_)\"><path d=\"M0 0H100V112H0Z\" fill=\"#394d46\"></path><path d=\"M0 80H100V112H0Z\" fill=\"#293c37\"></path><svg x=\"0\" y=\"0\" width=\"100\" height=\"112\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"none\" overflow=\"hidden\"><image href=\"/characters/elias-portrait-v06.png\" x=\"0\" y=\"0\" width=\"100\" height=\"100\" preserveAspectRatio=\"none\"></image></svg><g transform=\"translate(0 5) rotate(-9 50 50)\" data-face-expression=\"neutral\"><path d=\"M30 36H69V48H73V57H68V63H61V67H40V63H33V57H28V46H30Z\" fill=\"#ffc59d\"></path><path d=\"M30 51H33V57H37V61H41V63H60V61H65V58H68V53H71V58H68V64H61V68H40V64H33V58H30Z\" fill=\"#dc9c7a\" opacity=\".45\"></path><path d=\"M31 36H42V38H31ZM57 36H68V38H57Z\" fill=\"#684b3b\"></path><path d=\"M31 42H43V50H31ZM56 42H68V50H56Z\" fill=\"#fff5df\"></path><path d=\"M34 43H41V50H34ZM59 43H66V50H59Z\" fill=\"#658ca2\"></path><path d=\"M36 44H39V49H36ZM61 44H64V49H61Z\" fill=\"#303535\"></path><path d=\"M34 43H37V45H34ZM59 43H62V45H59Z\" fill=\"#fffdf0\"></path><path d=\"M30 41H43V43H30ZM56 41H69V43H56Z\" fill=\"#493b33\"></path><path d=\"M48 49H51V52H54V54H48Z\" fill=\"#d89179\" opacity=\".8\"></path><path d=\"M43 59H57V61H43Z\" fill=\"#a66d67\"></path></g></g>"
+    },
+    {
+      "character": "narrator",
+      "emotion": "happy",
+      "markup": "<defs><clipPath id=\"_r_3_\"><path d=\"M6 0H94V6H100V106H94V112H6V106H0V6H6Z\"></path></clipPath></defs><g clip-path=\"url(#_r_3_)\"><path d=\"M0 0H100V112H0Z\" fill=\"#394d46\"></path><path d=\"M0 80H100V112H0Z\" fill=\"#293c37\"></path><path d=\"M20 31H48V35H52V31H80V86H54V91H46V86H20Z\" fill=\"#d6c5a1\"></path><path d=\"M25 37H45V79H25ZM55 37H75V79H55Z\" fill=\"#efdfbd\"></path><path d=\"M29 44H41V47H29ZM29 54H41V57H29ZM59 44H71V47H59ZM59 54H71V57H59Z\" fill=\"#ad9974\"></path><path d=\"M38 14H44V11H50V16H54V22H50V28H44V22H38Z\" fill=\"#d7949d\"></path></g>"
+    },
+    {
+      "character": "elias",
+      "emotion": "happy",
+      "markup": "<defs><clipPath id=\"_r_7_\"><path d=\"M6 0H94V6H100V106H94V112H6V106H0V6H6Z\"></path></clipPath></defs><g clip-path=\"url(#_r_7_)\"><path d=\"M0 0H100V112H0Z\" fill=\"#394d46\"></path><path d=\"M0 80H100V112H0Z\" fill=\"#293c37\"></path><svg x=\"0\" y=\"0\" width=\"100\" height=\"112\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"none\" overflow=\"hidden\"><image href=\"/characters/elias-portrait-v06.png\" x=\"0\" y=\"0\" width=\"100\" height=\"100\" preserveAspectRatio=\"none\"></image></svg><g transform=\"translate(0 5) rotate(-9 50 50)\" data-face-expression=\"happy\"><path d=\"M30 36H69V48H73V57H68V63H61V67H40V63H33V57H28V46H30Z\" fill=\"#ffc59d\"></path><path d=\"M30 51H33V57H37V61H41V63H60V61H65V58H68V53H71V58H68V64H61V68H40V64H33V58H30Z\" fill=\"#dc9c7a\" opacity=\".45\"></path><path d=\"M31 36H42V38H31ZM57 36H68V38H57Z\" fill=\"#684b3b\"></path><path d=\"M31 42H34V44H39V42H42V45H39V47H34V45H31ZM57 42H60V44H65V42H68V45H65V47H60V45H57Z\" fill=\"#493b33\"></path><path d=\"M48 49H51V52H54V54H48Z\" fill=\"#d89179\" opacity=\".8\"></path><path d=\"M26 49H34V53H26ZM66 49H74V53H66Z\" fill=\"#e79d96\" opacity=\".55\"></path><path d=\"M41 56H44V59H56V56H59V61H56V63H44V61H41Z\" fill=\"#9d5f58\"></path></g></g>"
+    },
+    {
+      "character": "felice",
+      "emotion": "shy",
+      "markup": "<defs><clipPath id=\"_r_8_\"><path d=\"M6 0H94V6H100V106H94V112H6V106H0V6H6Z\"></path></clipPath></defs><g clip-path=\"url(#_r_8_)\"><path d=\"M0 0H100V112H0Z\" fill=\"#394d46\"></path><path d=\"M0 80H100V112H0Z\" fill=\"#293c37\"></path><svg x=\"0\" y=\"0\" width=\"100\" height=\"112\" viewBox=\"155 15 155 180\" preserveAspectRatio=\"xMidYMin meet\" overflow=\"hidden\"><image href=\"/characters/felice-walk-v1.png\" x=\"0\" y=\"0\" width=\"1448\" height=\"1086\" preserveAspectRatio=\"none\"></image></svg><g transform=\"translate(0 -1)\" data-face-expression=\"shy\"><path d=\"M30 36H69V48H73V57H68V63H61V67H40V63H33V57H28V46H30Z\" fill=\"#f5b69a\"></path><path d=\"M30 51H33V57H37V61H41V63H60V61H65V58H68V53H71V58H68V64H61V68H40V64H33V58H30Z\" fill=\"#d98d79\" opacity=\".45\"></path><path d=\"M31 36H41V38H31ZM58 36H68V38H58Z\" fill=\"#795340\"></path><path d=\"M31 42H43V50H31ZM56 42H68V50H56Z\" fill=\"#fff5df\"></path><path d=\"M31 43H38V50H31ZM56 43H63V50H56Z\" fill=\"#865b40\"></path><path d=\"M32 44H36V49H32ZM57 44H61V49H57Z\" fill=\"#303535\"></path><path d=\"M34 43H37V45H34ZM59 43H62V45H59Z\" fill=\"#fffdf0\"></path><path d=\"M30 41H43V43H30ZM56 41H69V43H56Z\" fill=\"#493b33\"></path><path d=\"M48 49H51V52H54V54H48Z\" fill=\"#d89179\" opacity=\".8\"></path><path d=\"M26 49H34V53H26ZM66 49H74V53H66Z\" fill=\"#df8492\" opacity=\".85\"></path><path d=\"M45 59H54V61H45Z\" fill=\"#a66d67\"></path></g></g>"
+    },
+    {
+      "character": "elias",
+      "emotion": "laughing",
+      "markup": "<defs><clipPath id=\"_r_a_\"><path d=\"M6 0H94V6H100V106H94V112H6V106H0V6H6Z\"></path></clipPath></defs><g clip-path=\"url(#_r_a_)\"><path d=\"M0 0H100V112H0Z\" fill=\"#394d46\"></path><path d=\"M0 80H100V112H0Z\" fill=\"#293c37\"></path><svg x=\"0\" y=\"0\" width=\"100\" height=\"112\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"none\" overflow=\"hidden\"><image href=\"/characters/elias-portrait-v06.png\" x=\"0\" y=\"0\" width=\"100\" height=\"100\" preserveAspectRatio=\"none\"></image></svg><g transform=\"translate(0 5) rotate(-9 50 50)\" data-face-expression=\"laughing\"><path d=\"M30 36H69V48H73V57H68V63H61V67H40V63H33V57H28V46H30Z\" fill=\"#ffc59d\"></path><path d=\"M30 51H33V57H37V61H41V63H60V61H65V58H68V53H71V58H68V64H61V68H40V64H33V58H30Z\" fill=\"#dc9c7a\" opacity=\".45\"></path><path d=\"M31 36H42V38H31ZM57 36H68V38H57Z\" fill=\"#684b3b\"></path><path d=\"M31 43H34V40H39V43H42V45H39V43H34V45H31ZM57 43H60V40H65V43H68V45H65V43H60V45H57Z\" fill=\"#493b33\"></path><path d=\"M48 49H51V52H54V54H48Z\" fill=\"#d89179\" opacity=\".8\"></path><path d=\"M26 49H34V53H26ZM66 49H74V53H66Z\" fill=\"#e79d96\" opacity=\".55\"></path><path d=\"M42 56H59V61H56V65H46V62H42Z\" fill=\"#7e4544\"></path><path d=\"M44 56H57V58H44Z\" fill=\"#fff5df\"></path><path d=\"M48 62H54V65H48Z\" fill=\"#d38b91\"></path></g></g>"
+    },
+    {
+      "character": "elias",
+      "emotion": "thoughtful",
+      "markup": "<defs><clipPath id=\"_r_h_\"><path d=\"M6 0H94V6H100V106H94V112H6V106H0V6H6Z\"></path></clipPath></defs><g clip-path=\"url(#_r_h_)\"><path d=\"M0 0H100V112H0Z\" fill=\"#394d46\"></path><path d=\"M0 80H100V112H0Z\" fill=\"#293c37\"></path><svg x=\"0\" y=\"0\" width=\"100\" height=\"112\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"none\" overflow=\"hidden\"><image href=\"/characters/elias-portrait-v06.png\" x=\"0\" y=\"0\" width=\"100\" height=\"100\" preserveAspectRatio=\"none\"></image></svg><g transform=\"translate(0 5) rotate(-9 50 50)\" data-face-expression=\"thoughtful\"><path d=\"M30 36H69V48H73V57H68V63H61V67H40V63H33V57H28V46H30Z\" fill=\"#ffc59d\"></path><path d=\"M30 51H33V57H37V61H41V63H60V61H65V58H68V53H71V58H68V64H61V68H40V64H33V58H30Z\" fill=\"#dc9c7a\" opacity=\".45\"></path><path d=\"M31 36H42V38H31ZM57 36H68V38H57Z\" fill=\"#684b3b\"></path><path d=\"M31 42H43V50H31ZM56 42H68V50H56Z\" fill=\"#fff5df\"></path><path d=\"M34 43H41V50H34ZM59 43H66V50H59Z\" fill=\"#658ca2\"></path><path d=\"M36 44H39V49H36ZM61 44H64V49H61Z\" fill=\"#303535\"></path><path d=\"M34 43H37V45H34ZM59 43H62V45H59Z\" fill=\"#fffdf0\"></path><path d=\"M30 41H43V43H30ZM56 41H69V43H56Z\" fill=\"#493b33\"></path><path d=\"M31 41H43V44H31Z\" fill=\"#ffc59d\"></path><path d=\"M48 49H51V52H54V54H48Z\" fill=\"#d89179\" opacity=\".8\"></path><path d=\"M46 59H58V61H46Z\" fill=\"#a66d67\"></path></g><path d=\"M78 11H82V15H78ZM85 7H89V11H85ZM92 3H96V7H92Z\" fill=\"#acc7c5\"></path></g>"
+    },
+    {
+      "character": "felice",
+      "emotion": "love",
+      "markup": "<defs><clipPath id=\"_r_j_\"><path d=\"M6 0H94V6H100V106H94V112H6V106H0V6H6Z\"></path></clipPath></defs><g clip-path=\"url(#_r_j_)\"><path d=\"M0 0H100V112H0Z\" fill=\"#59404b\"></path><path d=\"M0 80H100V112H0Z\" fill=\"#293c37\"></path><svg x=\"0\" y=\"0\" width=\"100\" height=\"112\" viewBox=\"155 15 155 180\" preserveAspectRatio=\"xMidYMin meet\" overflow=\"hidden\"><image href=\"/characters/felice-walk-v1.png\" x=\"0\" y=\"0\" width=\"1448\" height=\"1086\" preserveAspectRatio=\"none\"></image></svg><g transform=\"translate(0 -1)\" data-face-expression=\"love\"><path d=\"M30 36H69V48H73V57H68V63H61V67H40V63H33V57H28V46H30Z\" fill=\"#f5b69a\"></path><path d=\"M30 51H33V57H37V61H41V63H60V61H65V58H68V53H71V58H68V64H61V68H40V64H33V58H30Z\" fill=\"#d98d79\" opacity=\".45\"></path><path d=\"M31 36H42V38H31ZM57 36H68V38H57Z\" fill=\"#684b3b\"></path><path d=\"M31 42H43V50H31ZM56 42H68V50H56Z\" fill=\"#fff5df\"></path><path d=\"M34 43H41V50H34ZM59 43H66V50H59Z\" fill=\"#865b40\"></path><path d=\"M36 44H39V49H36ZM61 44H64V49H61Z\" fill=\"#303535\"></path><path d=\"M34 43H37V45H34ZM59 43H62V45H59Z\" fill=\"#fffdf0\"></path><path d=\"M30 41H43V43H30ZM56 41H69V43H56Z\" fill=\"#493b33\"></path><path d=\"M48 49H51V52H54V54H48Z\" fill=\"#d89179\" opacity=\".8\"></path><path d=\"M26 49H34V53H26ZM66 49H74V53H66Z\" fill=\"#e79d96\" opacity=\".55\"></path><path d=\"M41 56H44V59H56V56H59V61H56V63H44V61H41Z\" fill=\"#9d5f58\"></path></g><g class=\"portrait-hearts\" fill=\"#dc98a4\"><path d=\"M8 8H12V6H16V10H18V14H14V18H10V14H6V10H8Z\"></path><path d=\"M82 24H85V22H89V25H92V29H88V33H85V29H81V25H82Z\"></path></g></g>"
+    },
+    {
+      "character": "elias",
+      "emotion": "love",
+      "markup": "<defs><clipPath id=\"_r_0_\"><path d=\"M6 0H94V6H100V106H94V112H6V106H0V6H6Z\"></path></clipPath></defs><g clip-path=\"url(#_r_0_)\"><path d=\"M0 0H100V112H0Z\" fill=\"#59404b\"></path><path d=\"M0 80H100V112H0Z\" fill=\"#293c37\"></path><svg x=\"0\" y=\"0\" width=\"100\" height=\"112\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"none\" overflow=\"hidden\"><image href=\"/characters/elias-portrait-v06.png\" x=\"0\" y=\"0\" width=\"100\" height=\"100\" preserveAspectRatio=\"none\"></image></svg><g transform=\"translate(0 5) rotate(-9 50 50)\" data-face-expression=\"love\"><path d=\"M30 36H69V48H73V57H68V63H61V67H40V63H33V57H28V46H30Z\" fill=\"#ffc59d\"></path><path d=\"M30 51H33V57H37V61H41V63H60V61H65V58H68V53H71V58H68V64H61V68H40V64H33V58H30Z\" fill=\"#dc9c7a\" opacity=\".45\"></path><path d=\"M31 36H42V38H31ZM57 36H68V38H57Z\" fill=\"#684b3b\"></path><path d=\"M31 42H43V50H31ZM56 42H68V50H56Z\" fill=\"#fff5df\"></path><path d=\"M34 43H41V50H34ZM59 43H66V50H59Z\" fill=\"#658ca2\"></path><path d=\"M36 44H39V49H36ZM61 44H64V49H61Z\" fill=\"#303535\"></path><path d=\"M34 43H37V45H34ZM59 43H62V45H59Z\" fill=\"#fffdf0\"></path><path d=\"M30 41H43V43H30ZM56 41H69V43H56Z\" fill=\"#493b33\"></path><path d=\"M48 49H51V52H54V54H48Z\" fill=\"#d89179\" opacity=\".8\"></path><path d=\"M26 49H34V53H26ZM66 49H74V53H66Z\" fill=\"#e79d96\" opacity=\".55\"></path><path d=\"M41 56H44V59H56V56H59V61H56V63H44V61H41Z\" fill=\"#9d5f58\"></path></g><g class=\"portrait-hearts\" fill=\"#dc98a4\"><path d=\"M8 8H12V6H16V10H18V14H14V18H10V14H6V10H8Z\"></path><path d=\"M82 24H85V22H89V25H92V29H88V33H85V29H81V25H82Z\"></path></g></g>"
+    },
+    {
+      "character": "mother",
+      "emotion": "happy",
+      "markup": "<defs><clipPath id=\"_r_6_\"><path d=\"M6 0H94V6H100V106H94V112H6V106H0V6H6Z\"></path></clipPath></defs><g clip-path=\"url(#_r_6_)\"><path d=\"M0 0H100V112H0Z\" fill=\"#394d46\"></path><path d=\"M0 80H100V112H0Z\" fill=\"#293c37\"></path><svg x=\"0\" y=\"0\" width=\"100\" height=\"112\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"none\" overflow=\"hidden\"><image href=\"/characters/portraits-v06.png\" x=\"0\" y=\"0\" width=\"400\" height=\"200\" preserveAspectRatio=\"none\"></image></svg><g transform=\"translate(0 -1)\" data-face-expression=\"happy\"><path d=\"M30 29H69V42H73V56H69V64H62V68H40V64H32V55H28V40H30Z\" fill=\"#f1bd9e\"></path><path d=\"M31 36H42V38H31ZM57 36H68V38H57Z\" fill=\"#684b3b\"></path><path d=\"M31 42H34V44H39V42H42V45H39V47H34V45H31ZM57 42H60V44H65V42H68V45H65V47H60V45H57Z\" fill=\"#493b33\"></path><path d=\"M48 49H51V52H54V54H48Z\" fill=\"#d89179\" opacity=\".8\"></path><path d=\"M26 49H34V53H26ZM66 49H74V53H66Z\" fill=\"#e79d96\" opacity=\".55\"></path><path d=\"M41 56H44V59H56V56H59V61H56V63H44V61H41Z\" fill=\"#9d5f58\"></path><path d=\"M68 34H73V38H68Z\" fill=\"#bd7882\"></path></g></g>"
+    },
+    {
+      "character": "felice",
+      "emotion": "thoughtful",
+      "markup": "<defs><clipPath id=\"_r_a_\"><path d=\"M6 0H94V6H100V106H94V112H6V106H0V6H6Z\"></path></clipPath></defs><g clip-path=\"url(#_r_a_)\"><path d=\"M0 0H100V112H0Z\" fill=\"#394d46\"></path><path d=\"M0 80H100V112H0Z\" fill=\"#293c37\"></path><svg x=\"0\" y=\"0\" width=\"100\" height=\"112\" viewBox=\"155 15 155 180\" preserveAspectRatio=\"xMidYMin meet\" overflow=\"hidden\"><image href=\"/characters/felice-walk-v1.png\" x=\"0\" y=\"0\" width=\"1448\" height=\"1086\" preserveAspectRatio=\"none\"></image></svg><g transform=\"translate(0 -1)\" data-face-expression=\"thoughtful\"><path d=\"M30 36H69V48H73V57H68V63H61V67H40V63H33V57H28V46H30Z\" fill=\"#f5b69a\"></path><path d=\"M30 51H33V57H37V61H41V63H60V61H65V58H68V53H71V58H68V64H61V68H40V64H33V58H30Z\" fill=\"#d98d79\" opacity=\".45\"></path><path d=\"M31 36H42V38H31ZM57 36H68V38H57Z\" fill=\"#684b3b\"></path><path d=\"M31 42H43V50H31ZM56 42H68V50H56Z\" fill=\"#fff5df\"></path><path d=\"M34 43H41V50H34ZM59 43H66V50H59Z\" fill=\"#865b40\"></path><path d=\"M36 44H39V49H36ZM61 44H64V49H61Z\" fill=\"#303535\"></path><path d=\"M34 43H37V45H34ZM59 43H62V45H59Z\" fill=\"#fffdf0\"></path><path d=\"M30 41H43V43H30ZM56 41H69V43H56Z\" fill=\"#493b33\"></path><path d=\"M31 41H43V44H31Z\" fill=\"#f5b69a\"></path><path d=\"M48 49H51V52H54V54H48Z\" fill=\"#d89179\" opacity=\".8\"></path><path d=\"M46 59H58V61H46Z\" fill=\"#a66d67\"></path></g><path d=\"M78 11H82V15H78ZM85 7H89V11H85ZM92 3H96V7H92Z\" fill=\"#acc7c5\"></path></g>"
+    },
+    {
+      "character": "felice",
+      "emotion": "surprised",
+      "markup": "<defs><clipPath id=\"_r_4_\"><path d=\"M6 0H94V6H100V106H94V112H6V106H0V6H6Z\"></path></clipPath></defs><g clip-path=\"url(#_r_4_)\"><path d=\"M0 0H100V112H0Z\" fill=\"#394d46\"></path><path d=\"M0 80H100V112H0Z\" fill=\"#293c37\"></path><svg x=\"0\" y=\"0\" width=\"100\" height=\"112\" viewBox=\"155 15 155 180\" preserveAspectRatio=\"xMidYMin meet\" overflow=\"hidden\"><image href=\"/characters/felice-walk-v1.png\" x=\"0\" y=\"0\" width=\"1448\" height=\"1086\" preserveAspectRatio=\"none\"></image></svg><g transform=\"translate(0 -1)\" data-face-expression=\"surprised\"><path d=\"M30 36H69V48H73V57H68V63H61V67H40V63H33V57H28V46H30Z\" fill=\"#f5b69a\"></path><path d=\"M30 51H33V57H37V61H41V63H60V61H65V58H68V53H71V58H68V64H61V68H40V64H33V58H30Z\" fill=\"#d98d79\" opacity=\".45\"></path><path d=\"M32 32H43V34H32ZM56 32H67V34H56Z\" fill=\"#795340\"></path><path d=\"M31 40H43V48H31ZM56 40H68V48H56Z\" fill=\"#fff5df\"></path><path d=\"M34 41H41V48H34ZM59 41H66V48H59Z\" fill=\"#865b40\"></path><path d=\"M36 42H39V47H36ZM61 42H64V47H61Z\" fill=\"#303535\"></path><path d=\"M34 41H37V43H34ZM59 41H62V43H59Z\" fill=\"#fffdf0\"></path><path d=\"M30 39H43V41H30ZM56 39H69V41H56Z\" fill=\"#493b33\"></path><path d=\"M48 49H51V52H54V54H48Z\" fill=\"#d89179\" opacity=\".8\"></path><path d=\"M46 57H54V66H46Z\" fill=\"#7e4544\"></path><path d=\"M48 59H52V64H48Z\" fill=\"#b66e6d\"></path></g><path d=\"M83 7H88V19H83ZM83 23H88V28H83Z\" fill=\"#f5d9a0\"></path></g>"
+    },
+    {
+      "character": "felice",
+      "emotion": "sad",
+      "markup": "<defs><clipPath id=\"_r_o_\"><path d=\"M6 0H94V6H100V106H94V112H6V106H0V6H6Z\"></path></clipPath></defs><g clip-path=\"url(#_r_o_)\"><path d=\"M0 0H100V112H0Z\" fill=\"#36444f\"></path><path d=\"M0 80H100V112H0Z\" fill=\"#293c37\"></path><svg x=\"0\" y=\"0\" width=\"100\" height=\"112\" viewBox=\"155 15 155 180\" preserveAspectRatio=\"xMidYMin meet\" overflow=\"hidden\"><image href=\"/characters/felice-walk-v1.png\" x=\"0\" y=\"0\" width=\"1448\" height=\"1086\" preserveAspectRatio=\"none\"></image></svg><g transform=\"translate(0 -1)\" data-face-expression=\"sad\"><path d=\"M30 36H69V48H73V57H68V63H61V67H40V63H33V57H28V46H30Z\" fill=\"#f5b69a\"></path><path d=\"M30 51H33V57H37V61H41V63H60V61H65V58H68V53H71V58H68V64H61V68H40V64H33V58H30Z\" fill=\"#d98d79\" opacity=\".45\"></path><path d=\"M32 35H36V33H42V36H36V38H32ZM56 33H62V35H66V38H62V36H56Z\" fill=\"#684b3b\"></path><path d=\"M31 42H43V50H31ZM56 42H68V50H56Z\" fill=\"#fff5df\"></path><path d=\"M34 43H41V50H34ZM59 43H66V50H59Z\" fill=\"#865b40\"></path><path d=\"M36 44H39V49H36ZM61 44H64V49H61Z\" fill=\"#303535\"></path><path d=\"M34 43H37V45H34ZM59 43H62V45H59Z\" fill=\"#fffdf0\"></path><path d=\"M30 41H43V43H30ZM56 41H69V43H56Z\" fill=\"#493b33\"></path><path d=\"M29 49H32V55H29ZM68 49H71V55H68Z\" fill=\"#a5d0d9\"></path><path d=\"M48 49H51V52H54V54H48Z\" fill=\"#d89179\" opacity=\".8\"></path><path d=\"M42 62H45V59H56V62H59V64H55V62H46V64H42Z\" fill=\"#9d5f58\"></path></g></g>"
+    },
+    {
+      "character": "narrator",
+      "emotion": "thoughtful",
+      "markup": "<defs><clipPath id=\"_r_2c_\"><path d=\"M6 0H94V6H100V106H94V112H6V106H0V6H6Z\"></path></clipPath></defs><g clip-path=\"url(#_r_2c_)\"><path d=\"M0 0H100V112H0Z\" fill=\"#394d46\"></path><path d=\"M0 80H100V112H0Z\" fill=\"#293c37\"></path><path d=\"M20 31H48V35H52V31H80V86H54V91H46V86H20Z\" fill=\"#d6c5a1\"></path><path d=\"M25 37H45V79H25ZM55 37H75V79H55Z\" fill=\"#efdfbd\"></path><path d=\"M29 44H41V47H29ZM29 54H41V57H29ZM59 44H71V47H59ZM59 54H71V57H59Z\" fill=\"#ad9974\"></path><path d=\"M38 14H44V11H50V16H54V22H50V28H44V22H38Z\" fill=\"#d7949d\"></path><path d=\"M78 11H82V15H78ZM85 7H89V11H85ZM92 3H96V7H92Z\" fill=\"#acc7c5\"></path></g>"
+    }
+  ],
+  "checks": [
+    "Resumed the UI-generated checkpoint after 6 events; no completion was fabricated",
+    "7/38 completed school-first-feelings-17 (2025-11-17)",
+    "8/38 completed chat-2025-11-17 (2025-11-17)",
+    "9/38 completed chat-2025-11-18 (2025-11-18)",
+    "10/38 completed school-first-feelings-19 (2025-11-19)",
+    "11/38 completed chat-2025-11-19 (2025-11-19)",
+    "12/38 completed chat-2025-11-20 (2025-11-20)",
+    "13/38 completed school-first-feelings-21 (2025-11-21)",
+    "14/38 completed chat-2025-11-21 (2025-11-21)",
+    "15/38 completed chat-2025-11-22 (2025-11-22)",
+    "16/38 completed chat-2025-11-23 (2025-11-23)",
+    "17/38 completed confession-2025-11-24 (2025-11-24)",
+    "18/38 completed chat-2025-11-24 (2025-11-24)",
+    "19/38 completed handholding-2025-11-25 (2025-11-25)",
+    "20/38 completed first-i-love-you (2025-11-25)",
+    "21/38 completed playground-2025-12-01 (2025-12-01)",
+    "22/38 completed christmas-market-2025-12-06 (2025-12-06)",
+    "23/38 completed first-kiss-christmas (2025-12-25)",
+    "24/38 completed morning-after-2025-12-26 (2025-12-26)",
+    "25/38 completed new-year-2026 (2026-01-01)",
+    "26/38 completed january-everyday (2026-01-02)",
+    "27/38 completed first-valentine (2026-02-14)",
+    "28/38 completed old-messages-2026-03-18 (2026-03-18)",
+    "29/38 completed elias-room-weekend (2026-03-20)",
+    "30/38 completed spring-everyday (2026-04-01)",
+    "31/38 completed longer-visit-plan (2026-05-06)",
+    "32/38 completed may-everyday (2026-05-14)",
+    "33/38 completed summer-everyday (2026-06-01)",
+    "34/38 completed summer-july (2026-07-01)",
+    "35/38 completed summer-august (2026-08-01)",
+    "36/38 completed autumn-everyday (2026-09-01)",
+    "37/38 completed morning-2026-10-08 (2026-10-08)",
+    "38/38 completed our-story-finale (2026-11-02)",
+    "Fresh UI run: every event, all eight chapters, final date and reloaded album completed",
+    "Touch replay preserves calendar: chat-2025-11-13",
+    "Touch replay preserves calendar: radegast-chocolate",
+    "Touch replay preserves calendar: confession-2025-11-24",
+    "Touch replay preserves calendar: first-i-love-you",
+    "Touch replay preserves calendar: playground-2025-12-01",
+    "Phone history, eight-chapter calendar, memory grid and album link are functional",
+    "Version 1 migration preserves 14 existing completions and play clock; added events stay playable",
+    "No JavaScript page errors during the UI runs"
+  ],
+  "screenshots": [
+    "school-first-feelings-17",
+    "school-first-feelings-17",
+    "confession-2025-11-24",
+    "first-i-love-you",
+    "first-kiss-christmas",
+    "first-kiss-christmas-animation-0",
+    "first-kiss-christmas",
+    "first-kiss-christmas",
+    "first-kiss-christmas-animation-1",
+    "first-kiss-christmas",
+    "first-kiss-christmas",
+    "first-kiss-christmas-animation-3",
+    "first-kiss-christmas",
+    "first-kiss-christmas-animation-4",
+    "first-kiss-christmas",
+    "first-kiss-christmas-animation-5",
+    "first-kiss-christmas",
+    "first-kiss-christmas-animation-6",
+    "new-year-2026",
+    "new-year-2026-animation-0",
+    "new-year-2026",
+    "new-year-2026-animation-1",
+    "new-year-2026",
+    "new-year-2026",
+    "first-valentine",
+    "first-valentine",
+    "first-valentine",
+    "first-valentine",
+    "morning-2026-10-08",
+    "our-story-finale",
+    "our-story-finale-animation-0",
+    "our-story-finale",
+    "our-story-finale-animation-1",
+    "our-story-finale",
+    "our-story-finale-animation-2",
+    "our-story-finale",
+    "our-story-finale-animation-3",
+    "finale-together",
+    "year-album-completed",
+    "mobile-chocolate",
+    "mobile-confession-2025-11-24",
+    "mobile-first-i-love-you"
+  ],
+  "resumed_checkpoint": {
+    "file": "qa/v09-year/initial-ui-checkpoint.json",
+    "completed_events": 6,
+    "active": {
+      "id": "school-first-feelings-17",
+      "returnPlayer": {
+        "x": 0.5,
+        "y": 0.7
+      },
+      "returnDirection": "front"
+    },
+    "generated_by_real_ui": true
+  },
+  "errors": []
+}

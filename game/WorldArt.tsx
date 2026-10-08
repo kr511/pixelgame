@@ -39,7 +39,8 @@ export function CharacterArt({ id, portrait = false, direction = "front", walkin
     } else if (neighbor) {
       rect = neighbor.rect;
     } else {
-      rect = atlas.frames[walking ? frame : spec.row][column];
+      const frameIndex = walking && Number.isFinite(frame) ? Math.max(0,Math.floor(frame)) % atlas.frames.length : spec.row;
+      rect = (atlas.frames[frameIndex] ?? atlas.frames[0])[column];
     }
     const size = resting ? [1254,1254] : neighbor?.size ?? atlas.size;
     const height = pose === "sitting" ? 108 : pose === "lying" ? 125 : 132;

@@ -1,23 +1,26 @@
 # Felice × Elias World
 
-Version **0.9** erweitert das vorhandene mobile 2D-Spiel mit zwölf zusammenhängenden Orten, vier Jahreszeiten, Story-Kalender und chronologisch spielbarem ersten Kapitel.
+Version **0.9** erweitert das vorhandene mobile 2D-Pixelspiel zu einer zusammenhängenden Geschichte vom **01.11.2025 bis 02.11.2026**: acht Kapitel, die zwölf vorhandenen Orte plus Spielplatz, Weihnachtsmarkt und Elias’ Zimmer sowie alle vier bestehenden Jahreszeiten.
 
 ## Neu in V0.9
 
-- Der Story-Kalender reicht vom **01.11.2025 bis 02.11.2026**. Datum, Uhrzeit und Fortschritt erscheinen automatisch. Aktionen verwenden weiter den vorhandenen Tageszyklus; erzählerisches Weiterblättern führt zur nächsten noch offenen Geschichte. Verpasste Abende bleiben spielbar, ohne eine spätere Spielzeit zurückzudrehen.
-- **13.–24.11.2025:** zwölf interaktive Chat-Episoden im Zimmer. Felice nimmt am Schreibtisch oder auf der Bettkante Platz und öffnet ihr Handy. Fünf Themen stehen zur Wahl; mindestens zwei ergeben einen abgeschlossenen Abend. Die ausdrücklich fiktionalisierten Rekonstruktionen entwickeln sich über den Zeitraum weiter. Episodenaufteilung, Themenzuordnung und Uhrzeiten sind keine überlieferten Nachrichten. Collin erhält keine ergänzte Identität oder Biografie.
-- **19.11.2025:** begehbare Herbstszene bei den Pferden in Radegast, animierte Fahrradankunft von Elias, Gespräch, Schokoladenübergabe und ein ruhiger Moment der Unsicherheit. Sie liegt vor der Chat-Episode dieses Tages; die Tagesreihenfolge ist eine szenische Einteilung, die tatsächliche Uhrzeit ist unbekannt.
-- **25.11.2025:** Elias schreibt „Ich liebe dich.“; nach einer Pause kann Felice dieselbe Antwort senden. Dezente Herzpartikel und eine sanfte Variation der vorhandenen Web-Audio-Atmosphäre begleiten den bestätigten Moment.
-- Das Erinnerungsbuch zeigt historische Daten, Beschreibungen, Illustrationen, Status und Wiederholungsbuttons. Eine Wiederholung pausiert die aktuelle Spielzeit und kehrt an Felices vorherige Position zurück. Auch vorzeitiges Verlassen verändert den Kalender nicht.
-- Anuk, Weihnachtsessen, Schulweg, Gölzau und die aus V0.8 übernommene Abschlussfeier bleiben als **undatierte Szenenentwürfe** erhalten. Insbesondere das frühere feste Weihnachtsdatum wird nicht länger als bestätigte historische Angabe dargestellt. Bestehende Abschlüsse und Bestwerte bleiben erhalten.
+- **Acht spielbare Kapitel:** Novemberanfang und Chats, erste romantische Dezembermomente, Neujahr, Valentinstag, alte Nachrichten und Besuche im März, gemeinsame Frühlingszeit, Sommeralltag sowie Herbst und Finale am 02.11.2026. Bewegung, Dialoge und Interaktionen finden direkt in der vorhandenen Welt statt.
+- **November:** zwölf Chat-Episoden vom 13.–24.11., das gemäß den neuesten Angaben auf **16.11.2025** datierte Schokoladentreffen, kurze Schulszenen, Felices Liebesgeständnis am **24.11. um 17:20 Uhr**, Händchenhalten und die beiden „Ich liebe dich.“-Nachrichten am 25.11. Ein offizielles Beziehungsdatum wird nicht ergänzt.
+- **Dezember:** Spielplatz am 01.–02.12., Weihnachtsmarkt am 06.12., Familienessen und erster richtiger Kuss am 25.12. sowie Brief und gefaltete Kraniche am 26.12. Der unbekannte Brieftext wird nicht erfunden.
+- **Neues Dialogsystem:** untere Pixel-Dialogbox, links darüber wechselnde Sprecherporträts, acht Emotionen für Felice und Elias, NPC-Porträts, Schreibmaschinenanimation und Antwortmöglichkeiten. Enter, Leertaste, Klick oder Touch zeigen zunächst den Text und schalten danach weiter.
+- **Interaktives Handy:** Nachrichten, gespeicherter Chatverlauf, Kalender und Erinnerungen. Sieben Gesprächsthemen stehen zur Wahl; mindestens zwei bewahren einen Chatabend. Ohne Originalnachrichten sind ergänzte Dialoge sichtbar als Rekonstruktion gekennzeichnet. Collin erhält keine erfundene Biografie.
+- **Unsere Geschichte:** das erweiterte Album zeigt alle acht Kapitel chronologisch mit Datum beziehungsweise Zeitraum, Status, Illustration, Silhouetten für gesperrte Bilder, anklickbaren Erinnerungsstücken und Wiederholung.
+- **Kalender und Jahreszeiten:** Datum, Uhrzeit und Story-Fortschritt erscheinen automatisch. Erzählerische Zeitsprünge führen zum nächsten wichtigen Moment; bestehende Frühlings-, Sommer-, Herbst- und Winterdarstellung folgt dem Kalender. Wiederholungen besitzen eine eigene Szenenzeit und verändern die aktuelle Spielzeit nicht.
+- **Echte Ereignisse und Spielgestaltung:** spätere Alltagsszenen sind ausdrücklich inszenierte Möglichkeiten. Unbekannte Geschenke und Unternehmungen werden nicht als Tatsachen ergänzt. Nach dem 08.10.2026 führt ein spielerischer Ausblick zum Finale: „Unsere Geschichte ist noch lange nicht zu Ende. ❤️“
+- **Bisherige Funktionen bleiben erhalten:** Anuk, Weihnachtsentwurf, Schulweg, Gölzau, Abschlussfeier mit drei Fotos, Namen und Schießbestwerte. Alte Abschlüsse bleiben erhalten; die neu bestätigten Hauptmeilensteine werden separat erlebt.
 
-[Datenmodell und Erweiterung](game/STORY-V09.md) · [Prüfbericht mit Desktop- und Touch-Szenen](qa/v09/REVIEW.md)
+[Datenmodell und Erweiterung](game/STORY-V09.md) · [Prüfung des vollständigen Jahres](qa/v09-year/README.md) · [Prüfbericht der früheren Novemberfassung](qa/v09/REVIEW.md)
 
 ### V0.9 spielen
 
-Welt betreten → im Buch oder links im Story-Hinweis **Zeit weiterblättern** → **Geschichte erleben**. Für Chatabende in Felices Zimmer zum Schreibtisch oder zur Bettkante laufen, mit **E** / Aktionsknopf Platz nehmen und **Handy öffnen** wählen. In Radegast auf Elias zulaufen und die angebotenen Aktionen ausführen. Das Buch öffnet sich mit **J** oder dem Buchknopf; abgeschlossene Erinnerungen lassen sich dort erneut erleben. Smartphones verwenden den bestehenden Touch-Joystick im Querformat.
+**Welt betreten** → im Album oder im Story-Hinweis **Geschichte erleben** beziehungsweise **Zeit weiterblättern**. Folge in mehrstufigen Szenen der Markierung und benutze **E** / den Aktionsknopf. Für Chatabende in Felices Zimmer am Schreibtisch oder auf der Bettkante Platz nehmen und **Handy öffnen** wählen. Auf Elias zulaufen, um Gespräche und gemeinsame Aktionen auszulösen. Das Handy öffnet sich außerdem über seinen Weltknopf, das Album mit **J** oder dem Buchknopf. Abgeschlossene Erinnerungen lassen sich im Album erneut erleben. Smartphones verwenden den vorhandenen Touch-Joystick im Querformat.
 
-Der neue Schlüssel `felice-elias.timeline.v09` speichert Kalender, Ereignisabschlüsse und laufende Chat-/Szenenfortschritte gemeinsam. Die alten Tages- und Erinnerungsdaten bleiben erhalten; Kapitel- und Namensfunktionen verwenden weiterhin ihre vorhandenen Schlüssel. Wiederholungszustände werden erst bei erfolgreichem Abschluss als zusätzlicher Besuch gezählt. Beschädigte oder unbekannte Speicherformate werden nicht überschrieben; blockiertes Speichern wird sichtbar gemeldet.
+Der Schlüssel `felice-elias.timeline.v09` speichert Kalender, Ereignisabschlüsse und laufende Chat-/Szenenfortschritte gemeinsam. Alte Tages- und Erinnerungsdaten bleiben erhalten; Kapitel- und Namensfunktionen verwenden ihre vorhandenen Schlüssel. Der erste Abschlusszeitpunkt bleibt bei Wiederholung erhalten; ein erfolgreicher weiterer Durchgang erhöht den Besuchszähler. Beschädigte oder unbekannte Speicherformate werden nicht überschrieben; blockiertes Speichern wird sichtbar gemeldet.
 
 ## Neu in V0.8
 
