@@ -4,7 +4,7 @@ import { advanceActor, standingActor, walkingRoute } from "../game/actors.ts";
 import { canWalk, PLACES, SPAWNS, routeTo, parseStory } from "../game/story.ts";
 
 test("Die neuen Fußwege lassen sich bis zu jedem Ausgang und zurück vollständig laufen", () => {
-  for (const place of ["radegast", "zoerbig", "schoolway", "goelzau"]) {
+  for (const place of ["radegast", "zoerbig", "schoolway", "gym", "goelzau"]) {
     for (const exit of PLACES[place].exits) {
       for (const [from,to] of [[SPAWNS[place],exit],[exit,SPAWNS[place]]]) {
         let actor = { ...standingActor(from), route: walkingRoute(place,from,to) };

@@ -20,6 +20,7 @@ export const SCENE_GRAPHICS: Record<Place, SceneGraphic> = {
     { clip: "polygon(49% 53.2%,51% 54%,52% 60%,57% 60%,59.2% 63%,57% 67.7%,43% 67.7%,40.8% 64%,43% 60%,48% 60%)", depth: 67.7 },
   ] },
   schoolway: { background: "/rooms/zoerbig-walk-v075.png", crop: SCHOOL_WAY_CROP, outdoors: true, light: "#e9dbb8", foreground: [] },
+  gym: { background: "/rooms/graduation-gym-v08.png", outdoors: false, light: "#f8ddb0", foreground: [rect(36,18,65,25),rect(68.7,17,74,25)] },
   school: { background: "/rooms/school-court-secondary-v075.png", outdoors: true, light: "#e9dbb8", foreground: [
     rect(0,0,100,22.3),rect(42.1,17.6,57.8,25),
     { clip: "polygon(1.9% 6.1%,13.6% 6.1%,13.6% 23.3%,10.7% 25.2%,2.2% 23.9%)", depth:25.2 },
@@ -56,6 +57,7 @@ export const CHARACTER_GRAPHICS = {
   // Temporary existing atlas frames until personal appearances are supplied.
   elena: npc(2,1), jason: npc(3,0), luca: npc(1,1), wyatt: npc(3,1),
   ida: npc(0,0), helena: npc(2,0), linda: npc(0,1), lina: npc(2,1), alexandra: npc(0,1),
+  paul: npc(3,0), justin: npc(1,1),
   alexander: npc(3,0), magdalena: npc(0,1), hans: npc(3,1), fritz: npc(1,0),
   dog: { sheet: "/characters/anuk-v06.png", columns: 1, rows: 1, column: 0, row: 0, width: 9, anchor: { x: .5, y: .94 }, portrait: { sheet: "/characters/anuk-v06.png", columns: 1, rows: 1, column: 0, row: 0 } },
 } satisfies Record<string, CharacterGraphic>;
@@ -107,7 +109,7 @@ export const REST_GRAPHICS = {
 export function characterGraphic(id: string): CharacterGraphic { return CHARACTER_GRAPHICS[id as CharacterId] ?? CHARACTER_GRAPHICS.friend; }
 export function speakerGraphic(speaker: string): CharacterId | null {
   const speakers: Record<string, CharacterId> = { Felice: "felice", Elias: "elias", Anuk: "dog", "Felices Mutter": "mother", "Felices Stiefvater": "stepfather", "Felices Halbschwester": "halfsister", "Freund der Halbschwester": "partner-one", "Tochter des Stiefvaters": "stepsister", "Ihr Freund": "partner-two", Freunde: "friend", "Am Schießstand": "host", "Trainer Hans": "hans", Hans: "hans", "Trainer Fritz": "fritz", Fritz: "fritz" };
-  const friends: Record<string, CharacterId> = { Elena: "elena", Jason: "jason", Luca: "luca", Wyatt: "wyatt", Ida: "ida", Helena: "helena", Linda: "linda", Lina: "lina", Alexandra: "alexandra", Alexander: "alexander", Magdalena: "magdalena" };
+  const friends: Record<string, CharacterId> = { Paul: "paul", Justin: "justin", Schulleiter: "host", Bürgermeister: "stepfather", Elena: "elena", Jason: "jason", Luca: "luca", Wyatt: "wyatt", Ida: "ida", Helena: "helena", Linda: "linda", Lina: "lina", Alexandra: "alexandra", Alexander: "alexander", Magdalena: "magdalena" };
   return speaker === "Felice & Elias" ? "elias" : speakers[speaker] ?? friends[speaker] ?? null;
 }
-export const CHAPTER_GRAPHICS: Record<ChapterId, string> = { dog: "/rooms/garden-v06.png", christmas: "/rooms/home-winter-v06.png", school: "/rooms/zoerbig-market-v08.png", shooting: "/rooms/goelzau-range-v1.png" };
+export const CHAPTER_GRAPHICS: Record<ChapterId, string> = { dog: "/rooms/garden-v06.png", christmas: "/rooms/home-winter-v06.png", school: "/rooms/zoerbig-market-v08.png", shooting: "/rooms/goelzau-range-v1.png", graduation: "/rooms/graduation-gym-v08.png" };

@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { CHAPTERS, ENTITIES, PLACES, SPAWNS, EMPTY_STORY, advanceStory, beginChapter, canWalk, currentStep, parseStory, routeTo } from "../game/story.ts";
 
-test("Alle vier Kapitel sind vollständig spielbar, speicherbar und wiederholbar", () => {
+test("Alle Kapitel sind vollständig spielbar, speicherbar und wiederholbar", () => {
   let save = { ...EMPTY_STORY };
   for (const chapter of CHAPTERS) {
     save = beginChapter(save,chapter.id);
@@ -16,10 +16,10 @@ test("Alle vier Kapitel sind vollständig spielbar, speicherbar und wiederholbar
     assert.equal(currentStep(save),undefined);
     assert.ok(save.completed.includes(chapter.id));
   }
-  assert.equal(save.completed.length,4);
+  assert.equal(save.completed.length,CHAPTERS.length);
   const replay = beginChapter(save,"dog");
   assert.equal(replay.step,0);
-  assert.equal(replay.completed.length,4);
+  assert.equal(replay.completed.length,CHAPTERS.length);
   assert.deepEqual(replay.bag,[]);
 });
 

@@ -6,7 +6,7 @@ const nodes: { x: number; y: number; name: string; places: Place[] }[] = [
   { x: 125, y: 225, name: "Bushaltestelle", places: ["bus"] },
   { x: 390, y: 85, name: "Markt · Busankunft", places: ["zoerbig"] },
   { x: 390, y: 155, name: "Schulweg · St. Mauritius", places: ["schoolway"] },
-  { x: 390, y: 225, name: "Schule · Gitter & Hof", places: ["school"] },
+  { x: 390, y: 225, name: "Schule · Hof & Turnhalle", places: ["school","gym"] },
   { x: 655, y: 155, name: "Weg zum Schützenhaus", places: ["goelzau"] },
   { x: 655, y: 225, name: "Schießstand", places: ["range"] },
 ];

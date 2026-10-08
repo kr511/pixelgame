@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { GameUI } from "./GameUI";
+import { GraduationPhotos } from "./GraduationPhotos";
+import { personalConversation } from "./conversations";
 import { NamesPanel } from "./NamesPanel";
 import { WorldMap } from "./WorldMap";
 import { NAMES_KEY, displayName, initialNames, parseNames, renamePerson, type NameSave } from "./names";
@@ -57,6 +59,7 @@ export function Game() {
   const [visitingElias, setVisitingElias] = useState<Place | null>(null);
   const [actors, setActors] = useState<Actors>(initialActors);
   const actorsRef = useRef(actors);
+  const [photoMoment, setPhotoMoment] = useState<{ target?: string } | null>(null);
   const [kitchenEffect, setKitchenEffect] = useState<string | null>(null);
   const [player, setPlayer] = useState<Point>(SPAWNS[initial.save.place]);
   const [direction, setDirection] = useState<Direction>("front");
@@ -79,7 +82,7 @@ export function Game() {
   const memoryError = useMemories(s => s.storageError);
   const transitioning = phase === "entering" || phase === "leaving";
   const inWorld = phase === "room";
-  const active = started && !paused && !needsLandscape && inWorld && !journal && !dialogue;
+  const active = started && !paused && !needsLandscape && inWorld && !journal && !dialogue && !photoMoment;
   const chapter = CHAPTERS.find(c => c.id === save.chapter);
   const step = currentStep(save);
   const exits = PLACES[save.place].exits;
@@ -239,6 +242,9 @@ export function Game() {
       changeRest({ spot: restTarget, elias: false, motion: beginRest(save.place, playerRef.current, restTarget) }); spendTime(ACTION_MINUTES); return;
     }
     if (nearbyEntity) {
+      if (nearbyEntity.id === "graduation-photo" && (step?.target === nearbyEntity.id || save.completed.includes("graduation"))) {
+        setPhotoMoment({ target: step?.target === nearbyEntity.id ? nearbyEntity.id : undefined }); return;
+      }
       if (nearbyEntity.id === "album") { setJournal(true); return; }
       if (save.place === "kitchen" && nearbyEntity.kind === "item") {
         setDialogue({ speaker: "Felice", text: nearbyEntity.text, action: "kitchen", kitchenId: nearbyEntity.id, choices: [`${nearbyEntity.name} · 10 Min.`, "Zurück ins Spiel"] }); return;
@@ -255,7 +261,7 @@ export function Game() {
       const matches = step?.place === save.place && step.target === nearbyEntity.id;
       if (!matches && nearbyEntity.kind === "person" && canChangePose(nearbyEntity.art)) {
         const actor = actorsRef.current[nearbyEntity.id];
-        const choices = ["Hinsetzen", "Aufstehen", "Weiterreden"];
+        const choices = [...(personalConversation(nearbyEntity.id) ? ["Persönlich reden"] : []), ...(spots.some(spot => spot.kind !== "bed") ? ["Hinsetzen"] : []), ...(actor?.pose !== "standing" ? ["Aufstehen"] : []), "Weiterreden"];
         setDialogue({ speaker: nearbyEntity.name, art: nearbyEntity.art, text: `${nearbyEntity.text}\n${actor?.pose === "sitting" ? "Du kannst mich gern wieder zum Aufstehen einladen." : "Ein bisschen Zeit für eine Pause?"}`, actorId: nearbyEntity.id, action: "pose", choices }); return;
       }
       const original = ENTITIES[save.place].find(entity => entity.id === nearbyEntity.id);
@@ -275,6 +281,10 @@ export function Game() {
     if (dialogue.action === "kitchen") {
       if (choice !== "Zurück ins Spiel") { spendTime(ACTION_MINUTES); setKitchenEffect(dialogue.kitchenId ?? null); }
       setDialogue(null); clearMovement(); return;
+    }
+    if (dialogue.action === "pose" && dialogue.actorId && choice === "Persönlich reden") {
+      setDialogue({ speaker: dialogue.speaker, art: dialogue.art, text: personalConversation(dialogue.actorId) ?? "Schön, mit dir zu reden." });
+      spendTime(ACTION_MINUTES); clearMovement(); return;
     }
     if (dialogue.action === "pose" && dialogue.actorId) {
       if (choice !== "Weiterreden") {
@@ -302,7 +312,7 @@ export function Game() {
     const down = (event: KeyboardEvent) => {
       if (event.target instanceof HTMLElement && event.target.closest('dialog,input,select,textarea,[contenteditable="true"]')) return;
       if (event.code === "Escape" && started && !transitioning) { event.preventDefault(); useInput.getState().setPaused(!useInput.getState().paused); clearMovement(); return; }
-      if (event.code === "KeyJ" && started && inWorld && !paused && !needsLandscape && !event.repeat) { event.preventDefault(); clearMovement(); setJournal(v => !v); return; }
+      if (event.code === "KeyJ" && started && inWorld && !paused && !needsLandscape && !photoMoment && !event.repeat) { event.preventDefault(); clearMovement(); setJournal(v => !v); return; }
       if (!active) return;
       if (["KeyW","KeyA","KeyS","KeyD","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(event.code)) {
         event.preventDefault(); pressedKeys.add(event.code);
@@ -313,7 +323,7 @@ export function Game() {
     const blur = () => { clearMovement(); setWalking(false); if (started) useInput.getState().setPaused(true); };
     window.addEventListener("keydown", down); window.addEventListener("keyup", up); window.addEventListener("blur", blur);
     return () => { window.removeEventListener("keydown", down); window.removeEventListener("keyup", up); window.removeEventListener("blur", blur); };
-  }, [active, started, inWorld, paused, needsLandscape, transitioning, move, interact]);
+  }, [active, started, inWorld, paused, needsLandscape, transitioning, move, interact, photoMoment]);
 
   useEffect(() => {
     if (!active) return;
@@ -330,9 +340,22 @@ export function Game() {
 
   function selectChapter(id: ChapterId) {
     const next = beginChapter(save,id);
-    setSave(next); changeRest(null); position(SPAWNS[next.place]); setJournal(false);
+    setSave(next); changeRest(null); setPhotoMoment(null); position(SPAWNS[next.place]); setJournal(false);
+    if (id === "graduation") persistDay({ ...dayRef.current, season: "Sommer", minute: 840 });
     const c = CHAPTERS.find(c => c.id === id)!;
     setDialogue({ speaker: c.date, text: c.intro });
+  }
+
+  function completePhotos() {
+    const target = photoMoment?.target;
+    setPhotoMoment(null); clearMovement();
+    if (!target) return;
+    const next = advanceStory(save, target);
+    setSave(next); spendTime(ACTION_MINUTES);
+    if (!currentStep(next) && chapter) {
+      worldAudio.play("complete");
+      setDialogue({ speaker: chapter.title, text: chapter.ending, ending: true });
+    }
   }
 
   function completeShooting(score: number) {
@@ -347,7 +370,7 @@ export function Game() {
   const questTarget = step ? step.place === save.place ? sceneEntities.find(e => e.id === step.target) : guide : undefined;
   const arrow = questTarget ? offscreenGuide(questTarget, camera) : null;
 
-  return <main className="game-shell pixel-game version-five version-six version-061 version-065 version-07 version-075" data-name-mode={names.visibility} data-scene={inWorld ? save.place : "shooting"} data-chapter={save.chapter ?? "free"} data-atmosphere-active={active} data-minute={day.minute} data-day={day.day}>
+  return <main className="game-shell pixel-game version-five version-six version-061 version-065 version-07 version-075 version-08" data-name-mode={names.visibility} data-scene={inWorld ? save.place : "shooting"} data-chapter={save.chapter ?? "free"} data-atmosphere-active={active} data-minute={day.minute} data-day={day.day}>
     <link rel="preload" as="image" href="/rooms/felice-bedroom-rest-v065.png"/>
     <link rel="preload" as="image" href="/characters/rest-poses-v065.png"/>
     <link rel="preload" as="image" href="/characters/neighbors-poses-v065.png"/>
@@ -375,12 +398,12 @@ export function Game() {
       {active && arrow && <div className="offscreen-guide" style={labelStyle(arrow)} role="status" aria-label={`Aufgabenziel: ${step?.label}`}><span style={{ transform: `rotate(${arrow.angle}deg)` }}>➜</span><small>{guide?.label ?? "Dein nächstes Ziel"}</small></div>}
     </div>
     {(phase === "memory" || phase === "leaving") && <ShootingMemory blocked={paused || needsLandscape || transitioning} onComplete={completeShooting} onLeave={useMemories.getState().leave}/>}
-    <GameUI started={started} onStart={() => { setStarted(true); if (!save.chapter && !save.completed.length) setJournal(true); }} roomActive={inWorld && !needsLandscape && !journal && !dialogue} transitioning={transitioning} place={inWorld ? PLACES[save.place].name : "Erinnerung · Gölzau"} completed={completed}/>
+    <GameUI started={started} onStart={() => { setStarted(true); if (!save.chapter && !save.completed.length) setJournal(true); }} roomActive={inWorld && !needsLandscape && !journal && !dialogue && !photoMoment} transitioning={transitioning} place={inWorld ? PLACES[save.place].name : "Erinnerung · Gölzau"} completed={completed}/>
     {started && inWorld && !paused && !transitioning && <>
       <div className="day-clock" data-testid="day-clock"><strong>Uhrzeit: {clockText(day.minute)}</strong><small>Tag {day.day} · {activityAt(save.place, day.minute)}</small><label><span>Jahreszeit</span><select aria-label="Jahreszeit" value={day.season} onChange={event => persistDay({ ...dayRef.current, season: event.target.value as Season })}>{SEASONS.map(season => <option key={season}>{season}</option>)}</select></label></div>
       {notices[0] && active && <aside className="day-notice" role="status" data-testid="day-notice" key={`${notices[0].date}-${notices[0].minute}`}><strong>Uhrzeit: {clockText(notices[0].minute)}</strong><span>{notices[0].label}</span></aside>}
       <button className="journal-button" aria-label="Erinnerungsbuch öffnen" onClick={() => { clearMovement(); setJournal(true); }}>▤ <span>Erinnerungsbuch</span> <kbd>J</kbd></button>
-      <aside className="quest-tracker" aria-live="polite"><small>{chapter ? `${chapter.date} · ${Math.min(save.step+1,chapter.steps.length)}/${chapter.steps.length}` : "Version 0.75 · Frei erkunden"}</small><strong>{chapter?.title ?? "Eure kleine Welt"}</strong><p>{step?.label ?? (chapter ? "Kapitel bewahrt ♥ Wähle im Buch die nächste Geschichte." : "Freunde treffen, gemeinsam sitzen und eure Welt erkunden. Über Radegast und den Zörbiger Markt zur Schule. Eure Wege und Namen findest du im Buch.")}</p>{step && <span>{step.place === save.place ? "✦ Folge der goldenen Markierung" : `↗ ${guide?.label ?? PLACES[step.place].name}`}</span>}{save.bag.length > 0 && <div className="inventory">Tasche · {save.bag.join(" · ")}</div>}</aside>
+      <aside className="quest-tracker" aria-live="polite"><small>{chapter ? `${chapter.date} · ${Math.min(save.step+1,chapter.steps.length)}/${chapter.steps.length}` : "Version 0.8 · Frei erkunden"}</small><strong>{chapter?.title ?? "Eure kleine Welt"}</strong><p>{step?.label ?? (chapter ? "Kapitel bewahrt ♥ Wähle im Buch die nächste Geschichte." : "Freunde treffen, gemeinsam sitzen und eure Welt erkunden. Über Radegast und den Zörbiger Markt zur Schule. Eure Wege und Namen findest du im Buch.")}</p>{step && <span>{step.place === save.place ? "✦ Folge der goldenen Markierung" : `↗ ${guide?.label ?? PLACES[step.place].name}`}</span>}{save.bag.length > 0 && <div className="inventory">Tasche · {save.bag.join(" · ")}</div>}</aside>
       {active && rest && <div className="memory-interaction rest-actions"><span>{!settled ? rest.motion.phase === "leaving" ? "Du stehst auf" : "Du gehst zum Ruheplatz" : rest.spot.kind === "bed" ? "Du liegst wach im Bett" : rest.elias ? "Ein Moment mit Elias" : rest.spot.kind === "chair" ? "Du sitzt gemütlich" : "Du sitzt auf der Bank"}</span><button data-testid="world-interact" disabled={rest.motion.phase === "leaving"} onClick={interact}><kbd>E</kbd>Aufstehen · 10 Min.</button>{settled && (rest.spot.kind === "bed" ? <button onClick={() => { setNotices([]); persistDay(sleepUntilMorning(dayRef.current)); position(rest.spot.approach); changeRest(null); setDialogue({ speaker: "Felice", text: "Ein neuer Morgen. Es ist 5:00 Uhr. Du bist ausgeschlafen.", morning: true }); }}>Schlafen bis 5:00 Uhr</button> : <><button onClick={() => spendTime(ACTION_MINUTES)}>Ausruhen · 10 Min.</button>{!rest.elias && <button onClick={() => { const native = sourceEntities.find(entity => entity.art === "elias");
         const start = native ? actorsRef.current[native.id]?.position ?? native : SPAWNS[save.place];
         const shift = canWalk(save.place, rest.spot.approach.x + .07, rest.spot.approach.y) ? .07 : -.07;
@@ -389,8 +412,9 @@ export function Game() {
       {active && !rest && target && <div className="memory-interaction"><span>{targetName}</span><button data-testid="world-interact" onClick={interact}><kbd>E</kbd>{restTarget ? restTarget.kind === "bed" ? "Hinlegen · 10 Min." : "Hinsetzen · 10 Min." : nearbyEntity ? nearbyEntity.id === "school-door" && day.minute < SCHOOL_END ? "Unterricht besuchen" : nearbyEntity.kind === "person" || nearbyEntity.kind === "dog" ? "Ansprechen · 10 Min." : save.place === "kitchen" ? "Aktion wählen" : "Anschauen / benutzen" : "Weitergehen · 30 Min."}</button></div>}
       {!save.chapter && <div className="world-welcome">Dein Zimmer ist erst der Anfang. Geh durch die Tür oder öffne das Buch.</div>}
     </>}
+    {photoMoment && <GraduationPhotos blocked={paused || needsLandscape} onComplete={completePhotos}/> }
     {journal && <dialog ref={journalRef} className="story-modal journal-modal" onCancel={() => { setJournal(false); clearMovement(); }}>
-      <div className="journal-heading"><div><small>FELICE × ELIAS · VERSION 0.75</small><h1>Unsere kleinen Geschichten</h1><p>{completed} von 4 Erinnerungen bewahrt{completed === 4 ? " · Eure erste Spielrunde ist komplett! ♥" : " · Ein Kapitel nach dem anderen, in eurem Tempo."}</p></div><div className="journal-duo" aria-label="Felice und Elias"><CharacterArt id="felice"/><CharacterArt id="elias"/></div><button className="modal-close" aria-label="Erinnerungsbuch schließen" onClick={() => setJournal(false)}>×</button></div>
+      <div className="journal-heading"><div><small>FELICE × ELIAS · VERSION 0.8</small><h1>Unsere kleinen Geschichten</h1><p>{completed} von {CHAPTERS.length} Erinnerungen bewahrt{completed === CHAPTERS.length ? " · Eure erste Spielrunde ist komplett! ♥" : " · Ein Kapitel nach dem anderen, in eurem Tempo."}</p></div><div className="journal-duo" aria-label="Felice und Elias"><CharacterArt id="felice"/><CharacterArt id="elias"/></div><button className="modal-close" aria-label="Erinnerungsbuch schließen" onClick={() => setJournal(false)}>×</button></div>
       <div className="chapter-grid">{CHAPTERS.map((c,i) => <article className={`chapter-card ${save.completed.includes(c.id)?"chapter-done":""}`} key={c.id}><div className="chapter-cover" style={{ backgroundImage: `url(${CHAPTER_GRAPHICS[c.id]})` }}><span className="chapter-symbol">{c.icon}</span></div><small>KAPITEL 0{i+1} {save.completed.includes(c.id) ? "· ✓ BEWAHRT" : ""}</small><h2>{c.title}</h2><time>{c.date}</time><p>{c.intro}</p><button onClick={() => { if (save.chapter === c.id && currentStep(save)) { setJournal(false); return; } selectChapter(c.id); }}>{save.chapter === c.id && step ? "Weiterspielen" : save.completed.includes(c.id) ? "Noch einmal erleben" : "Kapitel beginnen"} <span>→</span></button></article>)}</div>
       <WorldMap place={save.place}/>
       <NamesPanel save={names} error={namesError} onRename={changeName} onVisibility={mode => persistNames({ ...namesRef.current, visibility: mode })}/>

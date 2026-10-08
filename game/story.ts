@@ -1,8 +1,8 @@
-export type Place = "bedroom" | "home" | "kitchen" | "garden" | "radegast" | "bus" | "zoerbig" | "schoolway" | "school" | "goelzau" | "range";
+export type Place = "bedroom" | "home" | "kitchen" | "garden" | "radegast" | "bus" | "zoerbig" | "schoolway" | "school" | "gym" | "goelzau" | "range";
 export type Point = { x: number; y: number };
 export const SCHOOL_WAY_CROP = { x: .08, y: .30, width: .84, height: .70 };
 const schoolWayPoint = (x: number, y: number): Point => ({ x: (x-.08)/.84, y: (y-.30)/.70 });
-export type ChapterId = "dog" | "christmas" | "school" | "shooting";
+export type ChapterId = "dog" | "christmas" | "school" | "shooting" | "graduation";
 export type Step = { id: string; place: Place; target: string; label: string; speaker: string; text: string; item?: string };
 export type Chapter = { id: ChapterId; title: string; date: string; icon: string; intro: string; ending: string; reward: string; steps: Step[] };
 export type Entity = Point & { id: string; name: string; kind: "person" | "dog" | "item"; art: string; text: string; display?: Point };
@@ -46,7 +46,13 @@ export const PLACES: Record<Place, { name: string; subtitle: string; exits: Exit
     { ...schoolWayPoint(.34,.43), to: "zoerbig", label: "Zurück zum Markt", spawn: { x: .24, y: .70 } },
     { ...schoolWayPoint(.17,.76), to: "school", label: "Zum Pausenhof", spawn: { x: .52, y: .92 } },
   ], obstacles: [] },
-  school: { name: "Sekundarschule Zörbig · Pausenhof", subtitle: "Treffpunkt an den Fenstergittern", exits: [{ x: .515, y: .95, to: "schoolway", label: "Zurück zum Schulweg", spawn: schoolWayPoint(.20,.75) }], obstacles: [] },
+  school: { name: "Sekundarschule Zörbig · Pausenhof", subtitle: "Treffpunkt an den Fenstergittern", exits: [{ x: .88, y: .72, to: "gym", label: "In die kleine Turnhalle", spawn: { x: .5, y: .85 } }, { x: .515, y: .95, to: "schoolway", label: "Zurück zum Schulweg", spawn: schoolWayPoint(.20,.75) }], obstacles: [] },
+  gym: { name: "Zörbig · Kleine Turnhalle", subtitle: "Abschlusszeugnisse · Sommer 2026", exits: [{ x: .5, y: .90, to: "school", label: "Zurück auf den Schulhof", spawn: { x: .84, y: .73 } }], obstacles: [
+    { left: .36, right: .65, top: .18, bottom: .25 },
+    { left: .687, right: .74, top: .17, bottom: .25 },
+    { left: .11, right: .32, top: .373, bottom: .557 },
+    { left: .685, right: .887, top: .373, bottom: .557 },
+  ] },
   goelzau: { name: "Gölzau · Weg zum Schützenhaus", subtitle: "Ankommen, Freunde treffen, zusammen schießen", exits: [
     { x: .90, y: .65, to: "bus", label: "Zurück nach Radegast", spawn: { x: .82, y: .76 } },
     { x: .265, y: .285, to: "range", label: "Ins Schützenhaus", spawn: { x: .5, y: .82 } },
@@ -65,6 +71,17 @@ export const ENTITIES: Record<Place, Entity[]> = {
   ],
   schoolway: [
     { id: "zoerbig-church", name: "St. Mauritius", ...schoolWayPoint(.37,.60), display: schoolWayPoint(.70,.50), kind: "item", art: "landmark", text: "Am Weg zwischen Markt und Schule liegt St. Mauritius. Weiter südwestlich geht es zum Pausenhof." },
+  ],
+  gym: [
+    { id: "graduation-elias", name: "Elias", x: .42, y: .76, kind: "person", art: "elias", text: "Jetzt haben wir beide unser Abschlusszeugnis. Komm, ein Foto von uns zwei muss sein." },
+    { id: "paul", name: "Paul", x: .35, y: .62, kind: "person", art: "paul", text: "Also, ich hätte da eine Idee: Wir vier gehen Döner essen. Nur mal so als Vorschlag." },
+    { id: "justin", name: "Justin", x: .64, y: .62, kind: "person", art: "justin", text: "Paul hat wieder seine Döneridee. Elias, Felice, ihr habt das auch gehört, oder?" },
+    { id: "graduation-principal", name: "Schulleiter", x: .42, y: .31, kind: "person", art: "host", text: "Herzlichen Glückwunsch zu euren Abschlüssen. Heute bekommt ihr eure Zeugnisse." },
+    { id: "graduation-mayor", name: "Bürgermeister", x: .60, y: .31, kind: "person", art: "stepfather", text: "Alles Gute für euren nächsten Schritt. Schön, heute mit euch zu feiern." },
+    { id: "graduation-guest-one", name: "Ehrengast", x: .29, y: .33, kind: "person", art: "mother", text: "Herzlichen Glückwunsch euch beiden." },
+    { id: "graduation-guest-two", name: "Ehrengast", x: .80, y: .33, kind: "person", art: "partner-two", text: "Genießt euren gemeinsamen Abschlussmoment." },
+    { id: "graduation-certificates", name: "Eure Abschlusszeugnisse", x: .52, y: .32, display: { x: .52, y: .23 }, kind: "item", art: "certificate", text: "Elias und Felice haben beide ihr Abschlusszeugnis bekommen. Sommer 2026 – dieser Tag bleibt." },
+    { id: "graduation-photo", name: "Ein Foto von euch beiden", x: .55, y: .76, display: { x: .63, y: .79 }, kind: "item", art: "camera", text: "Kurz zusammenstellen. Ein heller Blitz, dann die Schnappschüsse von Elias und Felice." },
   ],
   goelzau: [{ id: "goelzau-sign", name: "Schützenhaus Gölzau", x: .43, y: .35, display: { x: .40, y: .24 }, kind: "item", art: "landmark", text: "Am Schützenhaus in Weißandt-Gölzau trefft ihr eure Schießfreunde. Durch den Eingang geht es zur Bahn." }],
   bedroom: [{ id: "album", name: "Unser Erinnerungsbuch", x: .77, y: .32, display: { x: .68, y: .23 }, kind: "item", art: "book", text: "Vier Kapitel, viele kleine Momente. Öffne das Erinnerungsbuch oben rechts und wähle eine Geschichte." }, { id: "photo", name: "Foto aus Gölzau", x: .79, y: .52, display: { x: .885, y: .45 }, kind: "item", art: "photo", text: "Das Foto führt dich direkt zum Schießen in Gölzau." }],
@@ -100,7 +117,7 @@ export const ENTITIES: Record<Place, Entity[]> = {
   school: [
     { id: "school-grille", name: "Treffpunkt am Fenstergitter", x: .225, y: .35, display: { x: .20, y: .51 }, kind: "item", art: "landmark", text: "Die niedrigen Gitter sitzen vor den unteren Fenstern des grauen Schulgebäudes. Hier stehen Elena, Jason, Luca und Wyatt in der Pause." },
     { id: "friends", name: "Elena", x: .18, y: .295, kind: "person", art: "elena", text: "Hey Felice! Wir treffen uns am Gitter beim Schulgebäude. Bleibst du noch ein bisschen bei mir?" },
-    { id: "jason", name: "Jason", x: .25, y: .295, kind: "person", art: "jason", text: "Hey. Ich mache gerade eine kleine Pause am Gitter. Du kannst dich gern dazustellen." },
+    { id: "jason", name: "Jason", x: .25, y: .295, kind: "person", art: "jason", text: "Ich mache Fachabi. Neuer Abschnitt, aber unsere Sprüche bleiben natürlich dieselben." },
     { id: "luca", name: "Luca", x: .18, y: .39, kind: "person", art: "luca", text: "Hallo Felice. Heute ist es hier ziemlich ruhig. Das mag ich." },
     { id: "wyatt", name: "Wyatt", x: .25, y: .39, kind: "person", art: "wyatt", text: "Hey Felice! Schön, dass du da bist." },
     { id: "notebook", name: "Vergessenes Heft", x: .60, y: .80, kind: "item", art: "book", text: "Jemand hat ein Heft liegen gelassen." },
@@ -153,6 +170,15 @@ export const CHAPTERS: Chapter[] = [
   { id: "shooting", title: "Schießen in Gölzau", date: "Ein Moment voller Konzentration", icon: "◎", intro: "Mach dich durch Radegast über die Haltestelle auf den Weg zum Schützenhaus in Gölzau. Auf der Bahn warten neun Schüsse auf dich.", ending: "Neun Schüsse, ein tiefer Atemzug und eine Erinnerung für euer Zimmer.", reward: "Erinnerungsmedaille und persönlicher Bestwert", steps: [
     { id: "range-welcome", place: "range", target: "range-host", label: "Begrüße Trainer Hans am Schießstand", speaker: "Trainer Hans", text: "Schön, dass du da bist. An der markierten Schießbahn geht es los. Die Punkte sind nicht alles – genieße den Moment." },
     { id: "range-play", place: "range", target: "shoot", label: "Spiele die neun Schüsse und bewahre die Erinnerung", speaker: "Felice", text: "Die Bahn ist frei. Los geht’s." },
+  ] },
+  { id: "graduation", title: "Unser Abschluss", date: "Sommer 2026", icon: "✧", intro: "Eine kleine Turnhalle, vertraute Gesichter und eure Abschlusszeugnisse. Paul, Justin und Elias sind da. Am Ende bleibt ein Fotomoment von euch beiden.", ending: "Zwei Abschlusszeugnisse, Pauls Döneridee und gemeinsame Schnappschüsse. Sommer 2026 – ein neuer Abschnitt für Elias und Felice.", reward: "Eure Schnappschüsse beim Fotopunkt in der Turnhalle", steps: [
+    { id: "graduation-arrive", place: "gym", target: "graduation-elias", label: "Triff Elias in der kleinen Turnhalle", speaker: "Elias", text: "Da sind wir. Heute bekommen wir beide unser Abschlusszeugnis. Schon ein besonderer Moment, oder?" },
+    { id: "graduation-principal-step", place: "gym", target: "graduation-principal", label: "Begrüße den Schulleiter", speaker: "Schulleiter", text: "Herzlich willkommen zur Zeugnisübergabe. Schön, diesen Abschluss gemeinsam mit euch zu feiern." },
+    { id: "graduation-mayor-step", place: "gym", target: "graduation-mayor", label: "Sprich mit dem Bürgermeister", speaker: "Bürgermeister", text: "Herzlichen Glückwunsch und alles Gute für das, was jetzt kommt." },
+    { id: "graduation-receive", place: "gym", target: "graduation-certificates", label: "Nehmt eure Abschlusszeugnisse entgegen", speaker: "Felice & Elias", text: "Jetzt halten wir beide unser Abschlusszeugnis in der Hand. Geschafft. Sommer 2026.", item: "Eure Abschlusszeugnisse" },
+    { id: "graduation-doner", place: "gym", target: "paul", label: "Hör dir Pauls Idee an", speaker: "Paul", text: "Also, hört zu: Elias, Justin, Felice und ich – einfach Döner essen gehen. Was sagt ihr? Ich wollte die Idee nur mal wieder in den Raum werfen." },
+    { id: "graduation-justin", place: "gym", target: "justin", label: "Sprich mit Justin", speaker: "Justin", text: "Paul schafft es sogar bei der Zeugnisübergabe, Döner vorzuschlagen. Erst mal Fotos, würde ich sagen." },
+    { id: "graduation-snapshots", place: "gym", target: "graduation-photo", label: "Macht die Schnappschüsse von Elias und Felice", speaker: "Felice & Elias", text: "Ein kurzer weißer Blitz. Ein paar Bilder von uns beiden. Genau so bleibt dieser Moment." },
   ] },
 ];
 
@@ -224,7 +250,7 @@ function insideArea(x: number, y: number, points: Point[]) {
 export function canWalk(place: Place, x: number, y: number) {
   return (!SOLID_AREAS[place] || !SOLID_AREAS[place]!.some(points => insideArea(x,y,points))) && (!WALK_AREAS[place] || WALK_AREAS[place]!.some(points => insideArea(x,y,points))) && x >= .075 && x <= .94 && y >= .16 && y <= (place === "school" ? .96 : .92) && !PLACES[place].obstacles.some(o => x > o.left - .02 && x < o.right + .02 && y > o.top - .015 && y < o.bottom + .015);
 }
-export const SPAWNS: Record<Place, Point> = { bedroom: { x: .5, y: .7 }, home: { x: .5, y: .78 }, kitchen: { x: .5, y: .85 }, garden: { x: .5, y: .38 }, radegast: { x: .435, y: .28 }, bus: { x: .5, y: .72 }, zoerbig: { x: .43, y: .275 }, schoolway: schoolWayPoint(.35,.43), school: { x: .52, y: .92 }, goelzau: { x: .86, y: .63 }, range: { x: .5, y: .8 } };
+export const SPAWNS: Record<Place, Point> = { bedroom: { x: .5, y: .7 }, home: { x: .5, y: .78 }, kitchen: { x: .5, y: .85 }, garden: { x: .5, y: .38 }, radegast: { x: .435, y: .28 }, bus: { x: .5, y: .72 }, zoerbig: { x: .43, y: .275 }, schoolway: schoolWayPoint(.35,.43), school: { x: .52, y: .92 }, gym: { x: .5, y: .85 }, goelzau: { x: .86, y: .63 }, range: { x: .5, y: .8 } };
 export function routeTo(from: Place, to: Place): Exit | undefined {
   const queue: { place: Place; first?: Exit }[] = [{ place: from }];
   const seen = new Set<Place>([from]);

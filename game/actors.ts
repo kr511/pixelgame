@@ -5,7 +5,7 @@ import { movementStep, walkingFrame } from "./motion.ts";
 export type Pose = "standing" | "sitting" | "lying";
 export type Actor = { position: Point; pose: Pose; moving: boolean; frame: number; direction: "front" | "left" | "back" | "right"; distance: number; waypoint: number; wait: number; route: Point[]; pending?: Pose; restId?: string; approach?: Point; departing?: Point };
 export type Actors = Record<string, Actor>;
-const FRIENDS = new Set(["elias", "elena", "jason", "luca", "wyatt", "ida", "helena", "linda", "lina", "alexandra", "alexander", "magdalena"]);
+const FRIENDS = new Set(["paul", "justin", "elias", "elena", "jason", "luca", "wyatt", "ida", "helena", "linda", "lina", "alexandra", "alexander", "magdalena"]);
 export function canChangePose(art: string) { return FRIENDS.has(art); }
 export function standingActor(position: Point, wait = 0): Actor {
   return { position, pose: "standing", moving: false, frame: 0, direction: "front", distance: 0, waypoint: 1, wait, route: [] };
