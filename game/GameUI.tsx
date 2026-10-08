@@ -1,15 +1,19 @@
 "use client";
 
-import { PointerEvent, useRef, useState } from "react";
-import { Pause, Play } from "lucide-react";
+import { type PointerEvent, useRef, useSyncExternalStore } from "react";
+import { Pause, Play, Volume2, VolumeX } from "lucide-react";
 import { useInput } from "./input";
+import { worldAudio } from "./audio";
 
-export function GameUI({ started, onStart }: { started: boolean; onStart: () => void }) {
+export function GameUI({ started, onStart, roomActive = true, transitioning = false, place = "Felices Pixelzimmer", completed = 0 }: { started: boolean; onStart: () => void; roomActive?: boolean; transitioning?: boolean; place?: string; completed?: number }) {
   const paused = useInput((state) => state.paused);
+  const muted = useSyncExternalStore(worldAudio.subscribe, worldAudio.getMuted, worldAudio.getMuted);
   const setPaused = useInput((state) => state.setPaused);
   const setMove = useInput((state) => state.setMove);
   const stickOrigin = useRef({ x: 0, y: 0 });
-  const [stick, setStick] = useState({ x: 0, y: 0 });
+  const moveX = useInput((state) => state.moveX);
+  const moveY = useInput((state) => state.moveY);
+  const stick = { x: moveX * 34, y: -moveY * 34 };
 
   function moveStick(event: PointerEvent<HTMLDivElement>) {
     const dx = event.clientX - stickOrigin.current.x;
@@ -18,17 +22,18 @@ export function GameUI({ started, onStart }: { started: boolean; onStart: () => 
     const limit = 34;
     const scale = Math.min(1, limit / length);
     const x = dx * scale; const y = dy * scale;
-    setStick({ x, y }); setMove(x / limit, -y / limit);
+    setMove(x / limit, -y / limit);
   }
 
-  function stopStick() { setStick({ x: 0, y: 0 }); setMove(0, 0); }
+  function stopStick() { setMove(0, 0); }
 
   return (
     <div className="game-ui">
-      <div className="world-title"><span>F × E</span><div><strong>Felice × Elias</strong><small>v0.2 · Felices Sonnenhof</small></div></div>
-      {started && <button data-game-control className="pause-button" onClick={() => setPaused(!paused)} aria-label={paused ? "Weiterspielen" : "Pause"}>{paused ? <Play size={18} /> : <Pause size={18} />}</button>}
-      {started && !paused && <div className="controls-hint"><span className="desktop-hint">WASD · Felices Hof erkunden</span><span className="mobile-hint">Joystick · Felices Hof erkunden</span></div>}
-      {started && !paused && (
+      <div className="world-title"><span>F × E</span><div><strong>Felice × Elias</strong><small>{place}{completed > 0 && ` · ${completed} Erinnerung bewahrt`}</small></div></div>
+      {started && !transitioning && <button data-game-control className="pause-button" onClick={() => { if (paused) void worldAudio.unlock(); setPaused(!paused); }} aria-label={paused ? "Weiterspielen" : "Pause"}>{paused ? <Play size={18} /> : <Pause size={18} />}</button>}
+      {started && <button data-game-control className="audio-button" onClick={() => worldAudio.toggleMuted()} aria-label={muted ? "Ton einschalten" : "Ton ausschalten"} aria-pressed={muted}>{muted ? <VolumeX size={18}/> : <Volume2 size={18}/>}</button>}
+      {started && !paused && roomActive && !transitioning && <div className="controls-hint"><span className="desktop-hint">WASD / Pfeile · Laufen &nbsp; E · Interagieren &nbsp; J · Erinnerungsbuch</span><span className="mobile-hint">Joystick · Laufen &nbsp; Aktionsknopf · Sprechen & Benutzen</span></div>}
+      {started && !paused && roomActive && !transitioning && (
         <div data-game-control className="joystick" onPointerDown={(event) => { event.currentTarget.setPointerCapture(event.pointerId); stickOrigin.current = { x: event.clientX, y: event.clientY }; moveStick(event); }} onPointerMove={(event) => { if (event.currentTarget.hasPointerCapture(event.pointerId)) moveStick(event); }} onPointerUp={stopStick} onPointerCancel={stopStick}>
           <div className="joystick-knob" style={{ transform: `translate(${stick.x}px, ${stick.y}px)` }} />
         </div>
@@ -36,10 +41,10 @@ export function GameUI({ started, onStart }: { started: boolean; onStart: () => 
       {(!started || paused) && (
         <div className="start-screen" data-game-control>
           <div className="start-card">
-            <p>Willkommen auf dem Sonnenhof</p>
+            <p>{started ? place : "Eure kleine Welt · Version 0.75"}</p>
             <h1>{started && paused ? "Kurze Pause?" : "Felice × Elias"}</h1>
-            <span>{started && paused ? "Der Sonnenhof wartet auf dich." : "Ein kleiner Hof voller Wege, Felder und ruhiger Ecken."}</span>
-            <button onClick={() => { setPaused(false); onStart(); }}><Play size={17} fill="currentColor" />{started && paused ? "Weiter" : "Welt betreten"}</button>
+            <span>{started && paused ? "Dein Moment wartet auf dich." : "Anuks erste Pfoten im Garten. Euer erstes Weihnachtsessen. Der gemeinsame Schulweg. Vier Geschichten zum Spielen und Bewahren."}</span>
+            <button onClick={() => { void worldAudio.unlock(); setPaused(false); if (!started) onStart(); }}><Play size={17} fill="currentColor" />{started && paused ? "Weiter" : "Welt betreten"}</button>
           </div>
         </div>
       )}

@@ -22,7 +22,7 @@ export const useInput = create<InputState>((set) => ({
     yaw: state.yaw - x * 0.005,
     pitch: Math.max(0.12, Math.min(0.78, state.pitch + y * 0.0035)),
   })),
-  setPaused: (paused) => set((state) => ({ paused, moveX: paused ? 0 : state.moveX, moveY: paused ? 0 : state.moveY })),
+  setPaused: (paused) => { pressedKeys.clear(); set({ paused, moveX: 0, moveY: 0 }); },
 }));
 
 export const pressedKeys = new Set<string>();
