@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Felice × Elias",
-  description: "Felices begehbares 2D-Pixelzimmer.",
+  description: "Felice × Elias World V0.9 – eine begehbare Pixelwelt mit Story-Kalender und gemeinsamen Erinnerungen.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",

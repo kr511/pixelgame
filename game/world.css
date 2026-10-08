@@ -141,8 +141,6 @@
 .version-065 .room-player.pose-lying { width:7.6%; }
 .version-065 .room-player.in-bed { width:0; height:0; }
 .version-065 .room-player.in-bed .room-player-label { display:none; }
-.version-065 .rest-mat { width:20%; z-index:8!important; }
-.version-065 .rest-mat>svg { filter:drop-shadow(0 2px 1px #283e3520); }
 .version-065 .entity-person.pose-sitting,.version-065 .entity-person.pose-lying { filter:drop-shadow(0 1px 1px #25352c44); }
 .kitchen-action-marker { display:block; color:#f2d89c; text-align:center; text-shadow:0 1px 4px #493726; font-size:14px; }
 .version-065 .entity-item:has(.kitchen-action-marker) .entity-name { display:block; width:max-content; max-width:110px; white-space:normal; text-align:center; }
@@ -229,13 +227,51 @@
 /* Overhead school courtyard: match the figure scale to the building and yard. */
 .version-075[data-scene="school"] .room-player,
 .version-075[data-scene="school"] .entity-person { width:4.8%!important; }
-.version-075[data-scene="school"] .rest-mat { width:14%; }
 .version-075[data-scene="school"] .world-exit { z-index:110; }
 
 .version-075[data-scene="school"] [data-rest-id^="school-bench-right"].pose-sitting .room-player-label,
 .version-075[data-scene="school"] [data-rest-id^="school-bench-right"].pose-sitting .entity-name { left:0; transform:translateX(-100%); }
 
-.version-075[data-scene="school"] [data-rest-id^="school-picnic"].pose-lying .entity-name { top:auto; bottom:100%; }
 @media (max-height:600px) and (orientation:landscape) {
   .version-075[data-scene="school"] .entity-person .entity-name { font-size:8px; padding:1px 2px; }
+}
+
+.version-075[data-scene="schoolway"] .room-player,
+.version-075[data-scene="schoolway"] .entity-person { width:4.8%!important; }
+
+/* V0.8: graduation snapshots, one soft white fade and still photographs. */
+.graduation-photos { position:fixed; inset:0; z-index:160; display:grid; place-items:center; overflow:hidden; background:#172923; }
+.graduation-photo-background { position:absolute; inset:-30px; background:linear-gradient(#152b29b8,#142620ef),url('/rooms/graduation-gym-v08.png') center/cover; filter:blur(12px); }
+.snapshot-stack { position:relative; width:min(570px,72vw); height:min(720px,87dvh); }
+.graduation-snapshot { position:absolute; inset:0; margin:0; padding:14px 14px 26px; background:#f5eddb; box-shadow:0 22px 80px #0008; opacity:0; transform:rotate(-2deg); transition:opacity .7s ease; display:flex; flex-direction:column; }
+.graduation-snapshot.is-visible { opacity:1; }
+.snapshot-1 { transform:rotate(2deg); }
+.snapshot-2 { transform:rotate(-1deg); }
+.snapshot-picture { position:relative; overflow:hidden; flex:1; min-height:0; background:#d4be99; }
+.snapshot-gym { position:absolute; inset:0; background:url('/rooms/graduation-gym-v08.png') 50% 10%/180%; filter:blur(1px); }
+.snapshot-person { position:absolute; bottom:-3%; width:65%; aspect-ratio:5/7; }
+.snapshot-person>.character-art { width:100%; height:100%; }
+.snapshot-felice { left:-1%; }
+.snapshot-elias { right:-1%; }
+.snapshot-sunlight { position:absolute; inset:0; background:linear-gradient(120deg,#ffeecb33,transparent 60%); pointer-events:none; }
+.snapshot-1 .snapshot-gym { background-position:45% 40%; background-size:240%; }
+.snapshot-1 .snapshot-person { width:78%; bottom:-22%; }
+.snapshot-1 .snapshot-felice { left:-12%; }
+.snapshot-1 .snapshot-elias { right:-12%; }
+.snapshot-2 .snapshot-gym { background-position:50% 5%; background-size:150%; }
+.snapshot-2 .snapshot-person { width:68%; bottom:-7%; }
+.graduation-snapshot figcaption { padding:14px 4px 0; color:#415648; font:italic 25px Georgia,serif; text-align:center; }
+.graduation-snapshot figcaption small { display:block; margin-top:9px; color:#7b806c; font:11px ui-sans-serif,system-ui,sans-serif; letter-spacing:.13em; }
+.snapshot-white { position:absolute; inset:0; background:#fff; pointer-events:none; }
+.snapshot-memory-caption { position:absolute; bottom:1%; margin:0; color:#e5ddc8; font:italic 14px Georgia,serif; }
+@media (max-height:600px) { .snapshot-stack { width:min(360px,60vw); height:86dvh; } .graduation-snapshot { padding:7px 7px 12px; } .graduation-snapshot figcaption { padding-top:7px; font-size:18px; } .graduation-snapshot figcaption small { margin-top:4px; font-size:9px; } .snapshot-memory-caption { font-size:10px; bottom:.5%; } }
+@media (prefers-reduced-motion:reduce) { .graduation-snapshot { transition:none; transform:none; } }
+@media (max-height:600px) {
+  .snapshot-person { width:50%; bottom:0; }
+  .snapshot-felice { left:6%; }
+  .snapshot-elias { right:6%; }
+  .snapshot-1 .snapshot-person { width:58%; bottom:-10%; }
+  .snapshot-1 .snapshot-felice { left:2%; }
+  .snapshot-1 .snapshot-elias { right:2%; }
+  .snapshot-2 .snapshot-person { width:52%; bottom:-3%; }
 }

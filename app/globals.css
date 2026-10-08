@@ -2,6 +2,7 @@
 @import "../game/memories/memories.css";
 @import "../game/story.css";
 @import "../game/world.css";
+@import "../game/timeline.css";
 
 :root { --ink:#fff7ef; --glass:rgba(27,28,31,.42); }
 * { box-sizing:border-box; }

@@ -1,9 +1,35 @@
 # Felice × Elias World
 
-Version **0.75**: ein eigenständiges, mobiles 2D-Spiel mit zehn zusammenhängenden Orten, Tageszyklus, Freunden, Ruhepositionen und vier spielbaren Erinnerungskapiteln.
+Version **0.9** erweitert das vorhandene mobile 2D-Spiel mit zwölf zusammenhängenden Orten, vier Jahreszeiten, Story-Kalender und chronologisch spielbarem ersten Kapitel.
 
-## Neu in V0.75
+## Neu in V0.9
 
+- Der Story-Kalender reicht vom **01.11.2025 bis 02.11.2026**. Datum, Uhrzeit und Fortschritt erscheinen automatisch. Aktionen verwenden weiter den vorhandenen Tageszyklus; erzählerisches Weiterblättern führt zur nächsten noch offenen Geschichte. Verpasste Abende bleiben spielbar, ohne eine spätere Spielzeit zurückzudrehen.
+- **13.–24.11.2025:** zwölf interaktive Chat-Episoden im Zimmer. Felice nimmt am Schreibtisch oder auf der Bettkante Platz und öffnet ihr Handy. Fünf Themen stehen zur Wahl; mindestens zwei ergeben einen abgeschlossenen Abend. Die ausdrücklich fiktionalisierten Rekonstruktionen entwickeln sich über den Zeitraum weiter. Episodenaufteilung, Themenzuordnung und Uhrzeiten sind keine überlieferten Nachrichten. Collin erhält keine ergänzte Identität oder Biografie.
+- **19.11.2025:** begehbare Herbstszene bei den Pferden in Radegast, animierte Fahrradankunft von Elias, Gespräch, Schokoladenübergabe und ein ruhiger Moment der Unsicherheit. Sie liegt vor der Chat-Episode dieses Tages; die Tagesreihenfolge ist eine szenische Einteilung, die tatsächliche Uhrzeit ist unbekannt.
+- **25.11.2025:** Elias schreibt „Ich liebe dich.“; nach einer Pause kann Felice dieselbe Antwort senden. Dezente Herzpartikel und eine sanfte Variation der vorhandenen Web-Audio-Atmosphäre begleiten den bestätigten Moment.
+- Das Erinnerungsbuch zeigt historische Daten, Beschreibungen, Illustrationen, Status und Wiederholungsbuttons. Eine Wiederholung pausiert die aktuelle Spielzeit und kehrt an Felices vorherige Position zurück. Auch vorzeitiges Verlassen verändert den Kalender nicht.
+- Anuk, Weihnachtsessen, Schulweg, Gölzau und die aus V0.8 übernommene Abschlussfeier bleiben als **undatierte Szenenentwürfe** erhalten. Insbesondere das frühere feste Weihnachtsdatum wird nicht länger als bestätigte historische Angabe dargestellt. Bestehende Abschlüsse und Bestwerte bleiben erhalten.
+
+[Datenmodell und Erweiterung](game/STORY-V09.md) · [Prüfbericht mit Desktop- und Touch-Szenen](qa/v09/REVIEW.md)
+
+### V0.9 spielen
+
+Welt betreten → im Buch oder links im Story-Hinweis **Zeit weiterblättern** → **Geschichte erleben**. Für Chatabende in Felices Zimmer zum Schreibtisch oder zur Bettkante laufen, mit **E** / Aktionsknopf Platz nehmen und **Handy öffnen** wählen. In Radegast auf Elias zulaufen und die angebotenen Aktionen ausführen. Das Buch öffnet sich mit **J** oder dem Buchknopf; abgeschlossene Erinnerungen lassen sich dort erneut erleben. Smartphones verwenden den bestehenden Touch-Joystick im Querformat.
+
+Der neue Schlüssel `felice-elias.timeline.v09` speichert Kalender, Ereignisabschlüsse und laufende Chat-/Szenenfortschritte gemeinsam. Die alten Tages- und Erinnerungsdaten bleiben erhalten; Kapitel- und Namensfunktionen verwenden weiterhin ihre vorhandenen Schlüssel. Wiederholungszustände werden erst bei erfolgreichem Abschluss als zusätzlicher Besuch gezählt. Beschädigte oder unbekannte Speicherformate werden nicht überschrieben; blockiertes Speichern wird sichtbar gemeldet.
+
+## Neu in V0.8
+
+- **Unser Abschluss · Sommer 2026:** kleine Turnhalle, Schulleiter, Bürgermeister, zwei Ehrengäste, Paul, Justin und Elias. Felice und Elias erhalten beide ein Abschlusszeugnis.
+- Pauls Döneridee bleibt ein Gespräch bei der Zeugnisübergabe. Es gibt keinen Döner-Ausflug.
+- Ein weißer Übergang führt automatisch zu drei Schnappschüssen von Elias und Felice. Der Fotopunkt spielt den Moment nach Abschluss erneut ab.
+- Persönliche Gespräche mit den Freunden, insbesondere Pauls Insider und Jasons Fachabi.
+- Liegen ausschließlich im Bett; alle Decken entfernt. Sitzen auf Sofa, Stühlen und Bänken bleibt möglich. Anuks Decke ist jetzt ein Hundekissen; alte Spielstände werden migriert.
+
+## Bisher in V0.75
+
+- **Schießgruppe:** Helena und Ida sind mit Alexander und Magdalena am Schießstand ansprechbar. Die Trainer Hans und Fritz haben eigene Namen, Figuren und Gespräche. Hans begrüßt Felice im Schießkapitel; seine bisherige Figuren-ID bleibt für gespeicherte Namen und Kapitel erhalten. Alexander und Magdalena können die vorhandenen Sitz- und Liegeplätze nutzen. Die neuen Figuren verwenden zunächst vorhandene Atlasgrafiken, bis persönliche Aussehensangaben vorliegen.
 - **Radegast:** Von Felices Wohnung führt ein verkürzter, wiedererkennbarer Weg entlang der Hausreihen und Gärten zur neu gestalteten Bushaltestelle.
 - **Zörbig:** Der Bus kommt am Markt an. Von dort geht es zu Fuß an der Kirche vorbei zur Sekundarschule und auf den Pausenhof. Markt, Kirche und Schule folgen der Anordnung im bereitgestellten Luftbild.
 - **Pausenhof:** Aus der Vogelperspektive liegt die graue Sekundarschule im Hintergrund. Ihr mittiger Eingang mit Treppe ist sichtbar und dient als Unterrichtszugang. Die Grundschule rechts bleibt außerhalb der Ansicht. Die Schulhof-Fotos bestimmen das graue Pflaster, den roten Querweg, Baumbeete mit Sitzrändern und die grüne Ecke mit Sitzmauern. Elena, Jason, Luca und Wyatt bewegen sich an den blau markierten Fenstergittern. Elias gehört nicht zu dieser Gruppe; Felice kann ihn separat zum Sitzen am Baum oder auf der Sitzmauer einladen.
@@ -29,7 +55,7 @@ Die Ortsanordnung nutzt die persönlichen Luftbilder, die vier Schulhof-Fotos un
 - **Felices Küche** ist vom Wohnzimmer aus erreichbar: Frühstück vorbereiten, ein warmes Getränk machen und aufräumen kosten jeweils zehn Minuten. Die Aktionen zeigen kurz Rückmeldung und passende Dampf-/Glanzanimationen. Am Küchentisch können Felice und Elias zusammen sitzen.
 - **Felice liegt unter der Decke, mit dem Kopf auf dem Kissen.** Die bewohnte Bettvariante übernimmt die genaue Kamera und Einrichtung des Zimmers; die frühere Deckenüberlagerung entfällt.
 - **Elena, Jason, Luca und Wyatt laufen auf dem Schulhof.** Jason und Luca gehen langsamer und pausieren länger. Die Figuren verwenden echte wechselnde Schrittbilder und begehbare Wege.
-- Beim Ansprechen können **alle neun Freunde und Elias** **Hinsetzen**, **Hinlegen** und **Aufstehen** wählen. Sie laufen zum nächsten freien passenden Platz; ein reservierter Platz kann nicht doppelt belegt werden. Hinlegen nutzt Decken, Sitzen Bänke, Sofa oder Küchenstühle. Felice kann die Ruheplätze ebenfalls benutzen.
+- Freunde und Elias können sich an verfügbaren Sitzplätzen hinsetzen und wieder aufstehen. Liegen ist nur in Felices Bett möglich. Persönliche Gespräche werden als eigene Gesprächsauswahl angeboten.
 - Bewegung pausiert in Dialogen, im Buch, bei Pause und bei verborgenem Tab. Automatisches Laufen kostet keine Spielminuten. Kapitel, Uhrzeit und Jahreszeit verwenden weiterhin die bestehenden Speicherstände; Haltungen bleiben vorübergehend.
 
 [Browserprüfung und Szenenbilder von V0.65](qa/v065/REVIEW.md) · [Grafikvorgaben](game/ART-V065.md)
@@ -76,7 +102,7 @@ npx eslint game/SceneArt.tsx game/graphics.ts game/Game.tsx game/GameUI.tsx game
 npm run build
 ```
 
-Die 42 Tests umfassen Kapitel, Speicherstände, Erreichbarkeit, Trefferwertung, Kamera, Grafikzuordnung, Ton, Tagesgrenzen, Hinweiszeiten, Schlafen, Jahreszeiten, Bewegung bei verschiedenen Bildraten, Kollisionen, NPC-Laufwege, Platzreservierungen, alle Freundesposen sowie Felices und Elias' Ruhewege und ergänzte Namen. Die Schulgruppe ohne Elias, durchgehend begehbare Wege um schmale Sitzmauern und die Rückkehr zur Gruppe nach dem Ausruhen werden ebenfalls geprüft. Browserprüfungen ergänzen sie um Darstellung und Bedienung.
+Die automatisierten Tests umfassen Kapitel, Speicherstände, Erreichbarkeit, Trefferwertung, Kamera, Grafikzuordnung, Ton, Tagesgrenzen, Hinweiszeiten, Schlafen, Jahreszeiten, Bewegung bei verschiedenen Bildraten, Kollisionen, NPC-Laufwege, Platzreservierungen, alle Freundesposen sowie Felices und Elias' Ruhewege und ergänzte Namen. Die Schulgruppe ohne Elias, durchgehend begehbare Wege um schmale Sitzmauern und die Rückkehr zur Gruppe nach dem Ausruhen werden ebenfalls geprüft. Browserprüfungen ergänzen sie um Darstellung und Bedienung.
 
 ## Lokal starten
 

@@ -10,7 +10,7 @@ export const SEASONS = ["Frühling", "Sommer", "Herbst", "Winter"] as const;
 export type Season = typeof SEASONS[number];
 export type DaySave = { version: 1; date: string; minute: number; day: number; season: Season };
 export type DayNotice = { date: string; minute: number };
-export type RestSpot = { id: string; place: Place; name: string; kind: "bench" | "bed" | "chair" | "mat"; approach: Point; position: Point; companion?: Point; furniture?: Point };
+export type RestSpot = { id: string; place: Place; name: string; kind: "bench" | "bed" | "chair"; approach: Point; position: Point; companion?: Point; furniture?: Point };
 
 export function initialDay(now = new Date()): DaySave {
   const date = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
@@ -65,7 +65,9 @@ export function activityAt(place: Place, minute: number) {
   if (place === "range") return "Schießen · Gölzau";
   if (place === "goelzau") return "Gölzau · Auf dem Weg zum Schießen";
   if (place === "radegast") return "Radegast · Auf dem Weg zur Haltestelle";
-  if (place === "zoerbig") return "Zörbig · Markt und Schulweg";
+  if (place === "schoolway") return "Zörbig · Schulweg";
+  if (place === "zoerbig") return "Zörbig · Markt";
+  if (place === "gym") return "Abschlusszeugnisse · Sommer 2026";
   if (place === "school") return minute >= SCHOOL_START && minute < SCHOOL_END ? "Schule · Unterrichtszeit" : "Schule · Schulhof";
   return "Radegast · Haltestelle";
 }
@@ -79,13 +81,10 @@ export function seasonalLight(season: Season, minute: number) {
 }
 
 export const REST_SPOTS: RestSpot[] = [
+  { id: "felice-desk", place: "bedroom", name: "Stuhl am Schreibtisch", kind: "chair", approach: { x: .60, y: .395 }, position: { x: .61, y: .335 }, companion: { x: .69, y: .345 } },
+  { id: "felice-bed-edge", place: "bedroom", name: "Bettkante", kind: "chair", approach: { x: .40, y: .49 }, position: { x: .40, y: .425 }, companion: { x: .47, y: .425 } },
   { id: "home-sofa", place: "home", name: "Sofa im Wohnzimmer", kind: "chair", approach: { x: .36, y: .48 }, position: { x: .275, y: .412 }, companion: { x: .345, y: .412 } },
-  { id: "kitchen-rest", place: "kitchen", name: "Kuscheldecke", kind: "mat", approach: { x: .24, y: .81 }, position: { x: .2, y: .75 }, companion: { x: .28, y: .75 }, furniture: { x: .24, y: .77 } },
   { id: "kitchen-chairs", place: "kitchen", name: "Stuhl am Küchentisch", kind: "chair", approach: { x: .7, y: .64 }, position: { x: .654, y: .582 }, companion: { x: .783, y: .582 } },
-  { id: "school-picnic", place: "school", name: "Picknickdecke", kind: "mat", approach: { x: .35, y: .90 }, position: { x: .22, y: .855 }, companion: { x: .285, y: .855 }, furniture: { x: .25, y: .85 } },
-  { id: "range-rest", place: "range", name: "Ruhedecke", kind: "mat", approach: { x: .22, y: .92 }, position: { x: .18, y: .885 }, companion: { x: .26, y: .885 }, furniture: { x: .22, y: .905 } },
-  { id: "home-rest", place: "home", name: "Kuscheldecke zum Ausruhen", kind: "mat", approach: { x: .45, y: .78 }, position: { x: .425, y: .72 }, companion: { x: .505, y: .72 }, furniture: { x: .465, y: .74 } },
-  { id: "bus-rest", place: "bus", name: "Decke am Platzrand", kind: "mat", approach: { x: .38, y: .85 }, position: { x: .34, y: .79 }, companion: { x: .42, y: .79 }, furniture: { x: .38, y: .81 } },
   { id: "felice-bed", place: "bedroom", name: "Felices Bett", kind: "bed", approach: { x: .30, y: .49 }, position: { x: .255, y: .225 } },
   { id: "garden-bench", place: "garden", name: "Gartenbank", kind: "bench", approach: { x: .25, y: .65 }, position: { x: .215, y: .602 }, companion: { x: .28, y: .602 }, furniture: { x: .25, y: .61 } },
   { id: "bus-bench", place: "bus", name: "Bank an der Haltestelle", kind: "bench", approach: { x: .33, y: .485 }, position: { x: .312, y: .419 }, companion: { x: .362, y: .419 } },

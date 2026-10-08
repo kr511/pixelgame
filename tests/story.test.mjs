@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { CHAPTERS, ENTITIES, PLACES, SPAWNS, EMPTY_STORY, advanceStory, beginChapter, canWalk, currentStep, parseStory, routeTo } from "../game/story.ts";
 
-test("Alle vier Kapitel sind vollständig spielbar, speicherbar und wiederholbar", () => {
+test("Alle Kapitel sind vollständig spielbar, speicherbar und wiederholbar", () => {
   let save = { ...EMPTY_STORY };
   for (const chapter of CHAPTERS) {
     save = beginChapter(save,chapter.id);
@@ -16,10 +16,10 @@ test("Alle vier Kapitel sind vollständig spielbar, speicherbar und wiederholbar
     assert.equal(currentStep(save),undefined);
     assert.ok(save.completed.includes(chapter.id));
   }
-  assert.equal(save.completed.length,4);
+  assert.equal(save.completed.length,CHAPTERS.length);
   const replay = beginChapter(save,"dog");
   assert.equal(replay.step,0);
-  assert.equal(replay.completed.length,4);
+  assert.equal(replay.completed.length,CHAPTERS.length);
   assert.deepEqual(replay.bag,[]);
 });
 
@@ -27,7 +27,7 @@ test("Inventar wird aufgenommen und abgegeben; falscher Ort zählt nicht", () =>
   let s = beginChapter(EMPTY_STORY,"dog");
   assert.equal(advanceStory({...s,place:"bus"},"family").step,0);
   s = advanceStory(s,"family"); s = advanceStory(s,"blanket");
-  assert.deepEqual(s.bag,["Kuscheldecke"]);
+  assert.deepEqual(s.bag,["Hundekissen"]);
   s = advanceStory({...s,place:"garden"},"dog-bed");
   assert.deepEqual(s.bag,[]);
 });
@@ -66,4 +66,12 @@ test("Jede Person, jedes Questobjekt und jeder Ausgang ist laufend erreichbar", 
 test("Kaputte oder zukünftige Spielstände werden erkannt, vorhandene Daten bleiben intakt", () => {
   for(const raw of ["broken","null",JSON.stringify({...EMPTY_STORY,version:2}),JSON.stringify({...EMPTY_STORY,place:"toString"}),JSON.stringify({...EMPTY_STORY,step:90}),JSON.stringify({...EMPTY_STORY,completed:["unknown"]})]) assert.throws(()=>parseStory(raw));
   assert.deepEqual(parseStory(null),EMPTY_STORY);
+});
+
+
+test("Gespeicherte Kuscheldecke wird zum Hundekissen und Anuks Kapitel bleibt fortsetzbar", () => {
+  const old={version:1,chapter:"dog",step:2,completed:[],place:"garden",bag:["Kuscheldecke"]};
+  const saved=parseStory(JSON.stringify(old));
+  assert.deepEqual(saved.bag,["Hundekissen"]);
+  assert.deepEqual(advanceStory(saved,"dog-bed").bag,[]);
 });

@@ -18,6 +18,7 @@ export class WorldAudio {
   private muted = false;
   private enabled = false;
   private place: Place = "bedroom";
+  private mood: "world" | "evening" | "love" = "world";
   private listeners = new Set<() => void>();
   private lastStep = -Infinity;
   private effects = new Set<AudioScheduledSourceNode>();
@@ -56,6 +57,10 @@ export class WorldAudio {
     if (this.place !== place) this.stopAmbience();
     this.place = place; this.enabled = enabled; this.sync();
   }
+  setMood(mood: "world" | "evening" | "love") {
+    if (this.mood === mood) return;
+    this.mood = mood; this.stopAmbience(); this.sync();
+  }
   private stopAmbience() { if (this.ambience) { try { this.ambience.stop(); } catch { /* Already stopped. */ } this.ambience.disconnect(); this.ambience = null; } }
   private sync() {
     if (!this.context || !this.master) return;
@@ -69,11 +74,18 @@ export class WorldAudio {
       return;
     }
     if (this.ambience) return;
-    const outside = ["garden","bus","school","radegast","zoerbig","goelzau"].includes(this.place);
-    const buffer = this.context.createBuffer(1, this.context.sampleRate * 4, this.context.sampleRate);
+    const outside = ["garden","bus","school","schoolway","radegast","zoerbig","goelzau"].includes(this.place);
+    const music = !outside && this.mood !== "world";
+    const buffer = this.context.createBuffer(1, this.context.sampleRate * (music ? 16 : 4), this.context.sampleRate);
     const samples = buffer.getChannelData(0);
     let smooth = 0;
-    for (let i=0;i<samples.length;i++) { smooth = (smooth + (Math.random()*2-1)*.035)/1.035; samples[i] = smooth * (outside ? .12 : .025) * (.75 + .25 * Math.sin(i / this.context.sampleRate * Math.PI / 2)); }
+    const melody = this.mood === "love" ? [261.63,329.63,392,329.63,293.66,349.23,392,523.25] : [220,261.63,329.63,261.63,196,246.94,293.66,246.94];
+    for (let i=0;i<samples.length;i++) {
+      const time = i / this.context.sampleRate;
+      smooth = (smooth + (Math.random()*2-1)*.035)/1.035;
+      samples[i] = smooth * (outside ? .12 : .025) * (.75 + .25 * Math.sin(time * Math.PI / 2));
+      if (music) samples[i] += Math.sin(time * Math.PI * 2 * melody[Math.floor(time / 2) % 8]) * .07 * Math.sin(time % 2 * Math.PI / 2) ** 2;
+    }
     const source = this.context.createBufferSource(); source.buffer = buffer; source.loop = true;
     const filter = this.context.createBiquadFilter(); filter.type = "lowpass"; filter.frequency.value = outside ? 900 : 250;
     source.connect(filter); filter.connect(this.master); source.onended = () => filter.disconnect(); source.start(); this.ambience = source;
@@ -94,7 +106,7 @@ export class WorldAudio {
         const data = buffer.getChannelData(0);
         for (let i=0;i<data.length;i++) data[i] = (Math.random()*2-1)*Math.exp(-i/data.length*8);
         const noise = ctx.createBufferSource(); noise.buffer = buffer;
-        const filter = ctx.createBiquadFilter(); filter.type = "lowpass"; filter.frequency.value = effect === "shot" ? 1800 : ["garden","bus","school","radegast","zoerbig","goelzau"].includes(this.place) ? 900 : 450;
+        const filter = ctx.createBiquadFilter(); filter.type = "lowpass"; filter.frequency.value = effect === "shot" ? 1800 : ["garden","bus","school","radegast","zoerbig","schoolway","goelzau"].includes(this.place) ? 900 : 450;
         noise.connect(filter); filter.connect(envelope); source = noise;
         noise.onended = () => { this.effects.delete(noise); filter.disconnect(); envelope.disconnect(); };
       } else {
